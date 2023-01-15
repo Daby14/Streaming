@@ -65,6 +65,14 @@ class UserTypeException extends BaseException {
     }
 }
 
+//Excepción para indicar si una producción es nula o no es de tipo Production
+class ProductionTypeException extends BaseException {
+    constructor(fileName, lineNumber) {
+        super("Esa production es nula o no es una instancia de Production", fileName, lineNumber);
+        this.name = "ProductionTypeException";
+    }
+}
+
 //Excepción para indicar si el objeto no existe en el sistema
 class IndexOutException extends BaseException {
     constructor(fileName, lineNumber) {

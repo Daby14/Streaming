@@ -27,12 +27,12 @@ function testStreaming() {
     }
 
     //!Clase Movie
-    let m = new Movie(r, "Nueva Zelanda", "El Señor de los Anillos", "España", "06/01/2023", "Destruir el anillo", "images/image.jpg");
+    let m = new Movie("El Señor de los Anillos", "España", "12/10/2022", "Destruir el anillo", "images/anillo.jpg", r, "Nueva Zelanda");
 
     console.log(m.toString());
 
     //!Clase Serie
-    let s = new Serie("Volcán", "Nueva Zelanda", 3, "El Señor de los Anillos", "España", "06/01/2023", "Destruir el anillo", "images/image.jpg");
+    let s = new Serie("El Hobbit", "España", "12/01/2023", "Encontrar el anillo", "images/hobbit.jpg", "Volcán", "Nueva Zelanda", 3);
 
     console.log(s.toString());
 
@@ -197,6 +197,68 @@ function testStreaming() {
     }
 
     console.info("Fin Testeo Users");
+
+    //TODO: PRODUCTIONS
+
+    console.info("Testeo Productions");
+
+    //Comprobamos que se añaden las producciones sin problema
+    try {
+        v.addProduction(m);   //m es una pelicula declarada anteriormente
+        console.log(v.addProduction(s));      //s es una serie declarada anteriormente
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Recuperamos las producciones a través de un iterador
+    try {
+
+        //Con un for of vamos recuperando las producciones para mostrarlas por consola
+        for (const iterator of v.productions) {
+            console.log(iterator);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción ya que se intenta añadir un objeto que no es Production
+    try {
+        let r = new Resource("97", "movies/movie.mp4");
+        v.addProduction(r);
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción ya que se intenta añadir una producción que ya existe
+    try {
+        console.log(v.addProduction(s));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se elimina la producción
+    try {
+        console.log(v.removeProduction(s));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción al intentar borrar una producción que no es una instancia de Production
+    try {
+        let r = new Resource("100", "movies/movie.mp4");
+        console.log(v.removeProduction(r));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción al intentar borrar una producción que no existe
+    try {
+        console.log(v.removeProduction(s));
+    } catch (error) {
+        console.error(error);
+    }
+
+    console.info("Fin Testeo Productions");
 
 }
 

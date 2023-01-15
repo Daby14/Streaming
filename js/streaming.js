@@ -447,6 +447,63 @@ let VideoSystem = (function () {
                 }
             }
 
+            //Declaramos la lista productions donde vamos a ir almacenando las producciones del sistema
+            #productions = [];
+
+            //Método que añade producciones
+            addProduction(production) {
+
+                //Comprobamos si la production es un objeto Production
+                if ((production === null) || !(production instanceof Production)) {
+                    throw new ProductionTypeException();
+                }
+
+                //Comprobamos si el username del user existe
+                if ((this.#productions.findIndex((pro) => pro.title === production.title) !== -1)) {
+                    throw new ExistedException();
+                }
+
+                this.#productions.push(production);
+
+                return this.#productions.length;
+
+            }
+
+            //Método que dado un objeto production lo elimina del sistema
+            removeProduction(production) {
+
+                let index = this.#productions.findIndex((pro) => pro.title === production.title);
+
+                //Comprobamos si la producción es un objeto Production
+                if ((production === null) || !(production instanceof Production)) {
+                    throw new ProductionTypeException();
+                }
+
+                if ((index !== -1)) {
+                    this.#productions.splice(index, 1);
+                } else {
+                    throw new IndexOutException();
+                }
+
+                return this.#productions.length;
+
+            }
+
+            //Devuelve el objeto iterador que permite recuperar los usuarios del sistema
+            get productions() {
+
+                //Guardamos la referencia de la lista
+                let array = this.#productions;
+
+                return {
+                    *[Symbol.iterator]() {
+                        for (let pro of array) {
+                            yield pro;
+                        }
+                    }
+                }
+            }
+
         }
 
         let sc = new VideoSystem(name);//Devolvemos el objeto HighSchool para que sea una instancia única.
