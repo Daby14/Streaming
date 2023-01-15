@@ -29,6 +29,62 @@ function testStreaming() {
     console.log(u.toString());
     console.log(co.toString());
 
+    //-----------------------------------
+
+    //Instanciamos VideoSystem
+
+    //Comprobamos que se lanza una excepción ya que el name de VideoSystem no puede estar vacío
+    try {
+        let v = VideoSystem.getInstance("");
+    } catch (error) {
+        console.error(error);
+    }
+
+    let v = VideoSystem.getInstance("Maestre");
+    let v2 = VideoSystem.getInstance("Atenea");
+
+    //Comprobamos que el objeto VideoSystem es único
+    try {
+        console.log(v === v2);  //true, por lo que el objeto es único
+    } catch (error) {
+        console.error(error);
+    }
+
+    console.log(v.name);
+
+    //Comprobamos que se añade la categoria a la list sin problema
+    try {
+        console.log(v.addCategorie(c));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Recuperamos las categorias a través de un iterador
+    try {
+
+        //Con un for of vamos recuperando los cursos para mostrarlos por consola
+        for (const iterator of v.categories) {
+            console.log(iterator);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción ya que se intenta añadir un objeto que no es Category
+    try {
+        let r = new Resource("97", "movies/movie.mp4");
+        v.addCategorie(r);
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción ya que se intenta añadir una categoria que ya existe
+    try {
+        console.log(v.addCategorie(c));
+    } catch (error) {
+        console.error(error);
+    }
+
 }
 
 window.onload = testStreaming;

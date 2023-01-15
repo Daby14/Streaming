@@ -16,3 +16,27 @@ class AbstractException extends BaseException {
         this.name = "AbstractException";
     }
 }
+
+//Excepción para indicar si está vacío el name de VideoSystem
+class EmptyNameException extends BaseException {
+    constructor(fileName, lineNumber) {
+        super("El name de VideoSystem está vacío", fileName, lineNumber);
+        this.name = "EmptyNameException";
+    }
+}
+
+//Excepción para indicar si una categoría está registrada
+class CategorieException extends BaseException {
+    constructor(fileName, lineNumber) {
+        super("Esa categoría ya está registrada", fileName, lineNumber);
+        this.name = "CategorieException";
+    }
+}
+
+//Excepción para indicar si una categoría es nula o no es de tipo Category
+class CategorieTypeException extends BaseException {
+    constructor(fileName, lineNumber) {
+        super("Esa categoría es nula o no es una instancia de Category", fileName, lineNumber);
+        this.name = "CategorieTypeException";
+    }
+}

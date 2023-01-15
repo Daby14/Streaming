@@ -9,8 +9,8 @@ class Person {
     #picture;
 
     //Declaramos el constructor de Person
-    constructor(name, lastname1, lastname2 = "", born, picture = ""){
-        
+    constructor(name, lastname1, lastname2 = "", born, picture = "") {
+
         this.#name = name;
         this.#lastname1 = lastname1;
         this.#lastname2 = lastname2;
@@ -20,23 +20,23 @@ class Person {
     }
 
     //Declaramos los getters de Person
-    get name(){
+    get name() {
         return this.#name;
     }
 
-    get lastname1(){
+    get lastname1() {
         return this.#lastname1;
     }
 
-    get lastname2(){
+    get lastname2() {
         return this.#lastname2;
     }
 
-    get born(){
+    get born() {
         return this.#born;
     }
 
-    get picture(){
+    get picture() {
         return this.#picture;
     }
 
@@ -55,19 +55,19 @@ class Category {
     #description;
 
     //Declaramos el constructor de category
-    constructor(name, description = ""){
-        
+    constructor(name, description = "") {
+
         this.#name = name;
         this.#description = description;
 
     }
 
     //Declaramos los getters de category
-    get name(){
+    get name() {
         return this.#name;
     }
 
-    get description(){
+    get description() {
         return this.#description;
     }
 
@@ -86,19 +86,19 @@ class Resource {
     #link;
 
     //Declaramos el constructor de resource
-    constructor(duration, link){
-        
+    constructor(duration, link) {
+
         this.#duration = duration;
         this.#link = link;
 
     }
 
     //Declaramos los getters de resource
-    get duration(){
+    get duration() {
         return this.#duration;
     }
 
-    get link(){
+    get link() {
         return this.#link;
     }
 
@@ -120,8 +120,8 @@ class Production {
     #image;
 
     //Declaramos el constructor de production
-    constructor(title, nationality = "", publication, synopsis = "", image = ""){
-        
+    constructor(title, nationality = "", publication, synopsis = "", image = "") {
+
         this.#title = title;
         this.#nationality = nationality;
         this.#publication = publication;
@@ -136,23 +136,23 @@ class Production {
     }
 
     //Declaramos los getters de production
-    get title(){
+    get title() {
         return this.#title;
     }
 
-    get nationality(){
+    get nationality() {
         return this.#nationality;
     }
 
-    get publication(){
+    get publication() {
         return this.#publication;
     }
 
-    get synopsis(){
+    get synopsis() {
         return this.#synopsis;
     }
 
-    get image(){
+    get image() {
         return this.#image;
     }
 
@@ -164,15 +164,15 @@ class Production {
 }
 
 //Declaramos la clase movie
-class Movie extends Production{
+class Movie extends Production {
 
     //Declaramos las propiedades de movie
     #resource;
     #locations;
 
     //Declaramos el constructor de movie
-    constructor(title, nationality = "", publication, synopsis = "", image = "", resource = Resource, locations = []){
-        
+    constructor(title, nationality = "", publication, synopsis = "", image = "", resource = Resource, locations = []) {
+
         super(title, nationality, publication, synopsis, image);
         this.#resource = resource;
         this.#locations = locations;
@@ -180,11 +180,11 @@ class Movie extends Production{
     }
 
     //Declaramos los getters de movie
-    get resource(){
+    get resource() {
         return this.#resource;
     }
 
-    get locations(){
+    get locations() {
         return this.#locations;
     }
 
@@ -196,7 +196,7 @@ class Movie extends Production{
 }
 
 //Declaramos la clase serie
-class Serie extends Production{
+class Serie extends Production {
 
     //Declaramos las propiedades de serie
     #resources;
@@ -204,8 +204,8 @@ class Serie extends Production{
     #seasons;
 
     //Declaramos el constructor de serie
-    constructor(title, nationality = "", publication, synopsis = "", image = "", resources = [], locations = [], seasons = 0){
-        
+    constructor(title, nationality = "", publication, synopsis = "", image = "", resources = [], locations = [], seasons = 0) {
+
         super(title, nationality, publication, synopsis, image);
         this.#resources = resources;
         this.#locations = locations;
@@ -214,15 +214,15 @@ class Serie extends Production{
     }
 
     //Declaramos los getters de serie
-    get resources(){
+    get resources() {
         return this.#resources;
     }
 
-    get locations(){
+    get locations() {
         return this.#locations;
     }
 
-    get seasons(){
+    get seasons() {
         return this.#seasons;
     }
 
@@ -242,8 +242,8 @@ class User {
     #password;
 
     //Declaramos el constructor de user
-    constructor(username, email, password){
-        
+    constructor(username, email, password) {
+
         this.#username = username;
         this.#email = email;
         this.#password = password;
@@ -251,15 +251,15 @@ class User {
     }
 
     //Declaramos los getters de user
-    get username(){
+    get username() {
         return this.#username;
     }
 
-    get email(){
+    get email() {
         return this.#email;
     }
 
-    get password(){
+    get password() {
         return this.#password;
     }
 
@@ -278,19 +278,19 @@ class Coordinate {
     #longitude;
 
     //Declaramos el constructor de coordinate
-    constructor(latitude, longitude){
-        
+    constructor(latitude, longitude) {
+
         this.#latitude = latitude;
         this.#longitude = longitude;
 
     }
 
     //Declaramos los getters de coordinate
-    get latitude(){
+    get latitude() {
         return this.#latitude;
     }
 
-    get longitude(){
+    get longitude() {
         return this.#longitude;
     }
 
@@ -300,3 +300,88 @@ class Coordinate {
     }
 
 }
+
+//Objecto VideoSystem único
+let VideoSystem = (function () {
+
+    let instatiated;
+
+    function init(name) { //Inicialización del Singleton
+
+        class VideoSystem {
+
+            #name;
+
+            constructor(name) {
+
+                this.#name = name;
+
+                //Comprobamos si el name está vacío
+                if (this.#name === "") {
+                    throw new EmptyNameException();
+                }
+
+            }
+
+            //Getter de name
+            get name() {
+                return this.#name;
+            }
+
+            //Setter de name
+            set name(name) {
+                this.#name = name;
+            }
+
+            //Declaramos la lista categories donde vamos a ir almacenando las categorias del sistema
+            #categories = [];
+
+            addCategorie(categorie) {
+
+                //Comprobamos si la categoria es un objeto Category
+                if ((categorie === null) || !(categorie instanceof Category)) {
+                    throw new CategorieTypeException();
+                }
+
+                //Si la categoria no está previamente en la lista la añadimos
+                if ((this.#categories.findIndex((cat) => cat.name === categorie.name) !== -1)) {
+                    throw new CategorieException();
+                }
+
+                this.#categories.push(categorie);
+
+                return this.#categories.length;
+
+            }
+
+            //Devuelve el objeto iterador que permite recuperar las categorias del sistema
+            get categories() {
+
+                //Guardamos la referencia de la lista
+                let array = this.#categories;
+
+                return {
+                    *[Symbol.iterator]() {
+                        for (let cat of array) {
+                            yield cat;
+                        }
+                    }
+                }
+            }
+
+        }
+
+        let sc = new VideoSystem(name);//Devolvemos el objeto HighSchool para que sea una instancia única.
+        Object.freeze(sc);
+        return sc;
+    }
+
+    return {
+        getInstance: function (name) {
+            if (!instatiated) { //Si instantiated es undefined llama a init.
+                instatiated = init(name); //instantiated contiene el objeto único
+            }
+            return instatiated; //Devuelve el campo privado
+        }
+    }
+})();
