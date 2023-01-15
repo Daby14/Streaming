@@ -321,6 +321,69 @@ function testStreaming() {
 
     console.info("Fin Testeo Actors");
 
+    //TODO: DIRECTORS
+
+    console.info("Testeo Directors");
+
+    let p1 = new Person("Miguel", "Sanchez", "Caminero", "05/09/1968", "www.google.com");
+
+    //Comprobamos que se añade el director sin problema
+    try {
+        console.log(v.addDirector(p1));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Recuperamos los directores a través de un iterador
+    try {
+
+        //Con un for of vamos recuperando los directores para mostrarlos por consola
+        for (const iterator of v.directors) {
+            console.log(iterator);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción ya que se intenta añadir un objeto que no es Person
+    try {
+        let r = new Resource("101", "movies/movie.mp4");
+        v.addDirector(r);
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción ya que se intenta añadir un director que ya existe
+    try {
+        console.log(v.addDirector(p1));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se elimina el director
+    try {
+        console.log(v.removeDirector(p1));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción al intentar borrar un director que no es una instancia de Person
+    try {
+        let r = new Resource("102", "movies/movie.mp4");
+        console.log(v.removeDirector(r));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción al intentar borrar un director que no existe
+    try {
+        console.log(v.removeDirector(p1));
+    } catch (error) {
+        console.error(error);
+    }
+
+    console.info("Fin Testeo Directors");
+
 }
 
 window.onload = testStreaming;

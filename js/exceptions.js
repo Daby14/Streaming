@@ -76,7 +76,7 @@ class ProductionTypeException extends BaseException {
 //Excepción para indicar si un actor es nula o no es de tipo Person
 class PersonTypeException extends BaseException {
     constructor(fileName, lineNumber) {
-        super("Ese actor es nulo o no es una instancia de Person", fileName, lineNumber);
+        super("Ese actor/director es nulo o no es una instancia de Person", fileName, lineNumber);
         this.name = "PersonTypeException";
     }
 }

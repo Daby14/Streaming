@@ -516,7 +516,7 @@ let VideoSystem = (function () {
                 }
 
                 //Comprobamos si el actor existe
-                if ((this.#actors.findIndex((act) => act.title === actor.title) !== -1)) {
+                if ((this.#actors.findIndex((act) => act.name === actor.name) !== -1)) {
                     throw new ExistedException();
                 }
 
@@ -556,6 +556,63 @@ let VideoSystem = (function () {
                     *[Symbol.iterator]() {
                         for (let act of array) {
                             yield act;
+                        }
+                    }
+                }
+            }
+
+            //Declaramos la lista directors donde vamos a ir almacenando los directores del sistema
+            #directors = [];
+
+            //Método que añade directores
+            addDirector(director) {
+
+                //Comprobamos si el director es un objeto Person
+                if ((director === null) || !(director instanceof Person)) {
+                    throw new PersonTypeException();
+                }
+
+                //Comprobamos si el director existe
+                if ((this.#directors.findIndex((dir) => dir.name === director.name) !== -1)) {
+                    throw new ExistedException();
+                }
+
+                this.#directors.push(director);
+
+                return this.#directors.length;
+
+            }
+
+            //Método que dado un objeto director lo elimina del sistema
+            removeDirector(director) {
+
+                let index = this.#directors.findIndex((dir) => dir.name === director.name);
+
+                //Comprobamos si el director es un objeto Person
+                if ((director === null) || !(director instanceof Person)) {
+                    throw new PersonTypeException();
+                }
+
+                if ((index !== -1)) {
+                    this.#directors.splice(index, 1);
+                } else {
+                    throw new IndexOutException();
+                }
+
+                return this.#directors.length;
+
+            }
+
+            //Devuelve el objeto iterador que permite recuperar los directores del sistema
+            get directors() {
+
+                //Guardamos la referencia de la lista
+                let array = this.#directors;
+
+                return {
+                    *[Symbol.iterator]() {
+                        for (let dir of array) {
+                            yield dir;
                         }
                     }
                 }
