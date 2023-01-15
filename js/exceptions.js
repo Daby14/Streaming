@@ -25,11 +25,27 @@ class EmptyNameException extends BaseException {
     }
 }
 
-//Excepción para indicar si una categoría está registrada
-class CategorieException extends BaseException {
+//Excepción para indicar si un objeto está registrado
+class ExistedException extends BaseException {
     constructor(fileName, lineNumber) {
-        super("Esa categoría ya está registrada", fileName, lineNumber);
-        this.name = "CategorieException";
+        super("Ese objeto ya está registrado", fileName, lineNumber);
+        this.name = "ExistedException";
+    }
+}
+
+//Excepción para indicar si el username ya está registrado
+class UsernameExistedException extends BaseException {
+    constructor(fileName, lineNumber) {
+        super("Ese username ya está registrado", fileName, lineNumber);
+        this.name = "UsernameExistedException";
+    }
+}
+
+//Excepción para indicar si el email ya está registrado
+class EmailExistedException extends BaseException {
+    constructor(fileName, lineNumber) {
+        super("Ese email ya está registrado", fileName, lineNumber);
+        this.name = "EmailExistedException";
     }
 }
 
@@ -38,5 +54,21 @@ class CategorieTypeException extends BaseException {
     constructor(fileName, lineNumber) {
         super("Esa categoría es nula o no es una instancia de Category", fileName, lineNumber);
         this.name = "CategorieTypeException";
+    }
+}
+
+//Excepción para indicar si un usuario es nulo o no es de tipo User
+class UserTypeException extends BaseException {
+    constructor(fileName, lineNumber) {
+        super("Ese usuario es nulo o no es una instancia de User", fileName, lineNumber);
+        this.name = "UserTypeException";
+    }
+}
+
+//Excepción para indicar si el objeto no existe en el sistema
+class IndexOutException extends BaseException {
+    constructor(fileName, lineNumber) {
+        super("Ese objeto no está registrado", fileName, lineNumber);
+        this.name = "IndexOutException";
     }
 }

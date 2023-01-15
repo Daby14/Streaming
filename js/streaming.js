@@ -336,6 +336,7 @@ let VideoSystem = (function () {
             //Declaramos la lista categories donde vamos a ir almacenando las categorias del sistema
             #categories = [];
 
+            //Método que añade categorías
             addCategorie(categorie) {
 
                 //Comprobamos si la categoria es un objeto Category
@@ -345,10 +346,25 @@ let VideoSystem = (function () {
 
                 //Si la categoria no está previamente en la lista la añadimos
                 if ((this.#categories.findIndex((cat) => cat.name === categorie.name) !== -1)) {
-                    throw new CategorieException();
+                    throw new ExistedException();
                 }
 
                 this.#categories.push(categorie);
+
+                return this.#categories.length;
+
+            }
+
+            //Método que dado un objeto Category lo elimina del sistema
+            removeCategorie(categorie) {
+
+                let index = this.#categories.findIndex((cat) => cat.name === categorie.name);
+
+                if ((index !== -1)) {
+                    this.#categories.splice(index, 1);
+                } else {
+                    throw new IndexOutException();
+                }
 
                 return this.#categories.length;
 
@@ -364,6 +380,68 @@ let VideoSystem = (function () {
                     *[Symbol.iterator]() {
                         for (let cat of array) {
                             yield cat;
+                        }
+                    }
+                }
+            }
+
+            //Declaramos la lista users donde vamos a ir almacenando los usuarios del sistema
+            #users = [];
+
+            //Método que añade usuarios
+            addUser(user) {
+
+                //Comprobamos si el usuario es un objeto User
+                if ((user === null) || !(user instanceof User)) {
+                    throw new UserTypeException();
+                }
+
+                //Comprobamos si el username del user existe
+                if ((this.#users.findIndex((us) => us.username === user.username) !== -1)) {
+                    throw new UsernameExistedException();
+                }
+
+                //Comprobamos si el email del user existe
+                if ((this.#users.findIndex((us) => us.email === user.email) !== -1)) {
+                    throw new EmailExistedException();
+                }
+
+                this.#users.push(user);
+
+                return this.#users.length;
+
+            }
+
+            //Método que dado un objeto user lo elimina del sistema
+            removeUser(user) {
+
+                let index = this.#users.findIndex((us) => us.username === user.username);
+
+                //Comprobamos si el usuario es un objeto User
+                if ((user === null) || !(user instanceof User)) {
+                    throw new UserTypeException();
+                }
+
+                if ((index !== -1)) {
+                    this.#users.splice(index, 1);
+                } else {
+                    throw new IndexOutException();
+                }
+
+                return this.#users.length;
+
+            }
+
+            //Devuelve el objeto iterador que permite recuperar los usuarios del sistema
+            get users() {
+
+                //Guardamos la referencia de la lista
+                let array = this.#users;
+
+                return {
+                    *[Symbol.iterator]() {
+                        for (let us of array) {
+                            yield us;
                         }
                     }
                 }

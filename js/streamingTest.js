@@ -3,35 +3,52 @@
 //Comprobamos que todos las funciones implementadas funcionan correctamente
 function testStreaming() {
 
-    //Instanciamos las clases
+    //!Clase Person
     let p = new Person("David", "Letrado", "Gonzalez", "28/09/2003", "www.google.com");
+
+    console.log(p.toString());
+
+    //!Clase Category
     let c = new Category("DAW", "Excelente");
+
+    console.log(c.toString());
+
+    //!Clase Resource
     let r = new Resource("93", "movies/movie.mp4");
 
+    console.log(r.toString());
+
+    //!Clase Production
     //Comprobamos que se lanza una excepción al intentar instaciar la clase Production
-    try{
+    try {
         let pr = new Production("El Señor de los Anillos", "España", "06/01/2023", "Destruir el anillo", "images/image.jpg");
-    }catch(error){
+    } catch (error) {
         console.error(error);
     }
 
+    //!Clase Movie
     let m = new Movie(r, "Nueva Zelanda", "El Señor de los Anillos", "España", "06/01/2023", "Destruir el anillo", "images/image.jpg");
-    let s = new Serie("Volcán", "Nueva Zelanda", 3 , "El Señor de los Anillos", "España", "06/01/2023", "Destruir el anillo", "images/image.jpg");
-    let u = new User("David", "davidletrado03@gmail.com", "contraSeÑa" );
+
+    console.log(m.toString());
+
+    //!Clase Serie
+    let s = new Serie("Volcán", "Nueva Zelanda", 3, "El Señor de los Anillos", "España", "06/01/2023", "Destruir el anillo", "images/image.jpg");
+
+    console.log(s.toString());
+
+    //!Clase User
+    let u = new User("David", "davidletrado03@gmail.com", "contraSeÑa");
+
+    console.log(u.toString());
+
+    //!Clase Coordinate
     let co = new Coordinate(123, 178);
 
-    //Mostramos los datos de los objetos por consola
-    console.log(p.toString());
-    console.log(c.toString());
-    console.log(r.toString());
-    console.log(m.toString());
-    console.log(s.toString());
-    console.log(u.toString());
     console.log(co.toString());
 
-    //-----------------------------------
+    //!Objeto VideoSystem
 
-    //Instanciamos VideoSystem
+    console.info("Testeo Objeto VideoSystem");
 
     //Comprobamos que se lanza una excepción ya que el name de VideoSystem no puede estar vacío
     try {
@@ -40,6 +57,7 @@ function testStreaming() {
         console.error(error);
     }
 
+    //Instanciamos VideoSystem
     let v = VideoSystem.getInstance("Maestre");
     let v2 = VideoSystem.getInstance("Atenea");
 
@@ -50,11 +68,18 @@ function testStreaming() {
         console.error(error);
     }
 
+    //Mostramos el name por consola
     console.log(v.name);
 
-    //Comprobamos que se añade la categoria a la list sin problema
+    console.info("Fin Testeo Objeto VideoSystem");
+
+    //TODO: CATEGORIES
+
+    console.info("Testeo Categories");
+
+    //Comprobamos que se añade la categoria sin problema
     try {
-        console.log(v.addCategorie(c));
+        console.log(v.addCategorie(c));     //c es la categoría declarada anteriormente
     } catch (error) {
         console.error(error);
     }
@@ -62,7 +87,7 @@ function testStreaming() {
     //Recuperamos las categorias a través de un iterador
     try {
 
-        //Con un for of vamos recuperando los cursos para mostrarlos por consola
+        //Con un for of vamos recuperando las categorías para mostrarlas por consola
         for (const iterator of v.categories) {
             console.log(iterator);
         }
@@ -84,6 +109,94 @@ function testStreaming() {
     } catch (error) {
         console.error(error);
     }
+
+    //Comprobamos que se elimina la categoria
+    try {
+        console.log(v.removeCategorie(c));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción al intentar borrar una categoria que no existe
+    try {
+        console.log(v.removeCategorie(c));
+    } catch (error) {
+        console.error(error);
+    }
+
+    console.info("Fin Testeo Categories");
+
+    //TODO: USERS
+
+    console.info("Testeo Users");
+
+    let u1 = new User("Jesus", "pepito123@gmail.com", "contraSeÑa");
+    let u2 = new User("Antonio", "pepito123@gmail.com", "contraSeÑa");
+
+    //Comprobamos que se añade el usuario sin problema
+    try {
+        v.addUser(u);     //u es el user declarado anteriormente
+        console.log(v.addUser(u1));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Recuperamos los users a través de un iterador
+    try {
+
+        //Con un for of vamos recuperando los users para mostrarlas por consola
+        for (const iterator of v.users) {
+            console.log(iterator);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción ya que se intenta añadir un objeto que no es User
+    try {
+        let r = new Resource("98", "movies/movie.mp4");
+        v.addUser(r);
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción ya que se intenta añadir un user con un username que ya existe
+    try {
+        console.log(v.addUser(u));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción ya que se intenta añadir un user con un email que ya existe
+    try {
+        console.log(v.addUser(u2));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se elimina el user
+    try {
+        console.log(v.removeUser(u));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción al intentar borrar un user que no existe
+    try {
+        console.log(v.removeUser(u));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción al intentar borrar un user que no es una instancia de User
+    try {
+        let r = new Resource("99", "movies/movie.mp4");
+        console.log(v.removeUser(r));
+    } catch (error) {
+        console.error(error);
+    }
+
+    console.info("Fin Testeo Users");
 
 }
 
