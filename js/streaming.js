@@ -458,7 +458,7 @@ let VideoSystem = (function () {
                     throw new ProductionTypeException();
                 }
 
-                //Comprobamos si el username del user existe
+                //Comprobamos si la producción existe
                 if ((this.#productions.findIndex((pro) => pro.title === production.title) !== -1)) {
                     throw new ExistedException();
                 }
@@ -499,6 +499,63 @@ let VideoSystem = (function () {
                     *[Symbol.iterator]() {
                         for (let pro of array) {
                             yield pro;
+                        }
+                    }
+                }
+            }
+
+            //Declaramos la lista actors donde vamos a ir almacenando los actores del sistema
+            #actors = [];
+
+            //Método que añade actores
+            addActor(actor) {
+
+                //Comprobamos si el actor es un objeto Person
+                if ((actor === null) || !(actor instanceof Person)) {
+                    throw new PersonTypeException();
+                }
+
+                //Comprobamos si el actor existe
+                if ((this.#actors.findIndex((act) => act.title === actor.title) !== -1)) {
+                    throw new ExistedException();
+                }
+
+                this.#actors.push(actor);
+
+                return this.#actors.length;
+
+            }
+
+            //Método que dado un objeto actor lo elimina del sistema
+            removeActor(actor) {
+
+                let index = this.#actors.findIndex((act) => act.name === actor.name);
+
+                //Comprobamos si el actor es un objeto Person
+                if ((actor === null) || !(actor instanceof Person)) {
+                    throw new PersonTypeException();
+                }
+
+                if ((index !== -1)) {
+                    this.#actors.splice(index, 1);
+                } else {
+                    throw new IndexOutException();
+                }
+
+                return this.#actors.length;
+
+            }
+
+            //Devuelve el objeto iterador que permite recuperar los actores del sistema
+            get actors() {
+
+                //Guardamos la referencia de la lista
+                let array = this.#actors;
+
+                return {
+                    *[Symbol.iterator]() {
+                        for (let act of array) {
+                            yield act;
                         }
                     }
                 }

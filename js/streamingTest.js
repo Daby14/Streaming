@@ -260,6 +260,67 @@ function testStreaming() {
 
     console.info("Fin Testeo Productions");
 
+    //TODO: ACTORS
+
+    console.info("Testeo Actors");
+
+    //Comprobamos que se añade el actor sin problema
+    try {
+        console.log(v.addActor(p));      //p es una person declarada anteriormente
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Recuperamos los actores a través de un iterador
+    try {
+
+        //Con un for of vamos recuperando los actores para mostrarlos por consola
+        for (const iterator of v.actors) {
+            console.log(iterator);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción ya que se intenta añadir un objeto que no es Person
+    try {
+        let r = new Resource("101", "movies/movie.mp4");
+        v.addActor(r);
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción ya que se intenta añadir un actor que ya existe
+    try {
+        console.log(v.addActor(p));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se elimina el actor
+    try {
+        console.log(v.removeActor(p));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción al intentar borrar un actor que no es una instancia de Person
+    try {
+        let r = new Resource("102", "movies/movie.mp4");
+        console.log(v.removeActor(r));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción al intentar borrar un actor que no existe
+    try {
+        console.log(v.removeActor(s));
+    } catch (error) {
+        console.error(error);
+    }
+
+    console.info("Fin Testeo Actors");
+
 }
 
 window.onload = testStreaming;
