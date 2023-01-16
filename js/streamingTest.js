@@ -1,5 +1,18 @@
 "use strict";
 
+//Importamos las clases y el objeto VideoSystem que hemos declarado en el archivo streaming.js
+import {
+    Person,
+    Category,
+    Resource,
+    Production,
+    Movie,
+    Serie,
+    User,
+    Coordinate,
+    VideoSystem
+} from '/js/streaming.js';
+
 //Comprobamos que todos las funciones implementadas funcionan correctamente
 function testStreaming() {
 

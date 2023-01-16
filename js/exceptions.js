@@ -88,3 +88,18 @@ class IndexOutException extends BaseException {
         this.name = "IndexOutException";
     }
 }
+
+//Exportamos las excepciones para utilizarlas en un archivo externo
+export {
+    BaseException,
+    AbstractException,
+    EmptyNameException,
+    ExistedException,
+    UsernameExistedException,
+    EmailExistedException,
+    CategorieTypeException,
+    UserTypeException,
+    ProductionTypeException,
+    PersonTypeException,
+    IndexOutException
+};

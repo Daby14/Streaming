@@ -1,3 +1,20 @@
+"use strict";
+
+//Importamos las excepciones que hemos declarado en el archivo exceptions.js
+import {
+    BaseException,
+    AbstractException,
+    EmptyNameException,
+    ExistedException,
+    UsernameExistedException,
+    EmailExistedException,
+    CategorieTypeException,
+    UserTypeException,
+    ProductionTypeException,
+    PersonTypeException,
+    IndexOutException
+} from '/js/exceptions.js';
+
 //Declaramos la clase Person
 class Person {
 
@@ -634,3 +651,16 @@ let VideoSystem = (function () {
         }
     }
 })();
+
+//Exportamos las clases y el objeto VideoSystem para utilizarlas en un archivo externo
+export {
+    Person,
+    Category,
+    Resource,
+    Production,
+    Movie,
+    Serie,
+    User,
+    Coordinate,
+    VideoSystem
+};
