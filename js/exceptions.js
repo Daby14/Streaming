@@ -89,6 +89,30 @@ class IndexOutException extends BaseException {
     }
 }
 
+//Excepción para indicar si el objeto es nulo
+class NullException extends BaseException {
+    constructor(fileName, lineNumber) {
+        super("Ese objeto es nulo", fileName, lineNumber);
+        this.name = "NullException";
+    }
+}
+
+//Excepción para indicar que la categoría por defecto no se puede borrar
+class DefaultCategoryImageManagerException extends BaseException {
+    constructor(fileName, lineNumber) {
+        super("La categoría por defecto no se puede borrar", fileName, lineNumber);
+        this.name = "DefaultCategoryImageManagerException";
+    }
+}
+
+//Excepción para indicar que la categoría no existe en la producción
+class CategoryNotExistsImageManagerException extends BaseException {
+    constructor(fileName, lineNumber) {
+        super("La categoría por defecto no se puede borrar", fileName, lineNumber);
+        this.name = "CategoryNotExistsImageManagerException";
+    }
+}
+
 //Exportamos las excepciones para utilizarlas en un archivo externo
 export {
     BaseException,
@@ -101,5 +125,8 @@ export {
     UserTypeException,
     ProductionTypeException,
     PersonTypeException,
-    IndexOutException
+    IndexOutException,
+    NullException,
+    DefaultCategoryImageManagerException,
+    CategoryNotExistsImageManagerException
 };

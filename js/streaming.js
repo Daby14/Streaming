@@ -12,7 +12,10 @@ import {
     UserTypeException,
     ProductionTypeException,
     PersonTypeException,
-    IndexOutException
+    IndexOutException,
+    NullException,
+    DefaultCategoryImageManagerException,
+    CategoryNotExistsImageManagerException
 } from '/js/exceptions.js';
 
 //Declaramos la clase Person
@@ -329,6 +332,22 @@ let VideoSystem = (function () {
 
             #name;
 
+            //Declaramos la lista de producciones
+            #producs = [];
+
+            //Categoría por defecto
+            #defaultCategory = new Category("Anonymous category");
+
+            #defaultCategoryImages;
+
+            //Declaramos la lista categories donde vamos a ir almacenando las categorias del sistema
+            #categories = [];
+
+            //Devuelve un iterator de los autores del gestor
+            get defaultCategory() {
+                return this.#defaultCategory;
+            }
+
             constructor(name) {
 
                 this.#name = name;
@@ -337,6 +356,10 @@ let VideoSystem = (function () {
                 if (this.#name === "") {
                     throw new EmptyNameException();
                 }
+
+                //Añadimos category por defecto.
+				this.addCategorie(this.#defaultCategory);
+				this.#defaultCategoryImages = this.#categories[0].producs;
 
             }
 
@@ -350,8 +373,14 @@ let VideoSystem = (function () {
                 this.#name = name;
             }
 
-            //Declaramos la lista categories donde vamos a ir almacenando las categorias del sistema
-            #categories = [];
+            #getCategoryPosition(categorie) {
+
+                function compareElements(element) {
+                    return (element.category.name === categorie.name)
+                }
+
+                return this.#categories.findIndex(compareElements);
+            }
 
             //Método que añade categorías
             addCategorie(categorie) {
@@ -362,11 +391,24 @@ let VideoSystem = (function () {
                 }
 
                 //Si la categoria no está previamente en la lista la añadimos
-                if ((this.#categories.findIndex((cat) => cat.name === categorie.name) !== -1)) {
+                // if ((this.#categories.findIndex((cat) => cat.name === categorie.name) !== -1)) {
+                //     throw new ExistedException();
+                // }
+
+                let position = this.#getCategoryPosition(categorie);
+
+                if (position === -1) {
+
+                    this.#categories.push(
+                        {
+                            category: categorie,
+                            producs: []
+                        }
+                    );
+
+                } else {
                     throw new ExistedException();
                 }
-
-                this.#categories.push(categorie);
 
                 return this.#categories.length;
 
@@ -375,7 +417,7 @@ let VideoSystem = (function () {
             //Método que dado un objeto Category lo elimina del sistema
             removeCategorie(categorie) {
 
-                let index = this.#categories.findIndex((cat) => cat.name === categorie.name);
+                let index = this.#getCategoryPosition(categorie);
 
                 if ((index !== -1)) {
                     this.#categories.splice(index, 1);
@@ -386,6 +428,40 @@ let VideoSystem = (function () {
                 return this.#categories.length;
 
             }
+
+            //Elimina una categoría del gestor
+			// removeCategory(categorie) {
+			// 	if (!(categorie instanceof Category)) {
+			// 		throw new CategorieTypeException();
+			// 	}
+			// 	let position = this.#getCategoryPosition(categorie);
+			// 	if (position !== -1) {
+			// 		if (categorie.title !== this.#defaultCategory.title) {
+
+			// 			// Recogemos todas los índices de las categorías menos las de por defecto y la que estamos borrando
+			// 			let restPositions = Array.from(Array(this.#categories.length), (el, i) => i);
+			// 			restPositions.splice(position, 1);
+			// 			restPositions.splice(0, 1);
+			// 			// Recorremos todas las imágenes de la categoría que estamos borrando 
+			// 			for (let pro of this.#categories[position].producs) {
+			// 				let insertInDefault = true;
+			// 				for (let index of restPositions) { // Chequeamos si cada imagen pertenece a otra categoría que no sea la de por defecto
+			// 					if (this.#getProductionPosition(pro, this.#categories[index].producs) > -1) {
+			// 						insertInDefault = false;
+			// 						break;
+			// 					}
+			// 				}
+			// 				if (insertInDefault) this.#categories[0].producs.push(pro);
+			// 			}
+			// 			this.#categories.splice(position, 1);
+			// 		} else {
+			// 			throw new DefaultCategoryImageManagerException();  //DefaultCategoryImageManagerException
+			// 		}
+			// 	} else {
+			// 		throw new CategoryNotExistsImageManagerException();  //CategoryNotExistsImageManagerException
+			// 	}
+			// 	return this;
+			// }
 
             //Devuelve el objeto iterador que permite recuperar las categorias del sistema
             get categories() {
@@ -633,6 +709,73 @@ let VideoSystem = (function () {
                         }
                     }
                 }
+            }
+
+            #getProductionPosition(production, producs = this.#producs) {
+                if (!(production instanceof Production)) {
+                    throw new ProductionTypeException();
+                }
+
+                function compareElements(element) {
+                    return (element.title === production.title)
+                }
+
+                return producs.findIndex(compareElements);
+            }
+
+            addProductions(production, categorie = this.defaultCategory) {
+                if (!(production instanceof Production)) {
+                    throw new ProductionTypeException();
+                }
+                if (!(categorie instanceof Category)) {
+                    throw new CategorieTypeException();
+                }
+                // if (!(actor instanceof Person)) {
+                // 	throw new PersonTypeException();
+                // }
+
+                // if (!(director instanceof Person)) {
+                // 	throw new PersonTypeException();
+                // }
+
+                //Obtenemos posición de la categoría. Si no existe se añade.
+                let categoryPosition = this.#getCategoryPosition(categorie);
+                if (categoryPosition === -1) {
+                    this.addCategorie(categorie);
+                    categoryPosition = this.#categories.length - 1;
+                }
+
+                // //Obtenemos posición del autor. Si no existe se añade.
+                // let authorPosition = this.#getAuthorPosition(author);
+                // if (authorPosition === -1) {
+                // 	this.addAuthor(author);
+                // 	authorPosition = this.#authors.length - 1;
+                // }
+
+                //Obtenemos posición de la imagen. Si no existe se añade.
+                let productionPosition = this.#getProductionPosition(production);
+                if (productionPosition === -1) {
+                    this.#producs.push(production);
+                    productionPosition = this.#producs.length - 1;
+                }
+
+                // // Verificamos que la imagen no pertenece a otro autor.
+                // let owner = this.getImageAuthor(image);
+                // if (owner !== null && owner.nickname !== author.nickname) {
+                // 	throw new ImageBelongsDifferentAuthorManagerException();
+                // }
+
+                // Asiganamos la imagen al autor si no existe
+                // if (this.#getImagePosition(image, this.#authors[authorPosition].images) === -1) {
+                // 	this.#authors[authorPosition].images.push(this.#images[imagePosition]);
+                // }
+
+                // Asiganamos la producción a la categoría si no existe
+                if (this.#getProductionPosition(production, this.#categories[categoryPosition].producs) === -1) {
+                    this.#categories[categoryPosition].producs.push(this.#producs[productionPosition]);
+                }
+
+                return this;
             }
 
         }

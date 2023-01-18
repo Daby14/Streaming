@@ -23,6 +23,7 @@ function testStreaming() {
 
     //!Clase Category
     let c = new Category("DAW", "Excelente");
+    let c1 = new Category("1", "2");
 
     console.log(c.toString());
 
@@ -41,6 +42,8 @@ function testStreaming() {
 
     //!Clase Movie
     let m = new Movie("El Señor de los Anillos", "España", "12/10/2022", "Destruir el anillo", "images/anillo.jpg", r, "Nueva Zelanda");
+
+    let m1 = new Movie("Prueba", "España", "12/10/2022", "Destruir el anillo", "images/anillo.jpg", r, "Nueva Zelanda");
 
     console.log(m.toString());
 
@@ -123,19 +126,57 @@ function testStreaming() {
         console.error(error);
     }
 
-    //Comprobamos que se elimina la categoria
+    
+
+    //Comprobamos que se asigna una producción a la categoría correspondiente
     try {
-        console.log(v.removeCategorie(c));
+        v.addProductions(s, c);
+        v.addProductions(m, c);
+        console.log(v.addProductions(m1, c));
     } catch (error) {
         console.error(error);
     }
 
-    //Comprobamos que se lanza una excepción al intentar borrar una categoria que no existe
+    //Comprobamos que se asigna una producción a la categoría correspondiente
     try {
-        console.log(v.removeCategorie(c));
+        v.addProductions(m, c1);
     } catch (error) {
         console.error(error);
     }
+
+    //Comprobamos que se elimina la categoria
+    try {
+        v.removeCategorie(c1);
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Recuperamos las categorias a través de un iterador
+    try {
+
+        //Con un for of vamos recuperando las categorías para mostrarlas por consola
+        for (const iterator of v.categories) {
+            console.log(iterator);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
+    // (manager.getImageCategories(ip1));
+
+    //Comprobamos que se elimina la categoria
+    // try {
+    //     console.log(v.removeCategorie(c));
+    // } catch (error) {
+    //     console.error(error);
+    // }
+
+    //Comprobamos que se lanza una excepción al intentar borrar una categoria que no existe
+    // try {
+    //     console.log(v.removeCategorie(c));
+    // } catch (error) {
+    //     console.error(error);
+    // }
 
     console.info("Fin Testeo Categories");
 
@@ -396,6 +437,37 @@ function testStreaming() {
     }
 
     console.info("Fin Testeo Directors");
+
+    // try {
+    //     console.log(v.assignCategory(c,m));
+    // } catch (error) {
+    //     console.error(error);
+    // }
+
+    // try {
+    //     console.log(v.assignCategory(c,m));
+    // } catch (error) {
+    //     console.error(error);
+    // }
+
+    // try {
+
+    //     //Con un for of vamos recuperando los directores para mostrarlos por consola
+    //     for (const iterator of v.asCategories) {
+    //         console.log(iterator);
+    //     }
+    // } catch (error) {
+    //     console.error(error);
+    // }
+
+    
+
+    // //Comprobamos que se asigna una producción a la categoría correspondiente
+    // try {
+    //     console.log(v.addProductions(m1, c1));
+    // } catch (error) {
+    //     console.error(error);
+    // }
 
 }
 
