@@ -18,6 +18,7 @@ function testStreaming() {
 
     //!Clase Person
     let p = new Person("David", "Letrado", "Gonzalez", "28/09/2003", "www.google.com");
+    let p2 = new Person("David", "Letrado", "Gonzalez", "28/09/2003", "www.google.com");
 
     console.log(p.toString());
 
@@ -126,7 +127,7 @@ function testStreaming() {
         console.error(error);
     }
 
-    //Comprobamos que se asigna una producción a la categoría correspondiente
+    //Comprobamos que se asignan las producciones a las categorías correspondientes
     try {
         v.addProductions(m, c1);
         v.addProductions(m1, c1);
@@ -136,6 +137,7 @@ function testStreaming() {
         console.error(error);
     }
 
+    //Comprobamos que se eliminan las producciones de las categorías correspondientes
     try {
         v.removeProductionInCategory(m1, c1);
         console.log(v.removeProductionInCategory(m, c));
@@ -143,46 +145,19 @@ function testStreaming() {
         console.error(error);
     }
 
-    // //Comprobamos que se asigna una producción a la categoría correspondiente
-    // try {
-    //     v.addProductions(m, c1);
-    // } catch (error) {
-    //     console.error(error);
-    // }
+    //Comprobamos que se lanza una excepción ya que se intenta añadir un objeto que no es category
+    try {
+        console.log(v.addProductions(m, r));
+    } catch (error) {
+        console.error(error);
+    }
 
-    // //Comprobamos que se elimina la categoria
-    // try {
-    //     v.removeCategorie(c1);
-    // } catch (error) {
-    //     console.error(error);
-    // }
-
-    //Recuperamos las categorias a través de un iterador
-    // try {
-
-    //     //Con un for of vamos recuperando las categorías para mostrarlas por consola
-    //     for (const iterator of v.categories) {
-    //         console.log(iterator);
-    //     }
-    // } catch (error) {
-    //     console.error(error);
-    // }
-
-    // (manager.getImageCategories(ip1));
-
-    //Comprobamos que se elimina la categoria
-    // try {
-    //     console.log(v.removeCategorie(c));
-    // } catch (error) {
-    //     console.error(error);
-    // }
-
-    //Comprobamos que se lanza una excepción al intentar borrar una categoria que no existe
-    // try {
-    //     console.log(v.removeCategorie(c));
-    // } catch (error) {
-    //     console.error(error);
-    // }
+    //Comprobamos que se lanza una excepción ya que se intenta añadir un objeto que no es production
+    try {
+        console.log(v.addProductions(r, c));
+    } catch (error) {
+        console.error(error);
+    }
 
     console.info("Fin Testeo Categories");
 
@@ -374,7 +349,15 @@ function testStreaming() {
 
     //Comprobamos que se lanza una excepción al intentar borrar un actor que no existe
     try {
-        console.log(v.removeActor(s));
+        console.log(v.removeActor(p2));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se asigna una producción al actor correspondiente
+    try {
+        v.addProductions(s, c, p);
+        console.log(v.addProductions(m, c, p));
     } catch (error) {
         console.error(error);
     }
@@ -466,7 +449,7 @@ function testStreaming() {
     //     console.error(error);
     // }
 
-    
+
 
     // //Comprobamos que se asigna una producción a la categoría correspondiente
     // try {

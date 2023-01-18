@@ -344,6 +344,9 @@ let VideoSystem = (function () {
             //Declaramos la lista categories donde vamos a ir almacenando las categorias del sistema
             #categories = [];
 
+            //Declaramos la lista actors donde vamos a ir almacenando los actores del sistema
+            #actors = [];
+
             //Devuelve un iterator de los autores del gestor
             get defaultCategory() {
                 return this.#defaultCategory;
@@ -374,6 +377,7 @@ let VideoSystem = (function () {
                 this.#name = name;
             }
 
+            //Método que comprueba si existe una categoria
             #getCategoryPosition(categorie) {
 
                 function compareElements(element) {
@@ -390,11 +394,6 @@ let VideoSystem = (function () {
                 if ((categorie === null) || !(categorie instanceof Category)) {
                     throw new CategorieTypeException();
                 }
-
-                //Si la categoria no está previamente en la lista la añadimos
-                // if ((this.#categories.findIndex((cat) => cat.name === categorie.name) !== -1)) {
-                //     throw new ExistedException();
-                // }
 
                 let position = this.#getCategoryPosition(categorie);
 
@@ -623,8 +622,15 @@ let VideoSystem = (function () {
                 }
             }
 
-            //Declaramos la lista actors donde vamos a ir almacenando los actores del sistema
-            #actors = [];
+            //Método que comprueba si existe una categoria
+            #getActorPosition(actor) {
+
+                function compareElements(element) {
+                    return (element.actor.name === actor.name)
+                }
+
+                return this.#actors.findIndex(compareElements);
+            }
 
             //Método que añade actores
             addActor(actor) {
@@ -634,12 +640,20 @@ let VideoSystem = (function () {
                     throw new PersonTypeException();
                 }
 
-                //Comprobamos si el actor existe
-                if ((this.#actors.findIndex((act) => act.name === actor.name) !== -1)) {
+                let position = this.#getActorPosition(actor);
+
+                if (position === -1) {
+
+                    this.#actors.push(
+                        {
+                            actor: actor,
+                            producs: []
+                        }
+                    );
+
+                } else {
                     throw new ExistedException();
                 }
-
-                this.#actors.push(actor);
 
                 return this.#actors.length;
 
@@ -648,12 +662,12 @@ let VideoSystem = (function () {
             //Método que dado un objeto actor lo elimina del sistema
             removeActor(actor) {
 
-                let index = this.#actors.findIndex((act) => act.name === actor.name);
-
                 //Comprobamos si el actor es un objeto Person
                 if ((actor === null) || !(actor instanceof Person)) {
                     throw new PersonTypeException();
                 }
+
+                let index = this.#getActorPosition(actor);
 
                 if ((index !== -1)) {
                     this.#actors.splice(index, 1);
@@ -749,16 +763,18 @@ let VideoSystem = (function () {
                 return producs.findIndex(compareElements);
             }
 
-            addProductions(production, categorie = this.defaultCategory) {
+            addProductions(production, categorie = this.defaultCategory, actor) {
                 if (!(production instanceof Production)) {
                     throw new ProductionTypeException();
                 }
+
                 if (!(categorie instanceof Category)) {
                     throw new CategorieTypeException();
                 }
-                // if (!(actor instanceof Person)) {
-                // 	throw new PersonTypeException();
-                // }
+
+                if (!(actor instanceof Person)) {
+                    throw new PersonTypeException();
+                }
 
                 // if (!(director instanceof Person)) {
                 // 	throw new PersonTypeException();
@@ -771,12 +787,12 @@ let VideoSystem = (function () {
                     categoryPosition = this.#categories.length - 1;
                 }
 
-                // //Obtenemos posición del autor. Si no existe se añade.
-                // let authorPosition = this.#getAuthorPosition(author);
-                // if (authorPosition === -1) {
-                // 	this.addAuthor(author);
-                // 	authorPosition = this.#authors.length - 1;
-                // }
+                //Obtenemos posición del actor. Si no existe se añade.
+                let actorPosition = this.#getActorPosition(actor);
+                if (actorPosition === -1) {
+                	this.addActor(actor);
+                	actorPosition = this.#actors.length - 1;
+                }
 
                 //Obtenemos posición de la imagen. Si no existe se añade.
                 let productionPosition = this.#getProductionPosition(production);
@@ -792,9 +808,9 @@ let VideoSystem = (function () {
                 // }
 
                 // Asiganamos la imagen al autor si no existe
-                // if (this.#getImagePosition(image, this.#authors[authorPosition].images) === -1) {
-                // 	this.#authors[authorPosition].images.push(this.#images[imagePosition]);
-                // }
+                if (this.#getProductionPosition(production, this.#actors[actorPosition].producs) === -1) {
+                	this.#actors[actorPosition].producs.push(this.#producs[productionPosition]);
+                }
 
                 // Asiganamos la producción a la categoría si no existe
                 if (this.#getProductionPosition(production, this.#categories[categoryPosition].producs) === -1) {
