@@ -126,41 +126,47 @@ function testStreaming() {
         console.error(error);
     }
 
-    
-
-    //Comprobamos que se asigna una producción a la categoría correspondiente
-    try {
-        v.addProductions(s, c);
-        v.addProductions(m, c);
-        console.log(v.addProductions(m1, c));
-    } catch (error) {
-        console.error(error);
-    }
-
     //Comprobamos que se asigna una producción a la categoría correspondiente
     try {
         v.addProductions(m, c1);
+        v.addProductions(m1, c1);
+        v.addProductions(s, c);
+        console.log(v.addProductions(m, c));
     } catch (error) {
         console.error(error);
     }
 
-    //Comprobamos que se elimina la categoria
     try {
-        v.removeCategorie(c1);
+        v.removeProductionInCategory(m1, c1);
+        console.log(v.removeProductionInCategory(m, c));
     } catch (error) {
         console.error(error);
     }
+
+    // //Comprobamos que se asigna una producción a la categoría correspondiente
+    // try {
+    //     v.addProductions(m, c1);
+    // } catch (error) {
+    //     console.error(error);
+    // }
+
+    // //Comprobamos que se elimina la categoria
+    // try {
+    //     v.removeCategorie(c1);
+    // } catch (error) {
+    //     console.error(error);
+    // }
 
     //Recuperamos las categorias a través de un iterador
-    try {
+    // try {
 
-        //Con un for of vamos recuperando las categorías para mostrarlas por consola
-        for (const iterator of v.categories) {
-            console.log(iterator);
-        }
-    } catch (error) {
-        console.error(error);
-    }
+    //     //Con un for of vamos recuperando las categorías para mostrarlas por consola
+    //     for (const iterator of v.categories) {
+    //         console.log(iterator);
+    //     }
+    // } catch (error) {
+    //     console.error(error);
+    // }
 
     // (manager.getImageCategories(ip1));
 

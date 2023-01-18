@@ -14,8 +14,9 @@ import {
     PersonTypeException,
     IndexOutException,
     NullException,
-    DefaultCategoryImageManagerException,
-    CategoryNotExistsImageManagerException
+    DefaultCategoryProductionManagerException,
+    CategoryNotExistsProductionManagerException,
+    ProductionNotExistsProductionManagerException
 } from '/js/exceptions.js';
 
 //Declaramos la clase Person
@@ -358,8 +359,8 @@ let VideoSystem = (function () {
                 }
 
                 //Añadimos category por defecto.
-				this.addCategorie(this.#defaultCategory);
-				this.#defaultCategoryImages = this.#categories[0].producs;
+                this.addCategorie(this.#defaultCategory);
+                this.#defaultCategoryImages = this.#categories[0].producs;
 
             }
 
@@ -429,39 +430,64 @@ let VideoSystem = (function () {
 
             }
 
-            //Elimina una categoría del gestor
-			// removeCategory(categorie) {
-			// 	if (!(categorie instanceof Category)) {
-			// 		throw new CategorieTypeException();
-			// 	}
-			// 	let position = this.#getCategoryPosition(categorie);
-			// 	if (position !== -1) {
-			// 		if (categorie.title !== this.#defaultCategory.title) {
+            //Elimina una imagen de una categoría del gestor
+            removeProductionInCategory(production, categorie) {
+                if (!(production instanceof Production)) {
+                    throw new ImageImageManagerException();
+                }
+                if (!(categorie instanceof Category)) {
+                    throw new CategorieTypeException();
+                }
+                // Obtenemos la posición de la categoría
+                let categoryPosition = this.#getCategoryPosition(categorie);
+                if (categoryPosition !== -1) {
+                    // Obtenemos la posición de la imagen en la categoría
+                    let productionPosition = this.#getProductionPosition(production, this.#categories[categoryPosition].producs);
+                    if (productionPosition !== -1) {
+                        this.#categories[categoryPosition].producs.splice(productionPosition, 1);
+                    } else {
+                        throw new ProductionNotExistsProductionManagerException(categorie);
+                    }
+                } else {
+                    throw new CategoryNotExistsProductionManagerException();
+                }
 
-			// 			// Recogemos todas los índices de las categorías menos las de por defecto y la que estamos borrando
-			// 			let restPositions = Array.from(Array(this.#categories.length), (el, i) => i);
-			// 			restPositions.splice(position, 1);
-			// 			restPositions.splice(0, 1);
-			// 			// Recorremos todas las imágenes de la categoría que estamos borrando 
-			// 			for (let pro of this.#categories[position].producs) {
-			// 				let insertInDefault = true;
-			// 				for (let index of restPositions) { // Chequeamos si cada imagen pertenece a otra categoría que no sea la de por defecto
-			// 					if (this.#getProductionPosition(pro, this.#categories[index].producs) > -1) {
-			// 						insertInDefault = false;
-			// 						break;
-			// 					}
-			// 				}
-			// 				if (insertInDefault) this.#categories[0].producs.push(pro);
-			// 			}
-			// 			this.#categories.splice(position, 1);
-			// 		} else {
-			// 			throw new DefaultCategoryImageManagerException();  //DefaultCategoryImageManagerException
-			// 		}
-			// 	} else {
-			// 		throw new CategoryNotExistsImageManagerException();  //CategoryNotExistsImageManagerException
-			// 	}
-			// 	return this;
-			// }
+                return this;
+            }
+
+            //Elimina una categoría del gestor
+            // removeCategory(categorie) {
+            // 	if (!(categorie instanceof Category)) {
+            // 		throw new CategorieTypeException();
+            // 	}
+            // 	let position = this.#getCategoryPosition(categorie);
+            // 	if (position !== -1) {
+            // 		if (categorie.title !== this.#defaultCategory.title) {
+
+            // 			// Recogemos todas los índices de las categorías menos las de por defecto y la que estamos borrando
+            // 			let restPositions = Array.from(Array(this.#categories.length), (el, i) => i);
+            // 			restPositions.splice(position, 1);
+            // 			restPositions.splice(0, 1);
+            // 			// Recorremos todas las imágenes de la categoría que estamos borrando 
+            // 			for (let pro of this.#categories[position].producs) {
+            // 				let insertInDefault = true;
+            // 				for (let index of restPositions) { // Chequeamos si cada imagen pertenece a otra categoría que no sea la de por defecto
+            // 					if (this.#getProductionPosition(pro, this.#categories[index].producs) > -1) {
+            // 						insertInDefault = false;
+            // 						break;
+            // 					}
+            // 				}
+            // 				if (insertInDefault) this.#categories[0].producs.push(pro);
+            // 			}
+            // 			this.#categories.splice(position, 1);
+            // 		} else {
+            // 			throw new DefaultCategoryImageManagerException();  //DefaultCategoryImageManagerException
+            // 		}
+            // 	} else {
+            // 		throw new CategoryNotExistsImageManagerException();  //CategoryNotExistsImageManagerException
+            // 	}
+            // 	return this;
+            // }
 
             //Devuelve el objeto iterador que permite recuperar las categorias del sistema
             get categories() {

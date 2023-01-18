@@ -98,19 +98,28 @@ class NullException extends BaseException {
 }
 
 //Excepción para indicar que la categoría por defecto no se puede borrar
-class DefaultCategoryImageManagerException extends BaseException {
+class DefaultCategoryProductionManagerException extends BaseException {
     constructor(fileName, lineNumber) {
         super("La categoría por defecto no se puede borrar", fileName, lineNumber);
-        this.name = "DefaultCategoryImageManagerException";
+        this.name = "DefaultCategoryProductionManagerException";
     }
 }
 
 //Excepción para indicar que la categoría no existe en la producción
-class CategoryNotExistsImageManagerException extends BaseException {
+class CategoryNotExistsProductionManagerException extends BaseException {
     constructor(fileName, lineNumber) {
         super("La categoría por defecto no se puede borrar", fileName, lineNumber);
-        this.name = "CategoryNotExistsImageManagerException";
+        this.name = "CategoryNotExistsProductionManagerException";
     }
+}
+
+class ProductionNotExistsProductionManagerException extends BaseException  {
+	constructor(categorie, fileName, lineNumber) {
+		let message = (!categorie) ? "La producción no existe" :
+			"La producción no existe en la categoría" + categorie.title;
+		super(message, fileName, lineNumber);
+		this.name = "ProductionNotExistsProductionManagerException";
+	}
 }
 
 //Exportamos las excepciones para utilizarlas en un archivo externo
@@ -127,6 +136,7 @@ export {
     PersonTypeException,
     IndexOutException,
     NullException,
-    DefaultCategoryImageManagerException,
-    CategoryNotExistsImageManagerException
+    DefaultCategoryProductionManagerException,
+    CategoryNotExistsProductionManagerException,
+    ProductionNotExistsProductionManagerException
 };
