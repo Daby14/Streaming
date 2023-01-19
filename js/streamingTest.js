@@ -380,6 +380,17 @@ function testStreaming() {
         console.error(error);
     }
 
+    //Recuperamos todas las producciones de un actor
+    try {
+        for (let pro of v.getProductionsActor(p)){
+			console.log(pro);
+		} 
+    } catch (error) {
+        console.error(error);
+    }
+
+    
+
     console.info("Fin Testeo Actors");
 
     //TODO: DIRECTORS

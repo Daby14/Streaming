@@ -446,7 +446,7 @@ let VideoSystem = (function () {
             }
 
             //Método que asigna una producción a una categoría
-            assignCategory(production, categorie){
+            assignCategory(production, categorie) {
 
                 if (!(production instanceof Production)) {
                     throw new ProductionTypeException();
@@ -730,7 +730,7 @@ let VideoSystem = (function () {
             }
 
             //Método que asigna una producción a un actor
-            assignActor(production, actor){
+            assignActor(production, actor) {
 
                 if (!(production instanceof Production)) {
                     throw new ProductionTypeException();
@@ -861,7 +861,7 @@ let VideoSystem = (function () {
             }
 
             //Método que asigna una producción a un director
-            assignDirector(production, director){
+            assignDirector(production, director) {
 
                 if (!(production instanceof Production)) {
                     throw new ProductionTypeException();
@@ -934,80 +934,20 @@ let VideoSystem = (function () {
                 }
             }
 
-            // #getProductionPosition(production, producs = this.#producs) {
-            //     if (!(production instanceof Production)) {
-            //         throw new ProductionTypeException();
-            //     }
+            //Devuelve el objeto iterador que permite recuperar las producciones de un actor
+            * getProductionsActor(actor) {
 
-            //     function compareElements(element) {
-            //         return (element.title === production.title)
-            //     }
+                if (!(actor instanceof Person)) {
+                    throw new PersonTypeException();
+                }
+                let actorPosition = this.#getActorPosition(actor);
+                if (actorPosition === -1) throw new AuthorNotExistsImageManagerException();
 
-            //     return producs.findIndex(compareElements);
-            // }
-
-            // addProductions(production, categorie = this.defaultCategory, actor, director) {
-            //     if (!(production instanceof Production)) {
-            //         throw new ProductionTypeException();
-            //     }
-
-            //     if (!(categorie instanceof Category)) {
-            //         throw new CategorieTypeException();
-            //     }
-
-            //     if (!(actor instanceof Person)) {
-            //         throw new PersonTypeException();
-            //     }
-
-            //     if (!(director instanceof Person)) {
-            //         throw new PersonTypeException();
-            //     }
-
-            //     //Obtenemos posición de la categoría. Si no existe se añade.
-            //     let categoryPosition = this.#getCategoryPosition(categorie);
-            //     if (categoryPosition === -1) {
-            //         this.addCategorie(categorie);
-            //         categoryPosition = this.#categories.length - 1;
-            //     }
-
-            //     //Obtenemos posición del actor. Si no existe se añade.
-            //     let actorPosition = this.#getActorPosition(actor);
-            //     if (actorPosition === -1) {
-            //     	this.addActor(actor);
-            //     	actorPosition = this.#actors.length - 1;
-            //     }
-
-            //     //Obtenemos posición del director. Si no existe se añade.
-            //     let directorPosition = this.#getDirectorPosition(director);
-            //     if (directorPosition === -1) {
-            //     	this.addDirector(director);
-            //     	directorPosition = this.#directors.length - 1;
-            //     }
-
-            //     //Obtenemos posición de la produccion. Si no existe se añade.
-            //     let productionPosition = this.#getProductionPosition(production);
-            //     if (productionPosition === -1) {
-            //         this.#producs.push(production);
-            //         productionPosition = this.#producs.length - 1;
-            //     }
-
-            //     // Asignamos la producción al autor si no existe
-            //     if (this.#getProductionPosition(production, this.#actors[actorPosition].producs) === -1) {
-            //     	this.#actors[actorPosition].producs.push(this.#producs[productionPosition]);
-            //     }
-
-            //     // Asignamos la producción a la categoría si no existe
-            //     if (this.#getProductionPosition(production, this.#categories[categoryPosition].producs) === -1) {
-            //         this.#categories[categoryPosition].producs.push(this.#producs[productionPosition]);
-            //     }
-
-            //     // Asignamos la producción al director si no existe
-            //     if (this.#getProductionPosition(production, this.#directors[directorPosition].producs) === -1) {
-            //     	this.#directors[directorPosition].producs.push(this.#producs[productionPosition]);
-            //     }
-
-            //     return this;
-            // }
+                //Iteramos sobre el array de productos del actor encontrado
+                for (let pro of this.#actors[actorPosition].producs) {
+                    yield pro;
+                }
+            }
 
         }
 
