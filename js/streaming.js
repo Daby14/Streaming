@@ -380,6 +380,19 @@ let VideoSystem = (function () {
                 this.#name = name;
             }
 
+            //Método que obtiene la posición de una producción
+            #getProductionPosition(production, producs = this.#producs) {
+                if (!(production instanceof Production)) {
+                    throw new ProductionTypeException();
+                }
+
+                function compareElements(element) {
+                    return (element.title === production.title)
+                }
+
+                return producs.findIndex(compareElements);
+            }
+
             //Método que comprueba si existe una categoria
             #getCategoryPosition(categorie) {
 
@@ -432,8 +445,42 @@ let VideoSystem = (function () {
 
             }
 
-            //Elimina una imagen de una categoría del gestor
-            removeProductionInCategory(production, categorie) {
+            //Método que asigna una producción a una categoría
+            assignCategory(production, categorie){
+
+                if (!(production instanceof Production)) {
+                    throw new ProductionTypeException();
+                }
+
+                if (!(categorie instanceof Category)) {
+                    throw new CategorieTypeException();
+                }
+
+                //Obtenemos posición de la categoría. Si no existe se añade.
+                let categoryPosition = this.#getCategoryPosition(categorie);
+                if (categoryPosition === -1) {
+                    this.addCategorie(categorie);
+                    categoryPosition = this.#categories.length - 1;
+                }
+
+                //Obtenemos posición de la produccion. Si no existe se añade.
+                let productionPosition = this.#getProductionPosition(production);
+                if (productionPosition === -1) {
+                    this.#producs.push(production);
+                    productionPosition = this.#producs.length - 1;
+                }
+
+                // Asignamos la producción a la categoría si no existe
+                if (this.#getProductionPosition(production, this.#categories[categoryPosition].producs) === -1) {
+                    this.#categories[categoryPosition].producs.push(this.#producs[productionPosition]);
+                }
+
+                return this.#categories[categoryPosition].producs.length;
+
+            }
+
+            //Elimina una producción de una categoría del gestor
+            deassignCategory(production, categorie) {
                 if (!(production instanceof Production)) {
                     throw new ProductionTypeException();
                 }
@@ -454,7 +501,7 @@ let VideoSystem = (function () {
                     throw new CategoryNotExistsProductionManagerException();
                 }
 
-                return this;
+                return this.#categories[categoryPosition].producs.length;
             }
 
             //Elimina una categoría del gestor
@@ -682,8 +729,42 @@ let VideoSystem = (function () {
 
             }
 
+            //Método que asigna una producción a un actor
+            assignActor(production, actor){
+
+                if (!(production instanceof Production)) {
+                    throw new ProductionTypeException();
+                }
+
+                if (!(actor instanceof Person)) {
+                    throw new PersonTypeException();
+                }
+
+                //Obtenemos posición del actor. Si no existe se añade.
+                let actorPosition = this.#getActorPosition(actor);
+                if (actorPosition === -1) {
+                    this.addActor(actor);
+                    actorPosition = this.#actors.length - 1;
+                }
+
+                //Obtenemos posición de la produccion. Si no existe se añade.
+                let productionPosition = this.#getProductionPosition(production);
+                if (productionPosition === -1) {
+                    this.#producs.push(production);
+                    productionPosition = this.#producs.length - 1;
+                }
+
+                // Asignamos la producción al actor si no existe
+                if (this.#getProductionPosition(production, this.#actors[actorPosition].producs) === -1) {
+                    this.#actors[actorPosition].producs.push(this.#producs[productionPosition]);
+                }
+
+                return this.#actors[actorPosition].producs.length;
+
+            }
+
             //Elimina una producción de un actor del gestor
-            removeProductionInActor(production, actor) {
+            deassignActor(production, actor) {
                 if (!(production instanceof Production)) {
                     throw new ProductionTypeException();
                 }
@@ -704,7 +785,7 @@ let VideoSystem = (function () {
                     throw new CategoryNotExistsProductionManagerException();
                 }
 
-                return this;
+                return this.#actors[actorPosition].producs.length;
             }
 
             //Devuelve el objeto iterador que permite recuperar los actores del sistema
@@ -779,8 +860,42 @@ let VideoSystem = (function () {
 
             }
 
+            //Método que asigna una producción a un director
+            assignDirector(production, director){
+
+                if (!(production instanceof Production)) {
+                    throw new ProductionTypeException();
+                }
+
+                if (!(director instanceof Person)) {
+                    throw new PersonTypeException();
+                }
+
+                //Obtenemos posición del director. Si no existe se añade.
+                let directorPosition = this.#getDirectorPosition(director);
+                if (directorPosition === -1) {
+                    this.addDirector(director);
+                    directorPosition = this.#directors.length - 1;
+                }
+
+                //Obtenemos posición de la produccion. Si no existe se añade.
+                let productionPosition = this.#getProductionPosition(production);
+                if (productionPosition === -1) {
+                    this.#producs.push(production);
+                    productionPosition = this.#producs.length - 1;
+                }
+
+                // Asignamos la producción al director si no existe
+                if (this.#getProductionPosition(production, this.#directors[directorPosition].producs) === -1) {
+                    this.#directors[directorPosition].producs.push(this.#producs[productionPosition]);
+                }
+
+                return this.#directors[directorPosition].producs.length;
+
+            }
+
             //Elimina una producción de un director del gestor
-            removeProductionInDirector(production, director) {
+            deassignDirector(production, director) {
                 if (!(production instanceof Production)) {
                     throw new ProductionTypeException();
                 }
@@ -801,7 +916,7 @@ let VideoSystem = (function () {
                     throw new CategoryNotExistsProductionManagerException();
                 }
 
-                return this;
+                return this.#directors[directorPosition].producs.length;
             }
 
             //Devuelve el objeto iterador que permite recuperar los directores del sistema
@@ -819,80 +934,80 @@ let VideoSystem = (function () {
                 }
             }
 
-            #getProductionPosition(production, producs = this.#producs) {
-                if (!(production instanceof Production)) {
-                    throw new ProductionTypeException();
-                }
+            // #getProductionPosition(production, producs = this.#producs) {
+            //     if (!(production instanceof Production)) {
+            //         throw new ProductionTypeException();
+            //     }
 
-                function compareElements(element) {
-                    return (element.title === production.title)
-                }
+            //     function compareElements(element) {
+            //         return (element.title === production.title)
+            //     }
 
-                return producs.findIndex(compareElements);
-            }
+            //     return producs.findIndex(compareElements);
+            // }
 
-            addProductions(production, categorie = this.defaultCategory, actor, director) {
-                if (!(production instanceof Production)) {
-                    throw new ProductionTypeException();
-                }
+            // addProductions(production, categorie = this.defaultCategory, actor, director) {
+            //     if (!(production instanceof Production)) {
+            //         throw new ProductionTypeException();
+            //     }
 
-                if (!(categorie instanceof Category)) {
-                    throw new CategorieTypeException();
-                }
+            //     if (!(categorie instanceof Category)) {
+            //         throw new CategorieTypeException();
+            //     }
 
-                if (!(actor instanceof Person)) {
-                    throw new PersonTypeException();
-                }
+            //     if (!(actor instanceof Person)) {
+            //         throw new PersonTypeException();
+            //     }
 
-                if (!(director instanceof Person)) {
-                    throw new PersonTypeException();
-                }
+            //     if (!(director instanceof Person)) {
+            //         throw new PersonTypeException();
+            //     }
 
-                //Obtenemos posición de la categoría. Si no existe se añade.
-                let categoryPosition = this.#getCategoryPosition(categorie);
-                if (categoryPosition === -1) {
-                    this.addCategorie(categorie);
-                    categoryPosition = this.#categories.length - 1;
-                }
+            //     //Obtenemos posición de la categoría. Si no existe se añade.
+            //     let categoryPosition = this.#getCategoryPosition(categorie);
+            //     if (categoryPosition === -1) {
+            //         this.addCategorie(categorie);
+            //         categoryPosition = this.#categories.length - 1;
+            //     }
 
-                //Obtenemos posición del actor. Si no existe se añade.
-                let actorPosition = this.#getActorPosition(actor);
-                if (actorPosition === -1) {
-                	this.addActor(actor);
-                	actorPosition = this.#actors.length - 1;
-                }
+            //     //Obtenemos posición del actor. Si no existe se añade.
+            //     let actorPosition = this.#getActorPosition(actor);
+            //     if (actorPosition === -1) {
+            //     	this.addActor(actor);
+            //     	actorPosition = this.#actors.length - 1;
+            //     }
 
-                //Obtenemos posición del director. Si no existe se añade.
-                let directorPosition = this.#getDirectorPosition(director);
-                if (directorPosition === -1) {
-                	this.addDirector(director);
-                	directorPosition = this.#directors.length - 1;
-                }
+            //     //Obtenemos posición del director. Si no existe se añade.
+            //     let directorPosition = this.#getDirectorPosition(director);
+            //     if (directorPosition === -1) {
+            //     	this.addDirector(director);
+            //     	directorPosition = this.#directors.length - 1;
+            //     }
 
-                //Obtenemos posición de la imagen. Si no existe se añade.
-                let productionPosition = this.#getProductionPosition(production);
-                if (productionPosition === -1) {
-                    this.#producs.push(production);
-                    productionPosition = this.#producs.length - 1;
-                }
+            //     //Obtenemos posición de la produccion. Si no existe se añade.
+            //     let productionPosition = this.#getProductionPosition(production);
+            //     if (productionPosition === -1) {
+            //         this.#producs.push(production);
+            //         productionPosition = this.#producs.length - 1;
+            //     }
 
-                // Asignamos la producción al autor si no existe
-                if (this.#getProductionPosition(production, this.#actors[actorPosition].producs) === -1) {
-                	this.#actors[actorPosition].producs.push(this.#producs[productionPosition]);
-                }
+            //     // Asignamos la producción al autor si no existe
+            //     if (this.#getProductionPosition(production, this.#actors[actorPosition].producs) === -1) {
+            //     	this.#actors[actorPosition].producs.push(this.#producs[productionPosition]);
+            //     }
 
-                // Asignamos la producción a la categoría si no existe
-                if (this.#getProductionPosition(production, this.#categories[categoryPosition].producs) === -1) {
-                    this.#categories[categoryPosition].producs.push(this.#producs[productionPosition]);
-                }
+            //     // Asignamos la producción a la categoría si no existe
+            //     if (this.#getProductionPosition(production, this.#categories[categoryPosition].producs) === -1) {
+            //         this.#categories[categoryPosition].producs.push(this.#producs[productionPosition]);
+            //     }
 
-                // Asignamos la producción al director si no existe
-                if (this.#getProductionPosition(production, this.#directors[directorPosition].producs) === -1) {
-                	this.#directors[directorPosition].producs.push(this.#producs[productionPosition]);
-                }
+            //     // Asignamos la producción al director si no existe
+            //     if (this.#getProductionPosition(production, this.#directors[directorPosition].producs) === -1) {
+            //     	this.#directors[directorPosition].producs.push(this.#producs[productionPosition]);
+            //     }
 
-                return this;
-            }
+            //     return this;
+            // }
 
         }
 

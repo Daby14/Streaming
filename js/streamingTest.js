@@ -129,32 +129,29 @@ function testStreaming() {
 
     //Comprobamos que se asignan las producciones a las categorías correspondientes
     try {
-        v.addProductions(m, c1);
-        v.addProductions(m1, c1);
-        v.addProductions(s, c);
-        console.log(v.addProductions(m, c));
+        v.assignCategory(s, c);
+        console.log(v.assignCategory(m, c));
     } catch (error) {
         console.error(error);
     }
 
     //Comprobamos que se eliminan las producciones de las categorías correspondientes
     try {
-        v.removeProductionInCategory(m1, c1);
-        console.log(v.removeProductionInCategory(m, c));
+        console.log(v.deassignCategory(m, c));
     } catch (error) {
         console.error(error);
     }
 
     //Comprobamos que se lanza una excepción ya que se intenta añadir un objeto que no es category
     try {
-        console.log(v.addProductions(m, r));
+        console.log(v.assignCategory(m, r));
     } catch (error) {
         console.error(error);
     }
 
-    //Comprobamos que se lanza una excepción ya que se intenta añadir un objeto que no es production
+    //Comprobamos que se lanza una excepción ya que se intenta asignar un objeto que no es production
     try {
-        console.log(v.addProductions(r, c));
+        console.log(v.assignCategory(r, c));
     } catch (error) {
         console.error(error);
     }
@@ -354,17 +351,31 @@ function testStreaming() {
         console.error(error);
     }
 
-    //Comprobamos que se asignan las producciones al actor correspondiente
+    //Comprobamos que se asignan las producciones a los actores correspondientes
     try {
-        v.addProductions(s, c, p);
-        console.log(v.addProductions(m, c, p));
+        v.assignActor(s, p);
+        console.log(v.assignActor(m, p));
     } catch (error) {
         console.error(error);
     }
 
-    //Comprobamos que se elimina la produccion del actor correspondiente
+    //Comprobamos que se eliminan las producciones de los actores correspondientes
     try {
-        console.log(v.removeProductionInActor(m, p));
+        console.log(v.deassignActor(m, p));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción ya que se intenta añadir un objeto que no es actor
+    try {
+        console.log(v.assignActor(m, r));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción ya que se intenta asignar un objeto que no es production
+    try {
+        console.log(v.assignActor(r, c));
     } catch (error) {
         console.error(error);
     }
@@ -432,46 +443,60 @@ function testStreaming() {
         console.error(error);
     }
 
-    //Comprobamos que se asignan las producciones al director correspondiente
+    //Comprobamos que se asignan las producciones a los directores correspondientes
     try {
-        v.addProductions(s, c, p, p1);
-        console.log(v.addProductions(m, c, p, p1));
+        v.assignDirector(s, p1);
+        console.log(v.assignDirector(m, p1));
     } catch (error) {
         console.error(error);
     }
 
-    //Comprobamos que se elimina la produccion del actor correspondiente
+    //Comprobamos que se eliminan las producciones de los directores correspondientes
     try {
-        console.log(v.removeProductionInDirector(m, p1));
+        console.log(v.deassignDirector(m, p1));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción ya que se intenta añadir un objeto que no es director
+    try {
+        console.log(v.assignDirector(m, r));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se lanza una excepción ya que se intenta asignar un objeto que no es production
+    try {
+        console.log(v.assignDirector(r, c));
     } catch (error) {
         console.error(error);
     }
 
     console.info("Fin Testeo Directors");
 
-    //TODO: ASSIGNPRODUCTIONS
+    // //TODO: ASSIGNPRODUCTIONS
 
-    console.info("Testeo AssignProductions");
+    // console.info("Testeo AssignProductions");
 
-    //Comprobamos que se asignan las producciones a la categoria, actor y directo correspondiente
-    try {
-        v.addProductions(s, c, p, p1);
-        v.addProductions(m1, c, p, p1);
-        console.log(v.addProductions(m, c, p, p1));
-    } catch (error) {
-        console.error(error);
-    }
+    // //Comprobamos que se asignan las producciones a la categoria, actor y directo correspondiente
+    // try {
+    //     v.addProductions(s, c, p, p1);
+    //     v.addProductions(m1, c, p, p1);
+    //     console.log(v.addProductions(m, c, p, p1));
+    // } catch (error) {
+    //     console.error(error);
+    // }
 
-    //Borramos s a la categoria, m1 al actor y m al director
-    try {
-        v.removeProductionInCategory(s, c); 
-        v.removeProductionInActor(m1, p);
-        console.log(v.removeProductionInDirector(m, p1));
-    } catch (error) {
-        console.error(error);
-    }
+    // //Borramos s a la categoria, m1 al actor y m al director
+    // try {
+    //     v.removeProductionInCategory(s, c); 
+    //     v.removeProductionInActor(m1, p);
+    //     console.log(v.removeProductionInDirector(m, p1));
+    // } catch (error) {
+    //     console.error(error);
+    // }
 
-    console.info("Fin Testeo AssignProductions");
+    // console.info("Fin Testeo AssignProductions");
 
 }
 
