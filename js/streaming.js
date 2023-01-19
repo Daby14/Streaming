@@ -347,6 +347,9 @@ let VideoSystem = (function () {
             //Declaramos la lista actors donde vamos a ir almacenando los actores del sistema
             #actors = [];
 
+            //Declaramos la lista directors donde vamos a ir almacenando los directores del sistema
+            #directors = [];
+
             //Devuelve un iterator de los autores del gestor
             get defaultCategory() {
                 return this.#defaultCategory;
@@ -432,7 +435,7 @@ let VideoSystem = (function () {
             //Elimina una imagen de una categoría del gestor
             removeProductionInCategory(production, categorie) {
                 if (!(production instanceof Production)) {
-                    throw new ImageImageManagerException();
+                    throw new ProductionTypeException();
                 }
                 if (!(categorie instanceof Category)) {
                     throw new CategorieTypeException();
@@ -622,7 +625,7 @@ let VideoSystem = (function () {
                 }
             }
 
-            //Método que comprueba si existe una categoria
+            //Método que comprueba si existe un actor
             #getActorPosition(actor) {
 
                 function compareElements(element) {
@@ -679,6 +682,31 @@ let VideoSystem = (function () {
 
             }
 
+            //Elimina una producción de un actor del gestor
+            removeProductionInActor(production, actor) {
+                if (!(production instanceof Production)) {
+                    throw new ProductionTypeException();
+                }
+                if (!(actor instanceof Person)) {
+                    throw new PersonTypeException();
+                }
+                // Obtenemos la posición de la categoría
+                let actorPosition = this.#getActorPosition(actor);
+                if (actorPosition !== -1) {
+                    // Obtenemos la posición de la imagen en la categoría
+                    let productionPosition = this.#getProductionPosition(production, this.#actors[actorPosition].producs);
+                    if (productionPosition !== -1) {
+                        this.#actors[actorPosition].producs.splice(productionPosition, 1);
+                    } else {
+                        throw new ProductionNotExistsProductionManagerException(actor);
+                    }
+                } else {
+                    throw new CategoryNotExistsProductionManagerException();
+                }
+
+                return this;
+            }
+
             //Devuelve el objeto iterador que permite recuperar los actores del sistema
             get actors() {
 
@@ -694,8 +722,15 @@ let VideoSystem = (function () {
                 }
             }
 
-            //Declaramos la lista directors donde vamos a ir almacenando los directores del sistema
-            #directors = [];
+            //Método que comprueba si existe un director
+            #getDirectorPosition(director) {
+
+                function compareElements(element) {
+                    return (element.director.name === director.name)
+                }
+
+                return this.#directors.findIndex(compareElements);
+            }
 
             //Método que añade directores
             addDirector(director) {
@@ -705,12 +740,20 @@ let VideoSystem = (function () {
                     throw new PersonTypeException();
                 }
 
-                //Comprobamos si el director existe
-                if ((this.#directors.findIndex((dir) => dir.name === director.name) !== -1)) {
+                let position = this.#getDirectorPosition(director);
+
+                if (position === -1) {
+
+                    this.#directors.push(
+                        {
+                            director: director,
+                            producs: []
+                        }
+                    );
+
+                } else {
                     throw new ExistedException();
                 }
-
-                this.#directors.push(director);
 
                 return this.#directors.length;
 
@@ -719,12 +762,12 @@ let VideoSystem = (function () {
             //Método que dado un objeto director lo elimina del sistema
             removeDirector(director) {
 
-                let index = this.#directors.findIndex((dir) => dir.name === director.name);
-
                 //Comprobamos si el director es un objeto Person
                 if ((director === null) || !(director instanceof Person)) {
                     throw new PersonTypeException();
                 }
+
+                let index = this.#getDirectorPosition(director);
 
                 if ((index !== -1)) {
                     this.#directors.splice(index, 1);
@@ -734,6 +777,31 @@ let VideoSystem = (function () {
 
                 return this.#directors.length;
 
+            }
+
+            //Elimina una producción de un director del gestor
+            removeProductionInDirector(production, director) {
+                if (!(production instanceof Production)) {
+                    throw new ProductionTypeException();
+                }
+                if (!(director instanceof Person)) {
+                    throw new PersonTypeException();
+                }
+                // Obtenemos la posición del director
+                let directorPosition = this.#getDirectorPosition(director);
+                if (directorPosition !== -1) {
+                    // Obtenemos la posición de la producción en el director
+                    let productionPosition = this.#getProductionPosition(production, this.#directors[directorPosition].producs);
+                    if (productionPosition !== -1) {
+                        this.#directors[directorPosition].producs.splice(productionPosition, 1);
+                    } else {
+                        throw new ProductionNotExistsProductionManagerException(director);
+                    }
+                } else {
+                    throw new CategoryNotExistsProductionManagerException();
+                }
+
+                return this;
             }
 
             //Devuelve el objeto iterador que permite recuperar los directores del sistema
@@ -763,7 +831,7 @@ let VideoSystem = (function () {
                 return producs.findIndex(compareElements);
             }
 
-            addProductions(production, categorie = this.defaultCategory, actor) {
+            addProductions(production, categorie = this.defaultCategory, actor, director) {
                 if (!(production instanceof Production)) {
                     throw new ProductionTypeException();
                 }
@@ -776,9 +844,9 @@ let VideoSystem = (function () {
                     throw new PersonTypeException();
                 }
 
-                // if (!(director instanceof Person)) {
-                // 	throw new PersonTypeException();
-                // }
+                if (!(director instanceof Person)) {
+                    throw new PersonTypeException();
+                }
 
                 //Obtenemos posición de la categoría. Si no existe se añade.
                 let categoryPosition = this.#getCategoryPosition(categorie);
@@ -794,6 +862,13 @@ let VideoSystem = (function () {
                 	actorPosition = this.#actors.length - 1;
                 }
 
+                //Obtenemos posición del director. Si no existe se añade.
+                let directorPosition = this.#getDirectorPosition(director);
+                if (directorPosition === -1) {
+                	this.addDirector(director);
+                	directorPosition = this.#directors.length - 1;
+                }
+
                 //Obtenemos posición de la imagen. Si no existe se añade.
                 let productionPosition = this.#getProductionPosition(production);
                 if (productionPosition === -1) {
@@ -801,20 +876,19 @@ let VideoSystem = (function () {
                     productionPosition = this.#producs.length - 1;
                 }
 
-                // // Verificamos que la imagen no pertenece a otro autor.
-                // let owner = this.getImageAuthor(image);
-                // if (owner !== null && owner.nickname !== author.nickname) {
-                // 	throw new ImageBelongsDifferentAuthorManagerException();
-                // }
-
-                // Asiganamos la imagen al autor si no existe
+                // Asignamos la producción al autor si no existe
                 if (this.#getProductionPosition(production, this.#actors[actorPosition].producs) === -1) {
                 	this.#actors[actorPosition].producs.push(this.#producs[productionPosition]);
                 }
 
-                // Asiganamos la producción a la categoría si no existe
+                // Asignamos la producción a la categoría si no existe
                 if (this.#getProductionPosition(production, this.#categories[categoryPosition].producs) === -1) {
                     this.#categories[categoryPosition].producs.push(this.#producs[productionPosition]);
+                }
+
+                // Asignamos la producción al director si no existe
+                if (this.#getProductionPosition(production, this.#directors[directorPosition].producs) === -1) {
+                	this.#directors[directorPosition].producs.push(this.#producs[productionPosition]);
                 }
 
                 return this;

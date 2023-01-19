@@ -354,10 +354,17 @@ function testStreaming() {
         console.error(error);
     }
 
-    //Comprobamos que se asigna una producción al actor correspondiente
+    //Comprobamos que se asignan las producciones al actor correspondiente
     try {
         v.addProductions(s, c, p);
         console.log(v.addProductions(m, c, p));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se elimina la produccion del actor correspondiente
+    try {
+        console.log(v.removeProductionInActor(m, p));
     } catch (error) {
         console.error(error);
     }
@@ -425,38 +432,46 @@ function testStreaming() {
         console.error(error);
     }
 
+    //Comprobamos que se asignan las producciones al director correspondiente
+    try {
+        v.addProductions(s, c, p, p1);
+        console.log(v.addProductions(m, c, p, p1));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Comprobamos que se elimina la produccion del actor correspondiente
+    try {
+        console.log(v.removeProductionInDirector(m, p1));
+    } catch (error) {
+        console.error(error);
+    }
+
     console.info("Fin Testeo Directors");
 
-    // try {
-    //     console.log(v.assignCategory(c,m));
-    // } catch (error) {
-    //     console.error(error);
-    // }
+    //TODO: ASSIGNPRODUCTIONS
 
-    // try {
-    //     console.log(v.assignCategory(c,m));
-    // } catch (error) {
-    //     console.error(error);
-    // }
+    console.info("Testeo AssignProductions");
 
-    // try {
+    //Comprobamos que se asignan las producciones a la categoria, actor y directo correspondiente
+    try {
+        v.addProductions(s, c, p, p1);
+        v.addProductions(m1, c, p, p1);
+        console.log(v.addProductions(m, c, p, p1));
+    } catch (error) {
+        console.error(error);
+    }
 
-    //     //Con un for of vamos recuperando los directores para mostrarlos por consola
-    //     for (const iterator of v.asCategories) {
-    //         console.log(iterator);
-    //     }
-    // } catch (error) {
-    //     console.error(error);
-    // }
+    //Borramos s a la categoria, m1 al actor y m al director
+    try {
+        v.removeProductionInCategory(s, c); 
+        v.removeProductionInActor(m1, p);
+        console.log(v.removeProductionInDirector(m, p1));
+    } catch (error) {
+        console.error(error);
+    }
 
-
-
-    // //Comprobamos que se asigna una producción a la categoría correspondiente
-    // try {
-    //     console.log(v.addProductions(m1, c1));
-    // } catch (error) {
-    //     console.error(error);
-    // }
+    console.info("Fin Testeo AssignProductions");
 
 }
 
