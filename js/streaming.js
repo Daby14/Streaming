@@ -16,6 +16,8 @@ import {
     NullException,
     DefaultCategoryProductionManagerException,
     CategoryNotExistsProductionManagerException,
+    ActorNotExistsProductionManagerException,
+    DirectorNotExistsProductionManagerException,
     ProductionNotExistsProductionManagerException
 } from '/js/exceptions.js';
 
@@ -331,15 +333,11 @@ let VideoSystem = (function () {
 
         class VideoSystem {
 
+            //Declaramos el nombre del sistema
             #name;
 
             //Declaramos la lista de producciones
             #producs = [];
-
-            //Categoría por defecto
-            #defaultCategory = new Category("Anonymous category");
-
-            #defaultCategoryImages;
 
             //Declaramos la lista categories donde vamos a ir almacenando las categorias del sistema
             #categories = [];
@@ -350,10 +348,11 @@ let VideoSystem = (function () {
             //Declaramos la lista directors donde vamos a ir almacenando los directores del sistema
             #directors = [];
 
-            //Devuelve un iterator de los autores del gestor
-            get defaultCategory() {
-                return this.#defaultCategory;
-            }
+            //Declaramos la lista users donde vamos a ir almacenando los usuarios del sistema
+            #users = [];
+
+            //Declaramos la lista productions donde vamos a ir almacenando las producciones del sistema
+            #productions = [];
 
             constructor(name) {
 
@@ -363,10 +362,6 @@ let VideoSystem = (function () {
                 if (this.#name === "") {
                     throw new EmptyNameException();
                 }
-
-                //Añadimos category por defecto.
-                this.addCategorie(this.#defaultCategory);
-                this.#defaultCategoryImages = this.#categories[0].producs;
 
             }
 
@@ -382,10 +377,13 @@ let VideoSystem = (function () {
 
             //Método que obtiene la posición de una producción
             #getProductionPosition(production, producs = this.#producs) {
+
+                //Comprobamos si la producción es una instancia de Production
                 if (!(production instanceof Production)) {
                     throw new ProductionTypeException();
                 }
 
+                //Comparamos por title
                 function compareElements(element) {
                     return (element.title === production.title)
                 }
@@ -393,9 +391,17 @@ let VideoSystem = (function () {
                 return producs.findIndex(compareElements);
             }
 
+            //!CATEGORY
+
             //Método que comprueba si existe una categoria
             #getCategoryPosition(categorie) {
 
+                //Comprobamos si la categoria es una instancia de Category
+                if (!(categorie instanceof Category)) {
+                    throw new ProductionTypeException();
+                }
+
+                //Comparamos por name
                 function compareElements(element) {
                     return (element.category.name === categorie.name)
                 }
@@ -411,8 +417,10 @@ let VideoSystem = (function () {
                     throw new CategorieTypeException();
                 }
 
+                //Almacenamos la posición de la categoría
                 let position = this.#getCategoryPosition(categorie);
 
+                //Si esa categoría no está registrada, la registramos
                 if (position === -1) {
 
                     this.#categories.push(
@@ -433,8 +441,10 @@ let VideoSystem = (function () {
             //Método que dado un objeto Category lo elimina del sistema
             removeCategorie(categorie) {
 
+                //Almacenamos la posición de la categoría
                 let index = this.#getCategoryPosition(categorie);
 
+                //Si la categoría está registrada pues la borramos
                 if ((index !== -1)) {
                     this.#categories.splice(index, 1);
                 } else {
@@ -448,50 +458,67 @@ let VideoSystem = (function () {
             //Método que asigna una producción a una categoría
             assignCategory(production, categorie) {
 
+                //Comprobamos que production sea una instancia de Production
                 if (!(production instanceof Production)) {
                     throw new ProductionTypeException();
                 }
 
+                //Comprobamos que categorie sea una instancia de Category
                 if (!(categorie instanceof Category)) {
                     throw new CategorieTypeException();
                 }
 
-                //Obtenemos posición de la categoría. Si no existe se añade.
+                //Almacenamos la posición de la categoría
                 let categoryPosition = this.#getCategoryPosition(categorie);
+
+                //Si no existe la categoría, la añadimos y asignamos la última posición a categoryPosition
                 if (categoryPosition === -1) {
                     this.addCategorie(categorie);
                     categoryPosition = this.#categories.length - 1;
                 }
 
-                //Obtenemos posición de la produccion. Si no existe se añade.
+                //Almacenamos la posición de la producción
                 let productionPosition = this.#getProductionPosition(production);
+
+                //Si no existe la producción la añadimos y asignamos la última posición a productionPosition
                 if (productionPosition === -1) {
                     this.#producs.push(production);
                     productionPosition = this.#producs.length - 1;
                 }
 
-                // Asignamos la producción a la categoría si no existe
+                //Si la producción no está asignada a la categoría correspondiente, la asignamos
                 if (this.#getProductionPosition(production, this.#categories[categoryPosition].producs) === -1) {
                     this.#categories[categoryPosition].producs.push(this.#producs[productionPosition]);
                 }
 
+                //Devolvemos el total de producciones asignadas a la categoría
                 return this.#categories[categoryPosition].producs.length;
 
             }
 
-            //Elimina una producción de una categoría del gestor
+            //Método que elimina una producción de una categoría específica 
             deassignCategory(production, categorie) {
+
+                //Comprobamos que production sea una instancia de Production
                 if (!(production instanceof Production)) {
                     throw new ProductionTypeException();
                 }
+
+                //Comprobamos que categorie sea una instancia de Category
                 if (!(categorie instanceof Category)) {
                     throw new CategorieTypeException();
                 }
-                // Obtenemos la posición de la categoría
+
+                //Almacenamos la posición de la categoría
                 let categoryPosition = this.#getCategoryPosition(categorie);
+
+                //Si existe la categoría, pasamos a comprobar si existe la producción
                 if (categoryPosition !== -1) {
-                    // Obtenemos la posición de la imagen en la categoría
+
+                    //Almacenamos la posición de la producción
                     let productionPosition = this.#getProductionPosition(production, this.#categories[categoryPosition].producs);
+
+                    //Si existe la producción, eliminamos dicha producción de dicha categoría
                     if (productionPosition !== -1) {
                         this.#categories[categoryPosition].producs.splice(productionPosition, 1);
                     } else {
@@ -501,42 +528,9 @@ let VideoSystem = (function () {
                     throw new CategoryNotExistsProductionManagerException();
                 }
 
+                //Devolvemos el total de producciones asignadas a la categoría
                 return this.#categories[categoryPosition].producs.length;
             }
-
-            //Elimina una categoría del gestor
-            // removeCategory(categorie) {
-            // 	if (!(categorie instanceof Category)) {
-            // 		throw new CategorieTypeException();
-            // 	}
-            // 	let position = this.#getCategoryPosition(categorie);
-            // 	if (position !== -1) {
-            // 		if (categorie.title !== this.#defaultCategory.title) {
-
-            // 			// Recogemos todas los índices de las categorías menos las de por defecto y la que estamos borrando
-            // 			let restPositions = Array.from(Array(this.#categories.length), (el, i) => i);
-            // 			restPositions.splice(position, 1);
-            // 			restPositions.splice(0, 1);
-            // 			// Recorremos todas las imágenes de la categoría que estamos borrando 
-            // 			for (let pro of this.#categories[position].producs) {
-            // 				let insertInDefault = true;
-            // 				for (let index of restPositions) { // Chequeamos si cada imagen pertenece a otra categoría que no sea la de por defecto
-            // 					if (this.#getProductionPosition(pro, this.#categories[index].producs) > -1) {
-            // 						insertInDefault = false;
-            // 						break;
-            // 					}
-            // 				}
-            // 				if (insertInDefault) this.#categories[0].producs.push(pro);
-            // 			}
-            // 			this.#categories.splice(position, 1);
-            // 		} else {
-            // 			throw new DefaultCategoryImageManagerException();  //DefaultCategoryImageManagerException
-            // 		}
-            // 	} else {
-            // 		throw new CategoryNotExistsImageManagerException();  //CategoryNotExistsImageManagerException
-            // 	}
-            // 	return this;
-            // }
 
             //Devuelve el objeto iterador que permite recuperar las categorias del sistema
             get categories() {
@@ -553,8 +547,7 @@ let VideoSystem = (function () {
                 }
             }
 
-            //Declaramos la lista users donde vamos a ir almacenando los usuarios del sistema
-            #users = [];
+            //!USER
 
             //Método que añade usuarios
             addUser(user) {
@@ -574,8 +567,10 @@ let VideoSystem = (function () {
                     throw new EmailExistedException();
                 }
 
+                //Si el usuario no existe se añade
                 this.#users.push(user);
 
+                //Devolvemos el total de usuarios del sistema
                 return this.#users.length;
 
             }
@@ -583,19 +578,22 @@ let VideoSystem = (function () {
             //Método que dado un objeto user lo elimina del sistema
             removeUser(user) {
 
-                let index = this.#users.findIndex((us) => us.username === user.username);
-
                 //Comprobamos si el usuario es un objeto User
                 if ((user === null) || !(user instanceof User)) {
                     throw new UserTypeException();
                 }
 
+                //Almacenamos la posición del usuario
+                let index = this.#users.findIndex((us) => us.username === user.username);
+
+                //Si el usuario existe lo borramos
                 if ((index !== -1)) {
                     this.#users.splice(index, 1);
                 } else {
                     throw new IndexOutException();
                 }
 
+                //Devolvemos el total de usuarios del sistema
                 return this.#users.length;
 
             }
@@ -615,10 +613,9 @@ let VideoSystem = (function () {
                 }
             }
 
-            //Declaramos la lista productions donde vamos a ir almacenando las producciones del sistema
-            #productions = [];
+            //!PRODUCTION
 
-            //Método que añade producciones
+            //Método que añade producciones 
             addProduction(production) {
 
                 //Comprobamos si la production es un objeto Production
@@ -631,8 +628,10 @@ let VideoSystem = (function () {
                     throw new ExistedException();
                 }
 
+                //Si la producción no existe la añadimos
                 this.#productions.push(production);
 
+                //Devolvemos el total de producciones del sistema
                 return this.#productions.length;
 
             }
@@ -640,24 +639,27 @@ let VideoSystem = (function () {
             //Método que dado un objeto production lo elimina del sistema
             removeProduction(production) {
 
-                let index = this.#productions.findIndex((pro) => pro.title === production.title);
-
                 //Comprobamos si la producción es un objeto Production
                 if ((production === null) || !(production instanceof Production)) {
                     throw new ProductionTypeException();
                 }
 
+                //Almacenamos la posición de la producción
+                let index = this.#productions.findIndex((pro) => pro.title === production.title);
+
+                //Si la producción existe la borramos
                 if ((index !== -1)) {
                     this.#productions.splice(index, 1);
                 } else {
                     throw new IndexOutException();
                 }
 
+                //Devolvemos el total de producciones del sistema
                 return this.#productions.length;
 
             }
 
-            //Devuelve el objeto iterador que permite recuperar los usuarios del sistema
+            //Devuelve el objeto iterador que permite recuperar las producciones del sistema
             get productions() {
 
                 //Guardamos la referencia de la lista
@@ -672,9 +674,12 @@ let VideoSystem = (function () {
                 }
             }
 
+            //!ACTOR
+
             //Método que comprueba si existe un actor
             #getActorPosition(actor) {
 
+                //Comparamos por nombre
                 function compareElements(element) {
                     return (element.actor.name === actor.name)
                 }
@@ -690,8 +695,10 @@ let VideoSystem = (function () {
                     throw new PersonTypeException();
                 }
 
+                //Almacenamos la posición del actor
                 let position = this.#getActorPosition(actor);
 
+                //Si el actor no existe lo añadimos
                 if (position === -1) {
 
                     this.#actors.push(
@@ -705,6 +712,7 @@ let VideoSystem = (function () {
                     throw new ExistedException();
                 }
 
+                //Devolvemos el total de actores del sistema
                 return this.#actors.length;
 
             }
@@ -717,14 +725,17 @@ let VideoSystem = (function () {
                     throw new PersonTypeException();
                 }
 
+                //Almacenamos la posición del actor
                 let index = this.#getActorPosition(actor);
 
+                //Si existe el actor lo borramos
                 if ((index !== -1)) {
                     this.#actors.splice(index, 1);
                 } else {
                     throw new IndexOutException();
                 }
 
+                //Devolvemos el total de actores del sistema
                 return this.#actors.length;
 
             }
@@ -732,59 +743,77 @@ let VideoSystem = (function () {
             //Método que asigna una producción a un actor
             assignActor(production, actor) {
 
+                //Comprobamos que production es una instancia de Production
                 if (!(production instanceof Production)) {
                     throw new ProductionTypeException();
                 }
 
+                //Comprobamos que actor es una instancia de Person
                 if (!(actor instanceof Person)) {
                     throw new PersonTypeException();
                 }
 
-                //Obtenemos posición del actor. Si no existe se añade.
+                //Almacenamos la posición del actor
                 let actorPosition = this.#getActorPosition(actor);
+
+                //Si no existe el autor lo añadimos y asignamos la última posición a actorPosition
                 if (actorPosition === -1) {
                     this.addActor(actor);
                     actorPosition = this.#actors.length - 1;
                 }
 
-                //Obtenemos posición de la produccion. Si no existe se añade.
+                //Almacenamos la posición del actor
                 let productionPosition = this.#getProductionPosition(production);
+
+                //Si no existe la producción la añadimos y asignamos la última posición a productionPosition
                 if (productionPosition === -1) {
                     this.#producs.push(production);
                     productionPosition = this.#producs.length - 1;
                 }
 
-                // Asignamos la producción al actor si no existe
+                //Si la producción no está asignada al actor correspondiente, la asignamos
                 if (this.#getProductionPosition(production, this.#actors[actorPosition].producs) === -1) {
                     this.#actors[actorPosition].producs.push(this.#producs[productionPosition]);
                 }
 
+                //Devolvemos el total de producciones asignadas al actor
                 return this.#actors[actorPosition].producs.length;
 
             }
 
             //Elimina una producción de un actor del gestor
             deassignActor(production, actor) {
+
+                //Comprobamos que production es una instancia de Production
                 if (!(production instanceof Production)) {
                     throw new ProductionTypeException();
                 }
+
+                //Comprobamos que actor es una instancia de Person
                 if (!(actor instanceof Person)) {
                     throw new PersonTypeException();
                 }
-                // Obtenemos la posición de la categoría
+
+                //Almacenamos la posición del actor
                 let actorPosition = this.#getActorPosition(actor);
+
+                //Si el actor existe, comprobamos si existe la producción
                 if (actorPosition !== -1) {
-                    // Obtenemos la posición de la imagen en la categoría
+
+                    //Almacenamos la posición de la producción en el actor
                     let productionPosition = this.#getProductionPosition(production, this.#actors[actorPosition].producs);
+
+                    //Si existe la producción la eliminamos del actor correspondiente
                     if (productionPosition !== -1) {
                         this.#actors[actorPosition].producs.splice(productionPosition, 1);
                     } else {
                         throw new ProductionNotExistsProductionManagerException(actor);
                     }
                 } else {
-                    throw new CategoryNotExistsProductionManagerException();
+                    throw new ActorNotExistsProductionManagerException();
                 }
 
+                //Devolvemos el total de producciones asignadas al actor
                 return this.#actors[actorPosition].producs.length;
             }
 
@@ -803,9 +832,17 @@ let VideoSystem = (function () {
                 }
             }
 
+            //!DIRECTOR
+
             //Método que comprueba si existe un director
             #getDirectorPosition(director) {
 
+                //Comprobamos que director es una instancia de Person
+                if (!(director instanceof Person)) {
+                    throw new PersonTypeException();
+                }
+
+                //Comparamos por name
                 function compareElements(element) {
                     return (element.director.name === director.name)
                 }
@@ -821,8 +858,10 @@ let VideoSystem = (function () {
                     throw new PersonTypeException();
                 }
 
+                //Almacenamos la posición del director
                 let position = this.#getDirectorPosition(director);
 
+                //Si no existe el director lo añadimos
                 if (position === -1) {
 
                     this.#directors.push(
@@ -836,6 +875,7 @@ let VideoSystem = (function () {
                     throw new ExistedException();
                 }
 
+                //Devolvemos el total de directores del sistema
                 return this.#directors.length;
 
             }
@@ -848,14 +888,17 @@ let VideoSystem = (function () {
                     throw new PersonTypeException();
                 }
 
+                //Almacenamos la posición del director
                 let index = this.#getDirectorPosition(director);
 
+                //Si existe el director lo borramos
                 if ((index !== -1)) {
                     this.#directors.splice(index, 1);
                 } else {
                     throw new IndexOutException();
                 }
 
+                //Devolvemos el total de directores del sistema
                 return this.#directors.length;
 
             }
@@ -863,59 +906,75 @@ let VideoSystem = (function () {
             //Método que asigna una producción a un director
             assignDirector(production, director) {
 
+                //Comprobamos si la producción es un objeto Production
                 if (!(production instanceof Production)) {
                     throw new ProductionTypeException();
                 }
 
+                //Comprobamos si el director es un objeto Person
                 if (!(director instanceof Person)) {
                     throw new PersonTypeException();
                 }
 
-                //Obtenemos posición del director. Si no existe se añade.
+                //Almacenamos la posición del director
                 let directorPosition = this.#getDirectorPosition(director);
+
+                //Si no existe el director lo añadimos y asignamos la última posición a directorPosition
                 if (directorPosition === -1) {
                     this.addDirector(director);
                     directorPosition = this.#directors.length - 1;
                 }
 
-                //Obtenemos posición de la produccion. Si no existe se añade.
+                //Si no existe la producción la añadimos y asignamos la última posición a productionPosition
                 let productionPosition = this.#getProductionPosition(production);
                 if (productionPosition === -1) {
                     this.#producs.push(production);
                     productionPosition = this.#producs.length - 1;
                 }
 
-                // Asignamos la producción al director si no existe
+                //Si la producción no está asignada al director correspondiente, la asignamos
                 if (this.#getProductionPosition(production, this.#directors[directorPosition].producs) === -1) {
                     this.#directors[directorPosition].producs.push(this.#producs[productionPosition]);
                 }
 
+                //Devolvemos el total de producciones asignadas al director
                 return this.#directors[directorPosition].producs.length;
 
             }
 
             //Elimina una producción de un director del gestor
             deassignDirector(production, director) {
+
+                //Comprobamos si la producción es un objeto Production
                 if (!(production instanceof Production)) {
                     throw new ProductionTypeException();
                 }
+
+                //Comprobamos si el director es un objeto Person
                 if (!(director instanceof Person)) {
                     throw new PersonTypeException();
                 }
-                // Obtenemos la posición del director
+
+                //Almacenamos la posición del director
                 let directorPosition = this.#getDirectorPosition(director);
+
+                //Si existe el director, comprobamos si existe la producción
                 if (directorPosition !== -1) {
-                    // Obtenemos la posición de la producción en el director
+
+                    //Almacenamos la posición del director
                     let productionPosition = this.#getProductionPosition(production, this.#directors[directorPosition].producs);
+
+                    //Si existe la producción la borramos
                     if (productionPosition !== -1) {
                         this.#directors[directorPosition].producs.splice(productionPosition, 1);
                     } else {
                         throw new ProductionNotExistsProductionManagerException(director);
                     }
                 } else {
-                    throw new CategoryNotExistsProductionManagerException();
+                    throw new DirectorNotExistsProductionManagerException();
                 }
 
+                //Devolvemos el total de producciones asignadas al director
                 return this.#directors[directorPosition].producs.length;
             }
 
@@ -934,24 +993,103 @@ let VideoSystem = (function () {
                 }
             }
 
+            //!ITERATORS
+
+            //Devuelve el objeto iterador que permite recuperar las producciones de un director
+            * getProductionsDirector(director) {
+
+                //Comprobamos que el director es una instancia de Person
+                if (!(director instanceof Person)) {
+                    throw new PersonTypeException();
+                }
+
+                //Almacenamos la posición del director
+                let directorPosition = this.#getDirectorPosition(director);
+
+                //Si el director no existe se lanza una excepción
+                if (directorPosition === -1) {
+                    throw new DirectorNotExistsProductionManagerException();
+                }
+
+                //Iteramos sobre producs del director correspondiente
+                for (let pro of this.#directors[directorPosition].producs) {
+                    yield pro;
+                }
+            }
+
             //Devuelve el objeto iterador que permite recuperar las producciones de un actor
             * getProductionsActor(actor) {
 
+                //Comprobamos que el actor es una instancia de Person
                 if (!(actor instanceof Person)) {
                     throw new PersonTypeException();
                 }
-                let actorPosition = this.#getActorPosition(actor);
-                if (actorPosition === -1) throw new AuthorNotExistsImageManagerException();
 
-                //Iteramos sobre el array de productos del actor encontrado
+                //Almacenamos la posición del director
+                let actorPosition = this.#getActorPosition(actor);
+
+                //Si el director no existe se lanza una excepción
+                if (actorPosition === -1) {
+                    throw new ActorNotExistsProductionManagerException();
+                }
+
+                //Iteramos sobre producs del actor correspondiente
                 for (let pro of this.#actors[actorPosition].producs) {
                     yield pro;
                 }
             }
 
+            //Devuelve el objeto iterador que permite recuperar las producciones de una categoria
+            * getProductionsCategory(category) {
+
+                //Comprobamos que la categoria es una instancia de Category
+                if (!(category instanceof Category)) {
+                    throw new CategorieTypeException();
+                }
+
+                //Almacenamos la posición de la categoría
+                let categoryPosition = this.#getCategoryPosition(category);
+
+                //Si la categoría no existe se lanza una excepción
+                if (categoryPosition === -1) {
+                    throw new CategoryNotExistsProductionManagerException();
+                }
+
+                //Iteramos sobre producs de la categoría correspondiente
+                for (let pro of this.#categories[categoryPosition].producs) {
+                    yield pro;
+                }
+            }
+
+
+            //Devuelve los autores correspondientes a una producción
+            * getCast(production) {
+
+                //Iteramos sobre los actores
+                for (let pro of this.#actors) {
+
+                    //Iteramos sobre producs de cada actor
+                    let actor = null;
+                    let i = 0;
+
+                    //Mientras no se encuentre el actor se sigue recorriendo el array
+                    while (i < pro.producs.length && !actor) {
+
+                        //Comparamos por url
+                        if (pro.producs[i].url === production.url) {
+                            actor = pro.actor;
+                        }
+                        i++;
+                    }
+
+                    //Si encuentra el actor lo devuelve
+                    if (actor) yield actor;
+                }
+            }
+
         }
 
-        let sc = new VideoSystem(name);//Devolvemos el objeto HighSchool para que sea una instancia única.
+        let sc = new VideoSystem(name);//Devolvemos el objeto VideoSystem para que sea una instancia única.
         Object.freeze(sc);
         return sc;
     }

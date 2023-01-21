@@ -17,8 +17,8 @@ import {
 function testStreaming() {
 
     //!Clase Person
-    let p = new Person("David", "Letrado", "Gonzalez", "28/09/2003", "www.google.com");
-    let p2 = new Person("David", "Letrado", "Gonzalez", "28/09/2003", "www.google.com");
+    let p = new Person("David", "Letrado", "Gonzalez", "28/09/2003", "images/image.jpg");
+    let p2 = new Person("Antonio", "Diaz", "Fernandez", "28/09/2003", "images/image.jpg");
 
     console.log(p.toString());
 
@@ -42,14 +42,14 @@ function testStreaming() {
     }
 
     //!Clase Movie
-    let m = new Movie("El Señor de los Anillos", "España", "12/10/2022", "Destruir el anillo", "images/anillo.jpg", r, "Nueva Zelanda");
+    let m = new Movie("El Señor de los Anillos", "España", "12/10/2022", "Destruir el anillo", "images/image.jpg", r, "Nueva Zelanda");
 
-    let m1 = new Movie("Prueba", "España", "12/10/2022", "Destruir el anillo", "images/anillo.jpg", r, "Nueva Zelanda");
+    let m1 = new Movie("Prueba", "España", "12/10/2022", "Destruir el anillo", "images/image2.jpg", r, "Nueva Zelanda");
 
     console.log(m.toString());
 
     //!Clase Serie
-    let s = new Serie("El Hobbit", "España", "12/01/2023", "Encontrar el anillo", "images/hobbit.jpg", "Volcán", "Nueva Zelanda", 3);
+    let s = new Serie("El Hobbit", "España", "12/01/2023", "Encontrar el anillo", "images/image3.jpg", "Volcán", "Nueva Zelanda", 3);
 
     console.log(s.toString());
 
@@ -152,6 +152,15 @@ function testStreaming() {
     //Comprobamos que se lanza una excepción ya que se intenta asignar un objeto que no es production
     try {
         console.log(v.assignCategory(r, c));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Recuperamos todas las producciones de una categoría
+    try {
+        for (let pro of v.getProductionsCategory(c)) {
+            console.log(pro);
+        }
     } catch (error) {
         console.error(error);
     }
@@ -298,7 +307,8 @@ function testStreaming() {
 
     //Comprobamos que se añade el actor sin problema
     try {
-        console.log(v.addActor(p));      //p es una person declarada anteriormente
+        v.addActor(p);
+        console.log(v.addActor(p2));      //p y p2 son person declaradas anteriormente
     } catch (error) {
         console.error(error);
     }
@@ -361,7 +371,7 @@ function testStreaming() {
 
     //Comprobamos que se eliminan las producciones de los actores correspondientes
     try {
-        console.log(v.deassignActor(m, p));
+        console.log(v.deassignActor(s, p));
     } catch (error) {
         console.error(error);
     }
@@ -382,14 +392,28 @@ function testStreaming() {
 
     //Recuperamos todas las producciones de un actor
     try {
-        for (let pro of v.getProductionsActor(p)){
-			console.log(pro);
-		} 
+        for (let pro of v.getProductionsActor(p)) {
+            console.log(pro);
+        }
     } catch (error) {
         console.error(error);
     }
 
-    
+    //Comprobamos que se lanza una excepción ya que se intenta asignar un objeto que no es production
+    try {
+        console.log(v.assignActor(m, p2));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Recuperamos todas las producciones de una producción
+    try {
+        for (let pro of v.getCast(m)) {
+            console.log(pro);
+        }
+    } catch (error) {
+        console.error(error);
+    }
 
     console.info("Fin Testeo Actors");
 
@@ -479,6 +503,15 @@ function testStreaming() {
     //Comprobamos que se lanza una excepción ya que se intenta asignar un objeto que no es production
     try {
         console.log(v.assignDirector(r, c));
+    } catch (error) {
+        console.error(error);
+    }
+
+    //Recuperamos todas las producciones de un director
+    try {
+        for (let pro of v.getProductionsDirector(p1)) {
+            console.log(pro);
+        }
     } catch (error) {
         console.error(error);
     }

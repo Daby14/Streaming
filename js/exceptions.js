@@ -108,8 +108,24 @@ class DefaultCategoryProductionManagerException extends BaseException {
 //Excepción para indicar que la categoría no existe en la producción
 class CategoryNotExistsProductionManagerException extends BaseException {
     constructor(fileName, lineNumber) {
-        super("La categoría por defecto no se puede borrar", fileName, lineNumber);
+        super("La categoría no existe para esa producción", fileName, lineNumber);
         this.name = "CategoryNotExistsProductionManagerException";
+    }
+}
+
+//Excepción para indicar que el actor no existe en la producción
+class ActorNotExistsProductionManagerException extends BaseException {
+    constructor(fileName, lineNumber) {
+        super("El actor no existe para esa producción", fileName, lineNumber);
+        this.name = "ActorNotExistsProductionManagerException";
+    }
+}
+
+//Excepción para indicar que el director no existe en la producción
+class DirectorNotExistsProductionManagerException extends BaseException {
+    constructor(fileName, lineNumber) {
+        super("El director no existe para esa producción", fileName, lineNumber);
+        this.name = "DirectorNotExistsProductionManagerException";
     }
 }
 
@@ -138,5 +154,7 @@ export {
     NullException,
     DefaultCategoryProductionManagerException,
     CategoryNotExistsProductionManagerException,
+    ActorNotExistsProductionManagerException,
+    DirectorNotExistsProductionManagerException,
     ProductionNotExistsProductionManagerException
 };
