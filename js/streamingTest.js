@@ -219,6 +219,22 @@ function testStreaming() {
         console.error(error);
     }
 
+    console.log("Se lanza una excepción al intentar borrar una producción que no existe");
+    //Comprobamos que se lanza una excepción al intentar borrar una producción que no existe
+    try {
+        console.log(v.deassignCategory(m1, c));
+    } catch (error) {
+        console.error(error);
+    }
+
+    console.log("Se lanza una excepción al intentar borrar una producción de una categoría que no existe");
+    //Comprobamos que se lanza una excepción al intentar borrar una producción de una categoría que no existe
+    try {
+        console.log(v.deassignCategory(m, c1));
+    } catch (error) {
+        console.error(error);
+    }
+
     console.log("Mostramos todas las producciones de la categoría 1");
     //Recuperamos todas las producciones de una categoría
     try {
@@ -483,20 +499,29 @@ function testStreaming() {
         console.error(error);
     }
 
+    console.log("Se lanza una excepción al intentar borrar una producción que no existe");
+    //Comprobamos que se lanza una excepción al intentar borrar una producción que no existe
+    try {
+        console.log(v.deassignActor(m1, p));
+    } catch (error) {
+        console.error(error);
+    }
+
+    console.log("Se lanza una excepción al intentar borrar una producción de un actor que no existe");
+    //Comprobamos que se lanza una excepción al intentar borrar una producción de un actor que no existe
+    try {
+        let p3 = new Person("Pepito", "Alvarez", "Zupi", "19/08/1992", "images/image.jpg");
+        console.log(v.deassignActor(m, p3));
+    } catch (error) {
+        console.error(error);
+    }
+
     console.log("Mostramos las producciones del actor 1");
     //Recuperamos todas las producciones de un actor
     try {
         for (let pro of v.getProductionsActor(p)) {
             console.log(pro);
         }
-    } catch (error) {
-        console.error(error);
-    }
-
-    console.log("Se lanza una excepción al intentar asignar un objeto que no es Production");
-    //Comprobamos que se lanza una excepción ya que se intenta asignar un objeto que no es production
-    try {
-        console.log(v.assignActor(r, p2));
     } catch (error) {
         console.error(error);
     }
@@ -611,6 +636,23 @@ function testStreaming() {
     //Comprobamos que se lanza una excepción ya que se intenta asignar un objeto que no es production
     try {
         console.log(v.assignDirector(r, c));
+    } catch (error) {
+        console.error(error);
+    }
+
+    console.log("Se lanza una excepción al intentar borrar una producción que no existe");
+    //Comprobamos que se lanza una excepción al intentar borrar una producción que no existe
+    try {
+        console.log(v.deassignDirector(m1, p1));
+    } catch (error) {
+        console.error(error);
+    }
+
+    console.log("Se lanza una excepción al intentar borrar una producción de un director que no existe");
+    //Comprobamos que se lanza una excepción al intentar borrar una producción de un director que no existe
+    try {
+        let p3 = new Person("Pepito", "Alvarez", "Zupi", "19/08/1992", "images/image.jpg");
+        console.log(v.deassignDirector(m, p3));
     } catch (error) {
         console.error(error);
     }

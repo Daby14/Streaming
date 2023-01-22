@@ -132,9 +132,7 @@ class DirectorNotExistsProductionManagerException extends BaseException {
 //Excepción para indicar que la producción no existe
 class ProductionNotExistsProductionManagerException extends BaseException {
     constructor(categorie, fileName, lineNumber) {
-        let message = (!categorie) ? "La producción no existe" :
-            "La producción no existe en la categoría" + categorie.title;
-        super(message, fileName, lineNumber);
+        super("La producción no existe", fileName, lineNumber);
         this.name = "ProductionNotExistsProductionManagerException";
     }
 }
