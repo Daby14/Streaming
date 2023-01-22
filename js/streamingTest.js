@@ -48,6 +48,28 @@ function testStreaming() {
     console.log(r.toString());
     console.log("--- Fin Datos Resource ---");
 
+    //!Clase Coordinate
+    let co = new Coordinate(-90, 90);
+
+    console.log("--- Datos Coordinate ---");
+    console.log("Se lanza excepción ya que el valor de la latitud es incorrecto");
+    try {
+        let co1 = new Coordinate(-91, 90);
+    } catch (error) {
+        console.error(error);
+    }
+
+    console.log("Se lanza excepción ya que el valor de la longitud es incorrecto");
+    try {
+        let co2 = new Coordinate(-90, 185);
+    } catch (error) {
+        console.error(error);
+    }
+
+    console.log("Mostramos los datos de coordinate 1");
+    console.log(co.toString());
+    console.log("--- Fin Datos Coordinate ---");
+
     //!Clase Production
     console.log("--- Excepción Clase Production ---");
     console.log("Se lanza una excepción al intentar instanciar la clase abstracta Production");
@@ -61,10 +83,10 @@ function testStreaming() {
     console.log("--- Fin Excepción Clase Production ---");
 
     //!Clase Movie
-    
-    let m = new Movie("Movie 1", "España", "12/10/2022", "Conseguir la corona", "images/image.jpg", r, "Nueva Zelanda");
 
-    let m1 = new Movie("Movie 2", "Inglaterra", "23/03/2021", "Destruir el anillo", "images/image2.jpg", r, "Estados Unidos");
+    let m = new Movie("Movie 1", "España", "12/10/2022", "Conseguir la corona", "images/image.jpg", r, co);
+
+    let m1 = new Movie("Movie 2", "Inglaterra", "23/03/2021", "Destruir el anillo", "images/image2.jpg", r, co);
 
     console.log("--- Datos Movies ---");
     console.log("Mostramos los datos de la movie 1");
@@ -76,7 +98,7 @@ function testStreaming() {
 
     //!Clase Serie
 
-    let s = new Serie("Serie 1", "Inglaterra", "12/01/2023", "Encontrar el anillo", "images/image3.jpg", "Volcán", "Nueva Zelanda", 3);
+    let s = new Serie("Serie 1", "Inglaterra", "12/01/2023", "Encontrar el anillo", "images/image3.jpg", "Volcán", co, 3);
 
     console.log("--- Datos Serie ---");
     console.log("Mostramos los datos de la serie 1");
@@ -90,14 +112,6 @@ function testStreaming() {
     console.log("Mostramos los datos del user 1");
     console.log(u.toString());
     console.log("--- Fin Datos User ---");
-
-    //!Clase Coordinate
-    let co = new Coordinate(123, 178);
-
-    console.log("--- Datos Coordinate ---");
-    console.log("Mostramos los datos de coordinate 1");
-    console.log(co.toString());
-    console.log("--- Fin Datos Coordinate ---");
 
     //!Objeto VideoSystem
 

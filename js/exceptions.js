@@ -129,13 +129,30 @@ class DirectorNotExistsProductionManagerException extends BaseException {
     }
 }
 
-class ProductionNotExistsProductionManagerException extends BaseException  {
-	constructor(categorie, fileName, lineNumber) {
-		let message = (!categorie) ? "La producción no existe" :
-			"La producción no existe en la categoría" + categorie.title;
-		super(message, fileName, lineNumber);
-		this.name = "ProductionNotExistsProductionManagerException";
-	}
+//Excepción para indicar que la producción no existe
+class ProductionNotExistsProductionManagerException extends BaseException {
+    constructor(categorie, fileName, lineNumber) {
+        let message = (!categorie) ? "La producción no existe" :
+            "La producción no existe en la categoría" + categorie.title;
+        super(message, fileName, lineNumber);
+        this.name = "ProductionNotExistsProductionManagerException";
+    }
+}
+
+//Excepción para indicar que el valor de latitude no es correcto
+class InvalidLatitudeException extends BaseException {
+    constructor(fileName, lineNumber) {
+        super("El valor de latitude no es correcto", fileName, lineNumber);
+        this.name = "InvalidLatitudeException";
+    }
+}
+
+//Excepción para indicar que el valor de longitude no es correcto
+class InvalidLongitudeException extends BaseException {
+    constructor(fileName, lineNumber) {
+        super("El valor de longitude no es correcto", fileName, lineNumber);
+        this.name = "InvalidLongitudeException";
+    }
 }
 
 //Exportamos las excepciones para utilizarlas en un archivo externo
@@ -156,5 +173,7 @@ export {
     CategoryNotExistsProductionManagerException,
     ActorNotExistsProductionManagerException,
     DirectorNotExistsProductionManagerException,
-    ProductionNotExistsProductionManagerException
+    ProductionNotExistsProductionManagerException,
+    InvalidLatitudeException,
+    InvalidLongitudeException
 };

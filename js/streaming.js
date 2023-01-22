@@ -18,7 +18,9 @@ import {
     CategoryNotExistsProductionManagerException,
     ActorNotExistsProductionManagerException,
     DirectorNotExistsProductionManagerException,
-    ProductionNotExistsProductionManagerException
+    ProductionNotExistsProductionManagerException,
+    InvalidLatitudeException,
+    InvalidLongitudeException
 } from '/js/exceptions.js';
 
 //Declaramos la clase Person
@@ -194,7 +196,7 @@ class Movie extends Production {
     #locations;
 
     //Declaramos el constructor de movie
-    constructor(title, nationality = "", publication, synopsis = "", image = "", resource = Resource, locations = []) {
+    constructor(title, nationality = "", publication, synopsis = "", image = "", resource = Resource, locations = Coordinate) {
 
         super(title, nationality, publication, synopsis, image);
         this.#resource = resource;
@@ -227,7 +229,7 @@ class Serie extends Production {
     #seasons;
 
     //Declaramos el constructor de serie
-    constructor(title, nationality = "", publication, synopsis = "", image = "", resources = [], locations = [], seasons = 0) {
+    constructor(title, nationality = "", publication, synopsis = "", image = "", resources = [], locations = Coordinate, seasons = 0) {
 
         super(title, nationality, publication, synopsis, image);
         this.#resources = resources;
@@ -306,6 +308,14 @@ class Coordinate {
         this.#latitude = latitude;
         this.#longitude = longitude;
 
+        if (latitude < -90 || latitude > 90) {
+            throw new InvalidLatitudeException();
+        }
+
+        if (longitude < -180 || longitude > 180) {
+            throw new InvalidLongitudeException();
+        }
+
     }
 
     //Declaramos los getters de coordinate
@@ -319,7 +329,7 @@ class Coordinate {
 
     //Método toString que muestra las propiedades de coordinate
     toString() {
-        return this.#latitude + " " + this.#longitude;
+        return this.#latitude + "°" + " " + this.#longitude + "°";
     }
 
 }
