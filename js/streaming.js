@@ -1075,6 +1075,11 @@ let VideoSystem = (function () {
             //Devuelve los autores correspondientes a una producción
             * getCast(production) {
 
+                //Comprobamos que la producción es una instancia de Production
+                if (!(production instanceof Production)) {
+                    throw new ProductionTypeException();
+                }
+
                 //Iteramos sobre los actores
                 for (let pro of this.#actors) {
 
@@ -1093,7 +1098,9 @@ let VideoSystem = (function () {
                     }
 
                     //Si encuentra el actor lo devuelve
-                    if (actor) yield actor;
+                    if (actor) {
+                        yield actor;
+                    }
                 }
             }
 

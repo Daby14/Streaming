@@ -251,6 +251,26 @@ function testStreaming() {
         console.error(error);
     }
 
+    console.log("Se lanza una excepción al intentar mostrar las producciones de una categoría que no es instancia de Category");
+    //Se lanza una excepción al intentar mostrar las producciones de una categoría que no es instancia de Category
+    try {
+        for (let pro of v.getProductionsCategory(p)) {
+            console.log(pro);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
+    console.log("Se lanza una excepción al intentar mostrar las producciones de una categoría que no existe");
+    //Se lanza una excepción al intentar mostrar las producciones de una categoría que no existe
+    try {
+        for (let pro of v.getProductionsCategory(c1)) {
+            console.log(pro);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
     console.log("Mostramos todas las producciones de la categoría 1");
     //Recuperamos todas las producciones de una categoría
     try {
@@ -532,10 +552,41 @@ function testStreaming() {
         console.error(error);
     }
 
+    console.log("Se lanza una excepción al intentar mostrar las producciones de un actor que no es instancia de Person");
+    //Se lanza una excepción al intentar mostrar las producciones de un actor que no es instancia de Person
+    try {
+        for (let pro of v.getProductionsActor(c)) {
+            console.log(pro);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
+    console.log("Se lanza una excepción al intentar mostrar las producciones de un actor que no existe");
+    //Se lanza una excepción al intentar mostrar las producciones de un actor que no existe
+    try {
+        let p3 = new Person("Pepito", "Alvarez", "Zupi", "19/08/1992", "images/image.jpg");
+        for (let pro of v.getProductionsActor(p3)) {
+            console.log(pro);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
     console.log("Mostramos las producciones del actor 1");
     //Recuperamos todas las producciones de un actor
     try {
         for (let pro of v.getProductionsActor(p)) {
+            console.log(pro);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
+    console.log("Se lanza una excepción al intentar mostrar todos los actores de una producción que no es instancia de Production");
+    //Se lanza una excepción al intentar mostrar todos los actores de una producción que no es instancia de Production
+    try {
+        for (let pro of v.getCast(p)) {
             console.log(pro);
         }
     } catch (error) {
@@ -669,6 +720,27 @@ function testStreaming() {
     try {
         let p3 = new Person("Pepito", "Alvarez", "Zupi", "19/08/1992", "images/image.jpg");
         console.log(v.deassignDirector(m, p3));
+    } catch (error) {
+        console.error(error);
+    }
+
+    console.log("Se lanza una excepción al intentar mostrar las producciones de un director que no es instancia de Person");
+    //Se lanza una excepción al intentar mostrar las producciones de un director que no es instancia de Person
+    try {
+        for (let pro of v.getProductionsDirector(c)) {
+            console.log(pro);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
+    console.log("Se lanza una excepción al intentar mostrar las producciones de un director que no existe");
+    //Se lanza una excepción al intentar mostrar las producciones de un director que no existe
+    try {
+        let p3 = new Person("Pepito", "Alvarez", "Zupi", "19/08/1992", "images/image.jpg");
+        for (let pro of v.getProductionsDirector(p3)) {
+            console.log(pro);
+        }
     } catch (error) {
         console.error(error);
     }
