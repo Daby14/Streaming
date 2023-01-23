@@ -157,6 +157,22 @@ function testStreaming() {
         console.error(error);
     }
 
+    console.log("Borramos la categoría 1 del sistema");
+    //Comprobamos que se borra la categoria sin problema
+    try {
+        console.log(v.removeCategorie(c));
+    } catch (error) {
+        console.error(error);
+    }
+
+    console.log("Volvemos a añadir la categoría 1 al sistema");
+    //Comprobamos que se añade la categoria sin problema
+    try {
+        console.log(v.addCategorie(c));
+    } catch (error) {
+        console.error(error);
+    }
+
     console.log("Mostramos las categorías registradas en el sistema");
     //Recuperamos las categorias a través de un iterador
     try {
@@ -607,7 +623,7 @@ function testStreaming() {
         console.error(error);
     }
 
-    console.log("Asignamos la serie 1 y la movie 1 al director 1");
+    console.log("Asignamos la serie 1 y la movie 1 al director 1 (como el director 1 lo hemos borrado, a la hora de asignarle producciones se añade al sistema)");
     //Comprobamos que se asignan las producciones a los directores correspondientes
     try {
         v.assignDirector(s, p1);
