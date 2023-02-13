@@ -760,3 +760,51 @@ function testStreaming() {
 }
 
 window.onload = testStreaming;
+
+//Declaramos los objetos con los que vamos a trabajar en nuestra web
+let categoria1 = new Category("Categoria1", "Acción");
+let categoria2 = new Category("Categoria2", "Deportes");
+let categoria3 = new Category("Categoria3", "Aventura");
+
+let resource1 = new Resource("94", "movies/movie.mp4");
+let coordinate1 = new Coordinate(-90, 90);
+
+let produccion1 = new Serie("El señor de los anillos", "Nueva Zelanda", "12/01/2022", "Encontrar el anillo", "images/image1.jpg", "Volcán", coordinate1, 3);
+let produccion2 = new Serie("La que se avecina", "España", "24/09/2008", "Historias de ficción", "images/image2.jpg", "Edificio Contubernio", coordinate1, 13);
+let produccion3 = new Serie("La casa de papel", "España", "05/06/2018", "Fabricar dinero", "images/image3.jpg", "Banco Nacional de Moneda y Timbre", coordinate1, 5);
+let produccion4 = new Serie("The Shooter", "California", "15/11/2016", "Evitar complot contra el presidente de los EEUU", "images/image4.jpg", "USA Network", coordinate1, 3);
+let produccion5 = new Serie("Serie_5", "Inglaterra", "12/01/2023", "Encontrar el anillo", "images/image5.jpg", "Volcán", coordinate1, 3);
+let produccion6 = new Serie("Serie_6", "Inglaterra", "12/01/2023", "Encontrar el anillo", "images/image6.jpg", "Volcán", coordinate1, 3);
+
+
+
+let produccion7 = new Movie("Movie_1", "España", "12/10/2022", "Conseguir la corona", "images/image7.jpg", resource1, coordinate1);
+let produccion8 = new Movie("Movie_2", "España", "12/10/2022", "Conseguir la corona", "images/image8.jpg", resource1, coordinate1);
+let produccion9 = new Movie("Movie_3", "España", "12/10/2022", "Conseguir la corona", "images/image9.jpg", resource1, coordinate1);
+let produccion10 = new Movie("Movie_4", "España", "12/10/2022", "Conseguir la corona", "images/image10.jpg", resource1, coordinate1);
+let produccion11 = new Movie("Movie_5", "España", "12/10/2022", "Conseguir la corona", "images/image11.jpg", resource1, coordinate1);
+let produccion12 = new Movie("Movie_6", "España", "12/10/2022", "Conseguir la corona", "images/image12.jpg", resource1, coordinate1);
+
+
+
+//Exportamos dichos objetos para poder trabajar con ellos
+export {
+    categoria1,
+    categoria2,
+    categoria3,
+    resource1,
+    coordinate1,
+    produccion1,
+    produccion2,
+    produccion3,
+    produccion4,
+    produccion5,
+    produccion6,
+    produccion7,
+    produccion8,
+    produccion9,
+    produccion10,
+    produccion11,
+    produccion12,
+    VideoSystem
+};

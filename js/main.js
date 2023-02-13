@@ -29,18 +29,11 @@ let productsCat1 = [produccion1, produccion2, produccion3, produccion4];
 let productsCat2 = [produccion5, produccion6, produccion7, produccion8];
 let productsCat3 = [produccion9, produccion10, produccion11, produccion12];
 
-// categorias.css({
-//     border: '3px solid red',
-//     height: '300px'
-// });
-
-// console.log(produccion1.title)
-
 function showProductTypes() {
     categorias.empty();
     categorias.append(`<div id="type-list" class="row">
         <div id="cat1" class="col-lg-4 col-md-6"><a class="prueba" data-type="Categoria 1" href="#product-list">
-                <div><img class="cat__img" alt="Categoría 1" src="../images/catcamara.jpg" />
+                <div><img class="cat__img" alt="Categoría 1" src="./images/catcamara.jpg" />
                 </div>
                 <div class="cat__text">
                     <h3>Categoría 1</h3>
@@ -49,7 +42,7 @@ function showProductTypes() {
             </a>
         </div>
         <div id="cat2" class="col-lg-4 col-md-6"><a data-type="Categoria 2" href="#">
-                <div><img class="cat__img" alt="Categoria 2" src="../images/catmovi.jpg" />
+                <div><img class="cat__img" alt="Categoria 2" src="./images/catmovi.jpg" />
                 </div>
                 <div class="cat__text">
                     <h3>Categoria 2</h3>
@@ -58,7 +51,7 @@ function showProductTypes() {
             </a>
         </div>
         <div id="cat3" class="col-lg-4 col-md-6"><a data-type="Categoria 3" href="#">
-                <div><img class="cat__img" alt="Categoria 3" src="../images/catpportatil.jpg" />
+                <div><img class="cat__img" alt="Categoria 3" src="./images/catpportatil.jpg" />
                 </div>
                 <div class="cat__text">
                     <h3>Categoria 3</h3>
@@ -86,7 +79,7 @@ function listProducts(iterator, title, categorias, tipoCategoria) {
     while (!product.done) {
 
         id.children().first().append(`<div class="col-md-4">
-        <figure class="card card-product-grid card-lg"> <a id="prueba2" data-serial="${product.value.title}" href="#single-product" class="img-wrap"><img class="Serie" src="../${product.value.image}"></a>
+        <figure class="card card-product-grid card-lg"> <a id="prueba2" data-serial="${product.value.title}" href="#single-product" class="img-wrap"><img class="Serie" src="./${product.value.image}"></a>
             <figcaption class="info-wrap">
                 <div class="row">
                     <div class="col-md-8"> <a data-serial="${product.value.title}" href="#single-product" class="title">${product.value.title}  ${product.value.nationality} - ${product.value.publication}</a> </div>
