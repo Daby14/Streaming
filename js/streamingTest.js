@@ -11,7 +11,7 @@ import {
     User,
     Coordinate,
     VideoSystem
-} from '/js/streaming.js';
+} from './js/streaming.js';
 
 //Comprobamos que todos las funciones implementadas funcionan correctamente
 function testStreaming() {

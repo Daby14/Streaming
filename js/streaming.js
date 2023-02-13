@@ -21,7 +21,7 @@ import {
     ProductionNotExistsProductionManagerException,
     InvalidLatitudeException,
     InvalidLongitudeException
-} from '/js/exceptions.js';
+} from './js/exceptions.js';
 
 //Declaramos la clase Person
 class Person {
