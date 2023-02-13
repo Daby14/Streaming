@@ -1,0 +1,13 @@
+.carta {
+    width: 700px; 
+    height: 500px; 
+    border: 3px solid red;
+    align-items: center;
+    margin-left: 350px;
+    color: white;
+}
+
+img{
+    width: 350px;
+}
+

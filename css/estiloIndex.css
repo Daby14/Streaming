@@ -1,0 +1,43 @@
+.body{
+    /* background-image: url("../images/fondo.avif");  */
+    background-image: url("../images/fondo.avif"); 
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/*HEADER*/
+.header__logo{
+    width: 50px;
+}
+
+.cat__img{
+    width: 100%;
+}
+
+.cat__text {
+    text-align: center;
+    font-size: 1em; 
+    font-weight: 200; 
+    color: white;
+    text-decoration: none;
+}
+
+a:link { 
+    text-decoration: none;
+}
+
+a{
+    color: black;
+}
+
+.categories {
+    margin-top: 180px;
+}
+
+.Serie{
+    width: 300px;
+}
+
+h1{
+    color: white;
+}
