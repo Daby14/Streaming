@@ -82,7 +82,7 @@ function listProducts(iterator, title, categorias, tipoCategoria) {
         <figure class="card card-product-grid card-lg"> <a id="prueba2" data-serial="${product.value.title}" href="#single-product" class="img-wrap"><img class="Serie" src="./${product.value.image}"></a>
             <figcaption class="info-wrap">
                 <div class="row">
-                    <div class="col-md-8"> <a data-serial="${product.value.title}" href="#single-product" class="title">${product.value.title}  ${product.value.nationality} - ${product.value.publication}</a> </div>
+                    <div class="col-md-8"> <a data-serial="${product.value.title}" href="#single-product" class="title">${product.value.title} <br> ${product.value.nationality} | ${product.value.publication}</a> </div>
                     <div class="col-md-4">
                         <div class="rating text-right"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div>
                     </div>

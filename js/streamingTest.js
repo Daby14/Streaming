@@ -773,8 +773,8 @@ let produccion1 = new Serie("El señor de los anillos", "Nueva Zelanda", "12/01/
 let produccion2 = new Serie("La que se avecina", "España", "24/09/2008", "Historias de ficción", "images/image2.jpg", "Edificio Contubernio", coordinate1, 13);
 let produccion3 = new Serie("La casa de papel", "España", "05/06/2018", "Fabricar dinero", "images/image3.jpg", "Banco Nacional de Moneda y Timbre", coordinate1, 5);
 let produccion4 = new Serie("The Shooter", "California", "15/11/2016", "Evitar complot contra el presidente de los EEUU", "images/image4.jpg", "USA Network", coordinate1, 3);
-let produccion5 = new Serie("Serie_5", "Inglaterra", "12/01/2023", "Encontrar el anillo", "images/image5.jpg", "Volcán", coordinate1, 3);
-let produccion6 = new Serie("Serie_6", "Inglaterra", "12/01/2023", "Encontrar el anillo", "images/image6.jpg", "Volcán", coordinate1, 3);
+let produccion5 = new Serie("The Witcher", "Estados Unidos", "20/12/2019", "Leyenda de Geralt de Rivia y la princesa Ciri", "images/image5.jpg", "Mundo medieval", coordinate1, 2);
+let produccion6 = new Serie("Ni una palabra", "Estados Unidos", "22/04/2022", "Desaparición de una hija", "images/image6.jpg", "Volcán", coordinate1, 3);
 
 
 
