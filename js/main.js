@@ -115,37 +115,31 @@ function listProducts(iterator, title, categorias, tipoCategoria) {
 function showProduct(serial, tipoCategoria, productsCat1) {
     main.empty();
 
-    if(tipoCategoria == "Categoria_1"){
-        for(let i = 0; i < productsCat1.length; i++){
-            if(productsCat1[i].title == serial){
-                main.append(`<div class="carta row d-flex justify-content-center">
-                    <div class="col"><img class="img" src="${productsCat1[i].image}"></img></div>
-                    <div class="col">
-                        <h3>${productsCat1[i].title}</h3>
-                        <p><u>Descripción</u></p>
-                        <p>${productsCat1[i].synopsis}</p>
-                        <p><u>Características</u></p>
-                        <p>-País de Origen: ${productsCat1[i].nationality}</p>
-                        <p>-Fecha de Origen: ${productsCat1[i].publication}</p>
-                        <p>-Temporadas: ${productsCat1[i].seasons}</p>
-                    </div>
-                </div>`);
-                // console.log(productsCat1[i]);
-            }
+    let categorie;
+
+    if (tipoCategoria == "Categoria_1") categorie = productsCat1;
+
+    if (tipoCategoria == "Categoria_2") categorie = productsCat2;
+
+    if (tipoCategoria == "Categoria_3") categorie = productsCat3;
+
+    for (let i = 0; i < categorie.length; i++) {
+        if (categorie[i].title == serial) {
+            main.append(`<div class="carta row d-flex justify-content-center">
+                <div class="col"><img class="img" src="${categorie[i].image}"></img></div>
+                <div class="col">
+                    <h3>${categorie[i].title}</h3>
+                    <p><u>Descripción</u></p>
+                    <p>${categorie[i].synopsis}</p>
+                    <p><u>Características</u></p>
+                    <p>-País de Origen: ${categorie[i].nationality}</p>
+                    <p>-Fecha de Origen: ${categorie[i].publication}</p>
+                    <p>-Temporadas: ${categorie[i].seasons}</p>
+                </div>
+            </div>`);
+
         }
     }
-
-    //Dependiendo el serial, aparece unos datos u otros
-
-    //Para ello, dependiendo si son las producciones de la categoría 1, 2 o 3 sacamos los datos recorriendo las producciones de la categoría correspondiente para sacar los datos de la producción correspondiente
-
-    //Descripción: synopsis
-
-    //Características(subrayado)
-
-    //-País de Origen: nationality
-    //-Fecha de Origen: publication
-    //-Temporadas: seasons
 
 }
 
