@@ -1121,6 +1121,8 @@ let VideoSystem = (function () {
     }
 })();
 
+export default VideoSystem;
+
 //Exportamos las clases y el objeto VideoSystem para utilizarlas en un archivo externo
 export {
     Person,
@@ -1130,6 +1132,5 @@ export {
     Movie,
     Serie,
     User,
-    Coordinate,
-    VideoSystem
+    Coordinate
 };
