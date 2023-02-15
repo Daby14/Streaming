@@ -1071,19 +1071,33 @@ let VideoSystem = (function () {
                 }
             }
 
-            getCategory(title){
+            getCategory(title) {
 
                 let cat;
 
-                for(let i = 0; i < this.#categories.length; i++){
-                    if(this.#categories[i].category.name === title){
+                for (let i = 0; i < this.#categories.length; i++) {
+                    if (this.#categories[i].category.name === title) {
                         cat = this.#categories[i];
                     }
-                    
+
                 }
 
                 return cat;
-			}
+            }
+
+            getProduction(title) {
+
+                let pro;
+
+                for (let i = 0; i < this.#producs.length; i++) {
+                    if (this.#producs[i].title === title) {
+                        pro = this.#producs[i];
+                    }
+
+                }
+
+                return pro;
+            }
 
 
             //Devuelve los actores correspondientes a una producción

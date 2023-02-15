@@ -81,6 +81,7 @@ class Controller {
 
     onLoad = () => {
         this.#loadObjects();
+        this.onAddCategory();
     }
 
     handleShowShoppingCart = (type) => {
@@ -91,14 +92,33 @@ class Controller {
 
         const iterator = category.producs[Symbol.iterator]();
 
-        if(type === "Categoria1") title = "Categoria 1";
+        if (type === "Categoria1") title = "Categoria 1";
 
-        if(type === "Categoria2") title = "Categoria 2";
+        if (type === "Categoria2") title = "Categoria 2";
 
-        if(type === "Categoria3") title = "Categoria 3";
+        if (type === "Categoria3") title = "Categoria 3";
 
         this.#view.showMovies(iterator, title);
+        this.#view.bindShowProduct(this.handleShowProduct);
 
+    }
+
+    handleShowProduct = (serial) => {
+        let pro = this.#model.getProduction(serial);
+
+        this.#view.showProduct(pro, "hola");
+    }
+
+    onAddCategory = () => {
+
+        this.#view.showCategoriesInMenu(this.#model.categories);
+        this.#view.bindProductsCategoryListInMenu(
+            this.handleProductsCategoryList
+        );
+    }
+
+    handleProductsCategoryList = (type) => {
+        this.handleShowShoppingCart(type);
     }
 
 }
