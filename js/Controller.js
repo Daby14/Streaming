@@ -71,7 +71,8 @@ class Controller {
     }
 
     onInit = () => {
-        // this.#view.showProductTypes();
+        this.#view.showProductTypes();
+        this.#view.bindShowMovies(this.handleShowShoppingCart);
     }
 
     handleInit = () => {
@@ -80,7 +81,6 @@ class Controller {
 
     onLoad = () => {
         this.#loadObjects();
-        this.#view.showProductTypes();
     }
 
     handleShowShoppingCart = (type) => {
