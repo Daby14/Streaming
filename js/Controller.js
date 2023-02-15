@@ -2,7 +2,7 @@ import {
     Person, Category, Resource,
     Production, Movie, Serie,
     User, Coordinate
-} from "./model.js";
+} from "./Model.js";
 
 class Controller {
     //Campos privados
@@ -34,23 +34,24 @@ class Controller {
         let produccion11 = new Movie("Movie_5", "España", "12/10/2022", "Conseguir la corona", "images/image11.jpg", resource1, coordinate1);
         let produccion12 = new Movie("Movie_6", "España", "12/10/2022", "Conseguir la corona", "images/image12.jpg", resource1, coordinate1);
 
-        // try {
-        //     this.#model.addCategorie(categoria1);
-        // } catch (error) {
-        //     console.error(error);
-        // }
+        this.#model.addCategorie(categoria1);
+        this.#model.addCategorie(categoria2);
+        this.#model.addCategorie(categoria3);
 
-        // try {
-        //     this.#model.addCategorie(categoria2);
-        // } catch (error) {
-        //     console.error(error);
-        // }
+        this.#model.assignCategory(produccion1, categoria1);
+        this.#model.assignCategory(produccion2, categoria1);
+        this.#model.assignCategory(produccion3, categoria1);
+        this.#model.assignCategory(produccion4, categoria1);
 
-        // try {
-        //     this.#model.addCategorie(categoria3);
-        // } catch (error) {
-        //     console.error(error);
-        // }
+        this.#model.assignCategory(produccion5, categoria2);
+        this.#model.assignCategory(produccion6, categoria2);
+        this.#model.assignCategory(produccion7, categoria2);
+        this.#model.assignCategory(produccion8, categoria2);
+
+        this.#model.assignCategory(produccion9, categoria3);
+        this.#model.assignCategory(produccion10, categoria3);
+        this.#model.assignCategory(produccion11, categoria3);
+        this.#model.assignCategory(produccion12, categoria3);
 
     }
 
@@ -61,17 +62,16 @@ class Controller {
         // Eventos iniciales del Controlador
         this.onLoad();
         this.onInit();
-        // this.onNumberProductsInCartChanged();
 
         // Enlazamos handlers con la vista
         this.#view.bindInit(this.handleInit);
-        //this.#shoppingCartView.bindInit(this.handleInit.bind(this));
+
         this.#view.bindShowMovies(this.handleShowShoppingCart);
 
     }
 
     onInit = () => {
-        this.#view.showProductTypes();
+        // this.#view.showProductTypes();
     }
 
     handleInit = () => {
@@ -80,10 +80,25 @@ class Controller {
 
     onLoad = () => {
         this.#loadObjects();
+        this.#view.showProductTypes();
     }
 
-    handleShowShoppingCart = () => {
-        this.#view.showMovies();
+    handleShowShoppingCart = (type) => {
+
+        let title = "";
+
+        let category = this.#model.getCategory(type);
+
+        const iterator = category.producs[Symbol.iterator]();
+
+        if(type === "Categoria1") title = "Categoria 1";
+
+        if(type === "Categoria2") title = "Categoria 2";
+
+        if(type === "Categoria3") title = "Categoria 3";
+
+        this.#view.showMovies(iterator, title);
+
     }
 
 }

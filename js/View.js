@@ -8,10 +8,10 @@ class View {
     }
 
     showProductTypes() {
-        this.categorias.empty();
-        this.categorias.append(`<div id="type-list" class="row">
-        <div id="cat1" class="col-lg-4 col-md-6"><a class="prueba" data-type="Categoria 1" href="#product-list">
-                <div><img class="cat__img" alt="Categoría 1" src="./images/catcamara.jpg" />
+        this.main.empty();
+        this.main.append(`<div id="type-list" class="row inicial">
+        <div id="cat1" class="col-lg-4 col-md-6"><a class="prueba" data-type="Categoria1" href="#product-list">
+                <div><img class="cat__img" alt="Categoría1" src="./images/catcamara.jpg" />
                 </div>
                 <div class="cat__text">
                     <h3>Categoría 1</h3>
@@ -19,8 +19,8 @@ class View {
                 </div>
             </a>
         </div>
-        <div id="cat2" class="col-lg-4 col-md-6"><a data-type="Categoria 2" href="#">
-                <div><img class="cat__img" alt="Categoria 2" src="./images/catmovi.jpg" />
+        <div id="cat2" class="col-lg-4 col-md-6"><a data-type="Categoria2" href="#product-list">
+                <div><img class="cat__img" alt="Categoria2" src="./images/catmovi.jpg" />
                 </div>
                 <div class="cat__text">
                     <h3>Categoria 2</h3>
@@ -28,8 +28,8 @@ class View {
                 </div>
             </a>
         </div>
-        <div id="cat3" class="col-lg-4 col-md-6"><a data-type="Categoria 3" href="#">
-                <div><img class="cat__img" alt="Categoria 3" src="./images/catpportatil.jpg" />
+        <div id="cat3" class="col-lg-4 col-md-6"><a data-type="Categoria3" href="#product-list">
+                <div><img class="cat__img" alt="Categoria3" src="./images/catpportatil.jpg" />
                 </div>
                 <div class="cat__text">
                     <h3>Categoria 3</h3>
@@ -38,6 +38,7 @@ class View {
             </a>
         </div>
     </div>`);
+
     }
 
     bindInit(handler) {
@@ -49,12 +50,12 @@ class View {
         // });
     }
 
-    showMovies() {
-        main.empty();
-        if (categorias.children().length > 1)
-            categorias.children()[1].remove();
+    showMovies(iterator, title) {
+        this.main.empty();
+        if (this.categorias.children().length > 1)
+            this.categorias.children()[1].remove();
 
-        main.append(`<div id="product-list" class="container my-3"><div class="row"> </div></div>`);
+        this.main.append(`<div id="product-list" class="container my-3"><div class="row"> </div></div>`);
 
         let id = $("#product-list");
 
@@ -82,18 +83,37 @@ class View {
         }
 
         id.prepend(`<h1>${title}</h1>`);
-
     }
 
-
     bindShowMovies(handler) {
-        $('#type-list').find('a').click(function(event){
-            // handler(this.dataset.type);
-            console.log(this.dataset.type);
+        $('#type-list').find('a').click(function (event) {
+            handler(this.dataset.type);
         });
     }
 
-    
+    showCategories(categories) {
+        if (this.categories.children().length > 1)
+            this.categories.children()[1].remove();
+        let container = $('<div id="category-list" class="row"></div>');
+        for (let category of categories) {
+            container.append(`<div class="col-lg-3 col-md-6"><a data-category="${category.title}" href="#product-list">
+					<div class="cat-list-image"><img alt="${category.title}" src="${category.url}" />
+					</div>
+					<div class="cat-list-text">
+						<h3>${category.title}</h3>
+						<div>${category.description}</div>
+					</div>
+				</a>
+			</div>`);
+        }
+        this.categories.append(container);
+    }
+
+    bindProductsCategoryList(handler) {
+        $('#category-list').find('a').click(function (event) {
+            handler(this.dataset.category);
+        });
+    }
 
 }
 

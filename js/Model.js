@@ -1071,8 +1071,22 @@ let VideoSystem = (function () {
                 }
             }
 
+            getCategory(title){
 
-            //Devuelve los autores correspondientes a una producción
+                let cat;
+
+                for(let i = 0; i < this.#categories.length; i++){
+                    if(this.#categories[i].category.name === title){
+                        cat = this.#categories[i];
+                    }
+                    
+                }
+
+                return cat;
+			}
+
+
+            //Devuelve los actores correspondientes a una producción
             * getCast(production) {
 
                 //Comprobamos que la producción es una instancia de Production
