@@ -71,7 +71,12 @@ class Controller {
     }
 
     onInit = () => {
-        this.#view.showProductTypes();
+
+        let pros;
+
+        pros = this.#model.randomProduction();
+
+        this.#view.showProductTypes(pros);
         this.#view.bindShowMovies(this.handleShowShoppingCart);
     }
 

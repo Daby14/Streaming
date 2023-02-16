@@ -1099,6 +1099,30 @@ let VideoSystem = (function () {
                 return pro;
             }
 
+            randomProduction() {
+
+                let pros = [];
+                let pos = 0;
+
+                for (let i = 0; i < 3; i++) {
+
+                    pos = Math.floor(Math.random() * 11) + 1;
+
+                    pros[i] = this.#producs[pos];
+
+                    if (pros.includes(pos)) {
+                        pos = Math.floor(Math.random() * 11) + 1;
+                        pros[i] = this.#producs[pos];
+                    } else {
+                        pros[i] = this.#producs[pos];
+                    }
+
+                }
+
+                return pros;
+
+            }
+
 
             //Devuelve los actores correspondientes a una producción
             * getCast(production) {

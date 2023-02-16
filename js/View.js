@@ -11,12 +11,12 @@ class View {
         $('#init').click((event) => {
             handler();
         });
-        // $('#logo').click((event) => {
-        //     handler();
-        // });
+        $('#logo').click((event) => {
+            handler();
+        });
     }
 
-    showProductTypes() {
+    showProductTypes(pros) {
         this.main.empty();
         this.main.append(`<div id="type-list" class="row inicial">
         <div id="cat1" class="col-lg-4 col-md-6"><a class="prueba" data-type="Categoria1" href="#product-list">
@@ -48,7 +48,28 @@ class View {
         </div>
     </div>`);
 
+        for (let i = 0; i < pros.length; i++) {
+
+
+            this.main.append(`<div id="types-list" class="row inicial"></div>`);
+
+            let id = $("#types-list");
+
+            id.append(`
+        <div class="col-lg-4 col-md-6">
+            <a data-type="${pros[i].title}" href="#product-list">
+                <div>
+                    <img class="cat__img" alt="Produccion ${i}" src="./${pros[i].image}" />
+                </div>
+                <div class="cat__text">
+                    <h3>Producción ${i}</h3>
+                </div>
+            </a>
+        </div>`);
+        }
+
     }
+
 
     bindShowMovies(handler) {
         $('#type-list').children().find('a').click(function (event) {
@@ -189,14 +210,14 @@ class View {
         this.main.append(container);
     }
 
-    bindShowProduct(handler){
-		$('#product-list').find('a.img-wrap').click(function(event){
-			handler(this.dataset.serial);
-		});
-		$('#product-list').find('figcaption a').click(function(event){
-			handler(this.dataset.serial);
-		});
-	}
+    bindShowProduct(handler) {
+        $('#product-list').find('a.img-wrap').click(function (event) {
+            handler(this.dataset.serial);
+        });
+        $('#product-list').find('figcaption a').click(function (event) {
+            handler(this.dataset.serial);
+        });
+    }
 
 
 }

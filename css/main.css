@@ -8,7 +8,13 @@
 }
 
 img{
-    width: 350px;
+    width: 370px;
+    height: 200px;
+}
+
+.header__logo{
+    width: 50;
+    height: 50px;
 }
 
 .inicial{
@@ -18,3 +24,8 @@ img{
 .enlaceMenu {
     color: white;
 }
+
+/* .cat__img{
+    width: 350px;
+    height: 200px;
+} */
