@@ -18,9 +18,9 @@ class Controller {
         //Declaramos dichos objetos
 
         //!CATEGORIAS
-        let categoria1 = new Category("Categoria1", "Acción");
-        let categoria2 = new Category("Categoria2", "Ficción");
-        let categoria3 = new Category("Categoria3", "Aventura");
+        let categoria1 = new Category("Acción", "Acción");
+        let categoria2 = new Category("Ficción", "Ficción");
+        let categoria3 = new Category("Aventura", "Aventura");
 
         //!RESOURCE
         let resource1 = new Resource("94", "movies/movie.mp4");
@@ -39,24 +39,24 @@ class Controller {
         //!PELÍCULAS
         let produccion7 = new Movie("El Hobbit", "Nueva Zelanda", "28/11/2012", "La trilogía de El hobbit, adaptación cinematográfica basada en la novela homónima, comprende tres películas épicas de fantasía, acción y aventuras: El hobbit: un viaje inesperado, El hobbit: la desolación de Smaug y El hobbit: la batalla de los Cinco Ejércitos", "images/image7.jpg", resource1, coordinate1);
         let produccion8 = new Movie("Jaula", "España", "09/09/2022", "Cuando una pareja encuentra a una niña traumatizada de origen desconocido, la esposa, Paula, debe descifrar los extraños comportamientos de la niña para desvelar su identidad y su oscuro pasado", "images/image8.jpg", resource1, coordinate1);
-        let produccion9 = new Movie("Objetos", "España", "30/09/2022", "Objetos es una película de suspenso de 2022 dirigida por Jorge Dorado con guion de Natxo López y protagonizada por Álvaro Morte, China Suárez y Verónica Echegui. Es una coproducción hispano-argentina-alemana", "images/image9.jpg", resource1, coordinate1);
+        let produccion9 = new Movie("Objetos", "España", "30/09/2022", "Objetos es una película de suspenso de 2022 dirigida por Jorge  con guion de Natxo López y protagonizada por Álvaro Morte, China Suárez y Verónica Echegui. Es una coproducción hispano-argentina-alemana", "images/image9.jpg", resource1, coordinate1);
         let produccion10 = new Movie("Smile", "Estados Unidos", "30/09/2022", "Tras presenciar el dramático incidente sufrido por un paciente, la Dra. Cotter experimenta hechos aterradores sin explicación aparente. A medida que el horror se adueña de su vida, comprende que la respuesta está en su propio pasado", "images/image10.jpg", resource1, coordinate1);
         let produccion11 = new Movie("The Invitation", "Estados Unidos", "26/08/2022", "Tras morir su hermana, Evie queda sin familiares, pero un análisis de ADN le revela la existencia de un primo distante. La nueva familia la invita a una boda en Inglaterra, y lo que empieza como un cuento de hadas se transforma en una pesadilla", "images/image11.jpg", resource1, coordinate1);
         let produccion12 = new Movie("Hacia la libertad", "Estados Unidos", "12/10/2022", "Peter, un esclavo, huye de una plantación en Luisiana después de haber sido azotado. Ahora, tiene que burlar a los cazadores de sangre fría y a los implacables pantanos de Luisiana en un tortuoso viaje hacia el norte", "images/image12.jpg", resource1, coordinate1);
 
         //!DIRECTORES
-        let director1 = new Person("Alvaro", "Sanchez", "Caminero", "05/09/1968", "images/image1.jpg");
-        let director2 = new Person("Pedro", "Sanchez", "Diaz", "01/01/1969", "images/image2.jpg");
-        let director3 = new Person("Victor", "Diaz", "Sanchez", "02/02/1970", "images/image3.jpg");
-        let director4 = new Person("Jose", "Diaz", "Caminero", "03/03/1971", "images/image4.jpg");
-        let director5 = new Person("Angel", "Perez", "Gonzalez", "04/04/1972", "images/image5.jpg");
-        let director6 = new Person("Tomás", "Sanchez", "Gonzalez", "05/05/1973", "images/image6.jpg");
-        let director7 = new Person("David", "Caminero", "Gonzalez", "06/06/1974", "images/image7.jpg");
-        let director8 = new Person("Javier", "Perez", "Diaz", "07/07/1975", "images/image8.jpg");
-        let director9 = new Person("Alejandro", "Rodriguez", "Diaz", "08/08/1976", "images/image9.jpg");
-        let director10 = new Person("Claudia", "Blanco", "Viso", "09/09/1977", "images/image10.jpg");
-        let director11 = new Person("Sonia", "Fernandez", "Diaz", "10/10/1978", "images/image11.jpg");
-        let director12 = new Person("Laura", "Vidal", "Roldán", "11/11/1979", "images/image12.jpg");
+        let director1 = new Person("Juan", "Antonio", "Bayona", "05/09/1968", "images/director1.jpg");
+        let director2 = new Person("Laura", "Caballero", "", "01/01/1969", "images/director2.jpg");
+        let director3 = new Person("Álex", "Rodrigo", "", "02/02/1970", "images/director3.jpg");
+        let director4 = new Person("Ryan", "Phillippe", "", "03/03/1971", "images/director4.jpg");
+        let director5 = new Person("Alex", "García", "López", "04/04/1972", "images/director5.jpg");
+        let director6 = new Person("Michal", "Gazda", "", "05/05/1973", "images/director6.jpg");
+        let director7 = new Person("Peter", "Jakson", "", "06/06/1974", "images/director7.jpg");
+        let director8 = new Person("Ignacio", "Tatay", "", "07/07/1975", "images/director8.jpg");
+        let director9 = new Person("Jorge", "Dorado", "", "08/08/1976", "images/director9.jpg");
+        let director10 = new Person("Parker", "Finn", "Viso", "09/09/1977", "images/director10.jpg");
+        let director11 = new Person("Jessica", "Thompson", "", "10/10/1978", "images/director11.jpg");
+        let director12 = new Person("Antoine", "Fuqua", "", "11/11/1979", "images/director12.jpg");
 
         //!ACTORES
         let actor1 = new Person("Morfydd", "Clark", "(Galadriel)", "01/01/2003", "images/actor1.jpg");
@@ -65,24 +65,24 @@ class Controller {
         let actor4 = new Person("Jordi", "Sanchez", "(Antonio)", "04/01/2003", "images/actor4.jpg");
         let actor5 = new Person("Jaime", "Llorente", "(Denver)", "05/01/2003", "images/actor5.jpg");
         let actor6 = new Person("Pedro", "Alonso", "(Berlín)", "06/01/2003", "images/actor6.jpg");
-        let actor7 = new Person("Jose Angel", "Vargas", "Sanchez", "07/01/2003", "images/image4.jpg");
-        let actor8 = new Person("Judit", "Diaz", "Sanchez", "08/01/2003", "images/image4.jpg");
-        let actor9 = new Person("Alvaro", "Sanchez", "Redondo", "09/01/2003", "images/image5.jpg");
-        let actor10 = new Person("Clara", "Diaz", "Lopez", "10/01/2003", "images/image5.jpg");
-        let actor11 = new Person("Jose", "Romero", "Monforte", "11/01/2003", "images/image6.jpg");
-        let actor12 = new Person("Elena", "Sanchez", "Lopez", "12/01/2003", "images/image6.jpg");
-        let actor13 = new Person("Pedro", "Romero", "Lopez", "13/01/2003", "images/image7.jpg");
-        let actor14 = new Person("Beatriz", "Diaz", "Romero", "14/01/2003", "images/image7.jpg");
-        let actor15 = new Person("Leonardo", "Vargas", "Diaz", "15/01/2003", "images/image8.jpg");
-        let actor16 = new Person("Rebeca", "Lopez", "Sanchez", "16/01/2003", "images/image8.jpg");
-        let actor17 = new Person("Francisco", "Naranjo", "Martinez", "17/01/2003", "images/image9.jpg");
-        let actor18 = new Person("Daniela", "Martín", "Lopez", "18/01/2003", "images/image9.jpg");
-        let actor19 = new Person("Alejandro", "Martinez", "Nieto", "19/01/2003", "images/image10.jpg");
-        let actor20 = new Person("Amalia", "Romero", "Martinez", "20/01/2003", "images/image10.jpg");
-        let actor21 = new Person("Diego", "Martín", "Blanco", "21/01/2003", "images/image11.jpg");
-        let actor22 = new Person("Eva", "Ureña", "Sanchez", "22/01/2003", "images/image11.jpg");
-        let actor23 = new Person("Javier", "Romero", "Barba", "23/01/2003", "images/image12.jpg");
-        let actor24 = new Person("Ainhoa", "Serrano", "Montero", "24/01/2003", "images/image12.jpg");
+        let actor7 = new Person("Ryan", "Phillippe", "(Bob Lee Swagger)", "07/01/2003", "images/actor7.jpg");
+        let actor8 = new Person("Shantel", "VanSanten", "(Julie Swagger)", "08/01/2003", "images/actor8.jpg");
+        let actor9 = new Person("Henry", "Cavill", "(Geralt de Rivia)", "09/01/2003", "images/actor9.jpg");
+        let actor10 = new Person("Anya", "Chalotra", "(Yennefer de Vengerberg)", "10/01/2003", "images/actor10.jpg");
+        let actor11 = new Person("Magdalena", "Boczarska", "(Anna Barczyk)", "11/01/2003", "images/actor11.jpg");
+        let actor12 = new Person("Leszek", "Lichota", "(Michal Barczyk)", "12/01/2003", "images/actor12.jpg");
+        let actor13 = new Person("Martin", "Freeman", "(Bilbo Bolsón)", "13/01/2003", "images/actor13.jpg");
+        let actor14 = new Person("Ian", "McKellen", "(Gandalf)", "14/01/2003", "images/actor14.jpg");
+        let actor15 = new Person("Elena", "Anaya", "(Paula)", "15/01/2003", "images/actor15.jpg");
+        let actor16 = new Person("Eva", "Tennear", "(Clara)", "16/01/2003", "images/actor16.jpg");
+        let actor17 = new Person("China", "Suarez", "(Sara)", "17/01/2003", "images/actor17.jpg");
+        let actor18 = new Person("Alvaro", "Morte", "(Mario)", "18/01/2003", "images/actor18.jpg");
+        let actor19 = new Person("Caitlin", "Stasey", "(Laura Weaver)", "19/01/2003", "images/actor19.jpg");
+        let actor20 = new Person("Kyle", "Gallner", "(Joel)", "20/01/2003", "images/actor20.jpg");
+        let actor21 = new Person("Stephanie", "Corneliussen", "(Viktoria)", "21/01/2003", "images/actor21.jpg");
+        let actor22 = new Person("Alana", "Boden", "(Lucy)", "22/01/2003", "images/actor22.jpg");
+        let actor23 = new Person("Will", "Smith", "(Peter)", "23/01/2003", "images/actor23.jpg");
+        let actor24 = new Person("Imani", "Pullum", "(Betsy)", "24/01/2003", "images/actor24.jpg");
 
         //!ADD CATEGORIE
         this.#model.addCategorie([categoria1, categoria2, categoria3]);
@@ -192,6 +192,7 @@ class Controller {
         this.#view.showProductions(iterator, title);
         this.#view.bindShowCardProduct(this.handleShowProduct);
 
+
     }
 
     //Método handle que muestra la carta de una producción con sus actores y sus directores correspondientes
@@ -217,6 +218,12 @@ class Controller {
 
         //Llamamos al método para mostrar la información de la producción con sus actores y directores correspondientes
         this.#view.showCardProduction(pro, director, actors);
+        this.#view.bindDirector(this.handleDirector);
+    }
+
+    //Método handle que llama al handleShowCategory
+    handleDirector = (serial) => {
+        this.handleShowDirector(serial);
     }
 
     //Método onAddCategory que muestra las categorías en el menú
@@ -256,7 +263,9 @@ class Controller {
             produccion = pro;
         }
 
-        this.#view.showCardDirector(produccion, dir)
+        
+
+        this.#view.showCardDirector(produccion, dir);
 
     }
 

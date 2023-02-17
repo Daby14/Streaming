@@ -182,7 +182,9 @@ class View {
                                     <br>
                                     <br>
                                     <h6 class="text-uppercase"><u>Director</u></h6>
+                                    <a href="#" id="director" data-serial="${director.name}">
                                     <span class="text-muted brand">Nombre: ${director.name} ${director.lastname1} ${director.lastname2}</span>
+                                    </a>
                                     <br>
                                     <br>
                                     <h6 class="text-uppercase"><u>Actores</u></h6>
@@ -216,6 +218,12 @@ class View {
             handler(this.dataset.serial);
         });
         $('#product-list').find('a.compra').click(function (event) {
+            handler(this.dataset.serial);
+        });
+    }
+
+    bindDirector(handler) {
+        $('#director').click(function (event) {
             handler(this.dataset.serial);
         });
     }
@@ -259,7 +267,7 @@ class View {
                     <div class="row">
                         <div class="col-md-6">
                             <div class="images p-3">
-                                <div class="text-center p-4"> <img id="main-image" src="./${product.image}"/> </div>
+                                <div class="text-center p-4"> <img id="main-image" src="./${dir.director.picture}"/> </div>
                             </div>
                         </div>
                         <div class="col-md-6">
