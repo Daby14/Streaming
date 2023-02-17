@@ -30,8 +30,7 @@ class View {
                 <div><img class="cat__img" alt="Categoría1" src="./images/catcamara.jpg" />
                 </div>
                 <div class="cat__text">
-                    <h3>Categoría 1</h3>
-                    <div>Acción</div>
+                    <h3><strong>Acción</strong></h3>
                 </div>
             </a>
         </div>
@@ -39,8 +38,7 @@ class View {
                 <div><img class="cat__img" alt="Categoria2" src="./images/catmovi.jpg" />
                 </div>
                 <div class="cat__text">
-                    <h3>Categoria 2</h3>
-                    <div>Deportes</div>
+                    <h3><strong>Ficción</strong></h3>
                 </div>
             </a>
         </div>
@@ -48,8 +46,7 @@ class View {
                 <div><img class="cat__img" alt="Categoria3" src="./images/catpportatil.jpg" />
                 </div>
                 <div class="cat__text">
-                    <h3>Categoria 3</h3>
-                    <div>Aventura</div>
+                    <h3><strong>Aventura</strong></h3>
                 </div>
             </a>
         </div>
@@ -69,7 +66,7 @@ class View {
                     <img class="cat__img" alt="Produccion ${i}" src="./${pros[i].image}" />
                 </div>
                 <div class="cat__text">
-                    <h3>Producción ${i + 1}</h3>
+                    <h3><strong>Producción ${i + 1}</strong></h3>
                 </div>
             </a>
         </div>`);
@@ -327,20 +324,20 @@ class View {
         let container;
 
         if (product) {
-            container = $(`<div id="single-product" class="${act.actor.name}-style container mt-5 mb-5">
+            container = $(`<div id="single-product" class="${act.actor.name} container mt-5 mb-5">
             <div class="row d-flex justify-content-center">
             <div class="col-md-10">
                 <div class="card">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="images p-3">
-                                <div class="text-center p-4"> <img id="main-image" src="./${product.image}"/> </div>
+                                <div class="text-center p-4"> <img id="main-image" src="./${act.actor.picture}"/> </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="product p-4">
                                 <div class="mt-4 mb-3"> 
-                                    <h5 class="text-uppercase"><strong>DIRECTOR</strong></h5>
+                                    <h5 class="text-uppercase"><strong>Actor</strong></h5>
                                 </div>
                                 <div class="sizes mt-5">
                                     <span class="text-muted brand">Nombre: ${act.actor.name} ${act.actor.lastname1} ${act.actor.lastname2}</span>

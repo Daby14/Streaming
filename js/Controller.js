@@ -59,12 +59,12 @@ class Controller {
         let director12 = new Person("Laura", "Vidal", "Roldán", "11/11/1979", "images/image12.jpg");
 
         //!ACTORES
-        let actor1 = new Person("Jose Carlos", "Gonzalez", "Tirado", "01/01/2003", "images/image1.jpg");
-        let actor2 = new Person("Carmen", "Becerra", "Martín", "02/01/2003", "images/image1.jpg");
-        let actor3 = new Person("Cristian", "Sanchez", "Diaz", "03/01/2003", "images/image2.jpg");
-        let actor4 = new Person("Ana", "Vargas", "Ramírez", "04/01/2003", "images/image2.jpg");
-        let actor5 = new Person("Victor", "Vallez", "Manzanares", "05/01/2003", "images/image3.jpg");
-        let actor6 = new Person("Marta", "Bautista", "Diaz", "06/01/2003", "images/image3.jpg");
+        let actor1 = new Person("Morfydd", "Clark", "(Galadriel)", "01/01/2003", "images/actor1.jpg");
+        let actor2 = new Person("Robert", "Aramayo", "(Elrond)", "02/01/2003", "images/actor2.jpg");
+        let actor3 = new Person("Pablo", "Chiapella", "(Amador)", "03/01/2003", "images/actor3.jpg");
+        let actor4 = new Person("Jordi", "Sanchez", "(Antonio)", "04/01/2003", "images/actor4.jpg");
+        let actor5 = new Person("Jaime", "Llorente", "(Denver)", "05/01/2003", "images/actor5.jpg");
+        let actor6 = new Person("Pedro", "Alonso", "(Berlín)", "06/01/2003", "images/actor6.jpg");
         let actor7 = new Person("Jose Angel", "Vargas", "Sanchez", "07/01/2003", "images/image4.jpg");
         let actor8 = new Person("Judit", "Diaz", "Sanchez", "08/01/2003", "images/image4.jpg");
         let actor9 = new Person("Alvaro", "Sanchez", "Redondo", "09/01/2003", "images/image5.jpg");
@@ -85,9 +85,7 @@ class Controller {
         let actor24 = new Person("Ainhoa", "Serrano", "Montero", "24/01/2003", "images/image12.jpg");
 
         //!ADD CATEGORIE
-        this.#model.addCategorie(categoria1);
-        this.#model.addCategorie(categoria2);
-        this.#model.addCategorie(categoria3);
+        this.#model.addCategorie([categoria1, categoria2, categoria3]);
 
         //!ASSIGN CATEGORY
         this.#model.assignCategory(produccion1, categoria1);
@@ -118,30 +116,19 @@ class Controller {
         this.#model.assignDirector(produccion12, director12);
 
         //!ASSIGN ACTOR
-        this.#model.assignActor(produccion1, actor1);
-        this.#model.assignActor(produccion1, actor2);
-        this.#model.assignActor(produccion2, actor3);
-        this.#model.assignActor(produccion2, actor4);
-        this.#model.assignActor(produccion3, actor5);
-        this.#model.assignActor(produccion3, actor6);
-        this.#model.assignActor(produccion4, actor7);
-        this.#model.assignActor(produccion4, actor8);
-        this.#model.assignActor(produccion5, actor9);
-        this.#model.assignActor(produccion5, actor10);
-        this.#model.assignActor(produccion6, actor11);
-        this.#model.assignActor(produccion6, actor12);
-        this.#model.assignActor(produccion7, actor13);
-        this.#model.assignActor(produccion7, actor14);
-        this.#model.assignActor(produccion8, actor15);
-        this.#model.assignActor(produccion8, actor16);
-        this.#model.assignActor(produccion9, actor17);
-        this.#model.assignActor(produccion9, actor18);
-        this.#model.assignActor(produccion10, actor19);
-        this.#model.assignActor(produccion10, actor20);
-        this.#model.assignActor(produccion11, actor21);
-        this.#model.assignActor(produccion11, actor22);
-        this.#model.assignActor(produccion12, actor23);
-        this.#model.assignActor(produccion12, actor24);
+
+        this.#model.assignActor(produccion1, [actor1, actor2]);
+        this.#model.assignActor(produccion2, [actor3, actor4]);
+        this.#model.assignActor(produccion3, [actor5, actor6]);
+        this.#model.assignActor(produccion4, [actor7, actor8]);
+        this.#model.assignActor(produccion5, [actor9, actor10]);
+        this.#model.assignActor(produccion6, [actor11, actor12]);
+        this.#model.assignActor(produccion7, [actor13, actor14]);
+        this.#model.assignActor(produccion8, [actor15, actor16]);
+        this.#model.assignActor(produccion9, [actor17, actor18]);
+        this.#model.assignActor(produccion10, [actor19, actor20]);
+        this.#model.assignActor(produccion11, [actor21, actor22]);
+        this.#model.assignActor(produccion12, [actor23, actor24]);
 
     }
 

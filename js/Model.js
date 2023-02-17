@@ -121,37 +121,37 @@ let VideoSystem = (function () {
                 return this.#categories.findIndex(compareElements);
             }
 
+            // //Método que añade categorías
+            // addCategorie(categorie) {
+
+            //     //Comprobamos si la categoria es un objeto Category
+            //     if ((categorie === null) || !(categorie instanceof Category)) {
+            //         throw new CategorieTypeException();
+            //     }
+
+            //     //Almacenamos la posición de la categoría
+            //     let position = this.#getCategoryPosition(categorie);
+
+            //     //Si esa categoría no está registrada, la registramos
+            //     if (position === -1) {
+
+            //         this.#categories.push(
+            //             {
+            //                 category: categorie,
+            //                 producs: []
+            //             }
+            //         );
+
+            //     } else {
+            //         throw new ExistedException();
+            //     }
+
+            //     return this.#categories.length;
+
+            // }
+
             //Método que añade categorías
-            addCategorie(categorie) {
-
-                //Comprobamos si la categoria es un objeto Category
-                if ((categorie === null) || !(categorie instanceof Category)) {
-                    throw new CategorieTypeException();
-                }
-
-                //Almacenamos la posición de la categoría
-                let position = this.#getCategoryPosition(categorie);
-
-                //Si esa categoría no está registrada, la registramos
-                if (position === -1) {
-
-                    this.#categories.push(
-                        {
-                            category: categorie,
-                            producs: []
-                        }
-                    );
-
-                } else {
-                    throw new ExistedException();
-                }
-
-                return this.#categories.length;
-
-            }
-
-            //Método que añade categorías
-            addCategorie2(categorys) {
+            addCategorie(categorys) {
 
                 for (let i = 0; i < categorys.length; i++) {
 
@@ -177,13 +177,11 @@ let VideoSystem = (function () {
                         throw new ExistedException();
                     }
 
-                    return this.#categories.length;
+
 
                 }
 
-
-
-
+                return this.#categories.length;
 
             }
 
@@ -490,43 +488,45 @@ let VideoSystem = (function () {
             }
 
             //Método que asigna una producción a un actor
-            assignActor(production, actor) {
+            assignActor(production, actors) {
 
                 //Comprobamos que production es una instancia de Production
                 if (!(production instanceof Production)) {
                     throw new ProductionTypeException();
                 }
 
-                //Comprobamos que actor es una instancia de Person
-                if (!(actor instanceof Person)) {
-                    throw new PersonTypeException();
+                for (let i = 0; i < actors.length; i++) {
+
+                    //Comprobamos que actor es una instancia de Person
+                    if (!(actors[i] instanceof Person)) {
+                        throw new PersonTypeException();
+                    }
+
+                    //Almacenamos la posición del actor
+                    let actorPosition = this.#getActorPosition(actors[i]);
+
+                    //Si no existe el autor lo añadimos y asignamos la última posición a actorPosition
+                    if (actorPosition === -1) {
+                        this.addActor(actors[i]);
+                        actorPosition = this.#actors.length - 1;
+                    }
+
+                    //Almacenamos la posición de la producción
+                    let productionPosition = this.#getProductionPosition(production);
+
+                    //Si no existe la producción la añadimos y asignamos la última posición a productionPosition
+                    if (productionPosition === -1) {
+                        this.#producs.push(production);
+                        productionPosition = this.#producs.length - 1;
+                    }
+
+                    //Si la producción no está asignada al actor correspondiente, la asignamos
+                    if (this.#getProductionPosition(production, this.#actors[actorPosition].producs) === -1) {
+                        this.#actors[actorPosition].producs.push(this.#producs[productionPosition]);
+                    }
                 }
 
-                //Almacenamos la posición del actor
-                let actorPosition = this.#getActorPosition(actor);
-
-                //Si no existe el autor lo añadimos y asignamos la última posición a actorPosition
-                if (actorPosition === -1) {
-                    this.addActor(actor);
-                    actorPosition = this.#actors.length - 1;
-                }
-
-                //Almacenamos la posición del actor
-                let productionPosition = this.#getProductionPosition(production);
-
-                //Si no existe la producción la añadimos y asignamos la última posición a productionPosition
-                if (productionPosition === -1) {
-                    this.#producs.push(production);
-                    productionPosition = this.#producs.length - 1;
-                }
-
-                //Si la producción no está asignada al actor correspondiente, la asignamos
-                if (this.#getProductionPosition(production, this.#actors[actorPosition].producs) === -1) {
-                    this.#actors[actorPosition].producs.push(this.#producs[productionPosition]);
-                }
-
-                //Devolvemos el total de producciones asignadas al actor
-                return this.#actors[actorPosition].producs.length;
+                return this.#actors.length;
 
             }
 
@@ -897,46 +897,34 @@ let VideoSystem = (function () {
                 //Iteramos sobre los actores
                 for (let pros of this.#actors) {
 
-                    if (pros.actor.picture === production.image) {
-                        yield (pros.actor);
+                    for(let i=0; i<pros.producs.length; i++){
+
+                        if(pros.producs[i].title === production.title) yield (pros.actor);
+
                     }
+
                 }
             }
 
-            //Devuelve los directores correspondientes a una producción
+            //Devuelve los actores correspondientes a una producción
             * getCast2(production) {
 
-                //Comprobamos que la producción es una instancia de Production
-                if (!(production instanceof Production)) {
-                    throw new ProductionTypeException();
-                }
-
-                //Iteramos sobre los directores
-                for (let pro of this.#directors) {
-
-                    //Iteramos sobre producs de cada director
-                    let director = null;
-                    let i = 0;
-
-                    //Mientras no se encuentre el actor se sigue recorriendo el array
-                    while (i < pro.producs.length && !director) {
-
-                        //Comparamos por url
-                        if (pro.director.picture === production.image) {
-                            director = pro.director;
-                        }
-                        i++;
-                    }
-
-                    //Si encuentra el director lo devuelve
-                    if (director) {
-                        yield director;
-                    }
-
-
-
-                }
+            //Comprobamos que la producción es una instancia de Production
+            if (!(production instanceof Production)) {
+                throw new ProductionTypeException();
             }
+
+            //Iteramos sobre los actores
+            for (let pros of this.#directors) {
+
+                for(let i=0; i<pros.producs.length; i++){
+
+                    if(pros.producs[i].title === production.title) yield (pros.director);
+
+                }
+
+            }
+        }
 
         }
 
