@@ -1,12 +1,18 @@
 "use strict";
 
+//Clase View
 class View {
+
+    //Constructor
     constructor() {
+
+        //Accedemos a los elementos html mediante sus ids
         this.main = $('#main');
         this.categorias = $('#categorias');
         this.menu = $('#menu');
     }
 
+    //Método que captura el evento de volver a la página principal de la página web
     bindInit(handler) {
         $('#init').click((event) => {
             handler();
@@ -16,6 +22,7 @@ class View {
         });
     }
 
+    //Método que muestra los elementos de la página principal
     showProductTypes(pros) {
         this.main.empty();
         this.main.append(`<div id="type-list" class="row inicial">
@@ -191,10 +198,6 @@ class View {
                             <div class="product p-4">
                                 <div class="mt-4 mb-3"> 
                                     <h5 class="text-uppercase"><strong>${product.title}</strong></h5>
-                                    
-                                    <div class="price d-flex flex-row align-items-center">
-                                        
-                                    </div>
                                 </div>
                                 <p class="about">${product.synopsis}</p>
                                 <div class="sizes mt-5">
@@ -203,15 +206,15 @@ class View {
                                     <br>
                                     <span class="text-uppercase text-muted brand">Publicación: ${product.publication}</span>
                                     <br>
+                                    <br>
                                     <h6 class="text-uppercase"><u>Director</u></h6>
                                     <span class="text-muted brand">Nombre: ${director.name} ${director.lastname1} ${director.lastname2}</span>
+                                    <br>
                                     <br>
                                     <h6 class="text-uppercase"><u>Actores</u></h6>
                                     ${actor1}
                                     ${actor2}
-
                                 </div>
-                                    
                             </div>
                         </div>
                     </div>

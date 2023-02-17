@@ -1,20 +1,25 @@
+//Importamos las clases del products.js
 import {
     Person, Category, Resource,
     Production, Movie, Serie,
     User, Coordinate
-} from "./Model.js";
+} from "../entities/products.js";
 
+//Clase Controller
 class Controller {
-    //Campos privados
+
+    //Declaramos los campos privados
     #model;
     #view;
 
+    //Método que carga los objetos con los que vamos a trabajar en nuestra web
     #loadObjects() {
-        //Declaramos los objetos con los que vamos a trabajar en nuestra web
+
+        //Declaramos dichos objetos
 
         //!CATEGORIAS
         let categoria1 = new Category("Categoria1", "Acción");
-        let categoria2 = new Category("Categoria2", "Deportes");
+        let categoria2 = new Category("Categoria2", "Ficción");
         let categoria3 = new Category("Categoria3", "Aventura");
 
         //!RESOURCE
@@ -65,7 +70,7 @@ class Controller {
         let actor9 = new Person("Alvaro", "Sanchez", "Redondo", "09/01/2003", "images/image5.jpg");
         let actor10 = new Person("Clara", "Diaz", "Lopez", "10/01/2003", "images/image5.jpg");
         let actor11 = new Person("Jose", "Romero", "Monforte", "11/01/2003", "images/image6.jpg");
-        let actor12 = new Person("Marta", "Sanchez", "Lopez", "12/01/2003", "images/image6.jpg");
+        let actor12 = new Person("Elena", "Sanchez", "Lopez", "12/01/2003", "images/image6.jpg");
         let actor13 = new Person("Pedro", "Romero", "Lopez", "13/01/2003", "images/image7.jpg");
         let actor14 = new Person("Beatriz", "Diaz", "Romero", "14/01/2003", "images/image7.jpg");
         let actor15 = new Person("Leonardo", "Vargas", "Diaz", "15/01/2003", "images/image8.jpg");
@@ -79,25 +84,26 @@ class Controller {
         let actor23 = new Person("Javier", "Romero", "Barba", "23/01/2003", "images/image12.jpg");
         let actor24 = new Person("Ainhoa", "Serrano", "Montero", "24/01/2003", "images/image12.jpg");
 
+        //!ADD CATEGORIE
         this.#model.addCategorie(categoria1);
         this.#model.addCategorie(categoria2);
         this.#model.addCategorie(categoria3);
 
+        //!ASSIGN CATEGORY
         this.#model.assignCategory(produccion1, categoria1);
         this.#model.assignCategory(produccion2, categoria1);
         this.#model.assignCategory(produccion3, categoria1);
         this.#model.assignCategory(produccion4, categoria1);
-
         this.#model.assignCategory(produccion5, categoria2);
         this.#model.assignCategory(produccion6, categoria2);
         this.#model.assignCategory(produccion7, categoria2);
         this.#model.assignCategory(produccion8, categoria2);
-
         this.#model.assignCategory(produccion9, categoria3);
         this.#model.assignCategory(produccion10, categoria3);
         this.#model.assignCategory(produccion11, categoria3);
         this.#model.assignCategory(produccion12, categoria3);
 
+        //!ASSIGN DIRECTOR
         this.#model.assignDirector(produccion1, director1);
         this.#model.assignDirector(produccion2, director2);
         this.#model.assignDirector(produccion3, director3);
@@ -111,6 +117,7 @@ class Controller {
         this.#model.assignDirector(produccion11, director11);
         this.#model.assignDirector(produccion12, director12);
 
+        //!ASSIGN ACTOR
         this.#model.assignActor(produccion1, actor1);
         this.#model.assignActor(produccion1, actor2);
         this.#model.assignActor(produccion2, actor3);
@@ -138,6 +145,7 @@ class Controller {
 
     }
 
+    //Constructor
     constructor(model, view) {
         this.#model = model;
         this.#view = view;
@@ -198,6 +206,8 @@ class Controller {
 
         let pro = this.#model.getProduction(serial);
 
+
+
         for (let pros of this.#model.getCast2(pro)) {
             director = pros;
         }
@@ -206,10 +216,6 @@ class Controller {
             actors[pos] = actor;
             pos++;
         }
-
-        // for(let i = 0; i < actors.length; i++) {
-        //     console.log(actors[i]);
-        // }
 
         this.#view.showProduct(pro, director, actors);
     }
