@@ -150,6 +150,43 @@ let VideoSystem = (function () {
 
             }
 
+            //Método que añade categorías
+            addCategorie2(categorys) {
+
+                for (let i = 0; i < categorys.length; i++) {
+
+                    //Comprobamos si la categoria es un objeto Category
+                    if ((categorys[i] === null) || !(categorys[i] instanceof Category)) {
+                        throw new CategorieTypeException();
+                    }
+
+                    //Almacenamos la posición de la categoría
+                    let position = this.#getCategoryPosition(categorys[i]);
+
+                    //Si esa categoría no está registrada, la registramos
+                    if (position === -1) {
+
+                        this.#categories.push(
+                            {
+                                category: categorys[i],
+                                producs: []
+                            }
+                        );
+
+                    } else {
+                        throw new ExistedException();
+                    }
+
+                    return this.#categories.length;
+
+                }
+
+
+
+
+
+            }
+
             //Método que dado un objeto Category lo elimina del sistema
             removeCategorie(categorie) {
 
@@ -809,7 +846,7 @@ let VideoSystem = (function () {
                     if (this.#directors[i].director.name === title) {
                         dir = this.#directors[i];
                     }
-                    
+
 
                 }
 
@@ -824,7 +861,7 @@ let VideoSystem = (function () {
                     if (this.#actors[i].actor.name === title) {
                         act = this.#actors[i];
                     }
-                    
+
 
                 }
 
