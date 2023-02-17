@@ -26,24 +26,24 @@ class View {
     showPrincipalElements(pros) {
         this.main.empty();
         this.main.append(`<div id="type-list" class="row inicial">
-        <div id="cat1" class="col-lg-4 col-md-6"><a class="prueba" data-type="Categoria1" href="#product-list">
-                <div><img class="cat__img" alt="Categoría1" src="./images/catcamara.jpg" />
+        <div id="cat1" class="col-lg-4 col-md-6"><a class="prueba" data-type="Acción" href="#product-list">
+                <div><img class="cat__img" alt="Acción" src="./images/catcamara.jpg" />
                 </div>
                 <div class="cat__text">
                     <h3><strong>Acción</strong></h3>
                 </div>
             </a>
         </div>
-        <div id="cat2" class="col-lg-4 col-md-6"><a data-type="Categoria2" href="#product-list">
-                <div><img class="cat__img" alt="Categoria2" src="./images/catmovi.jpg" />
+        <div id="cat2" class="col-lg-4 col-md-6"><a data-type="Ficción" href="#product-list">
+                <div><img class="cat__img" alt="Ficción" src="./images/catmovi.jpg" />
                 </div>
                 <div class="cat__text">
                     <h3><strong>Ficción</strong></h3>
                 </div>
             </a>
         </div>
-        <div id="cat3" class="col-lg-4 col-md-6"><a data-type="Categoria3" href="#product-list">
-                <div><img class="cat__img" alt="Categoria3" src="./images/catpportatil.jpg" />
+        <div id="cat3" class="col-lg-4 col-md-6"><a data-type="Aventura" href="#product-list">
+                <div><img class="cat__img" alt="Aventura" src="./images/catpportatil.jpg" />
                 </div>
                 <div class="cat__text">
                     <h3><strong>Aventura</strong></h3>
@@ -188,8 +188,14 @@ class View {
                                     <br>
                                     <br>
                                     <h6 class="text-uppercase"><u>Actores</u></h6>
-                                    ${actor1}
-                                    ${actor2}
+                                    <div id="actor">
+                                        <a href="#" data-serial="${actor[0].name}">
+                                            ${actor1}
+                                        </a>
+                                        <a href="#" data-serial="${actor[1].name}">
+                                            ${actor2}
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -224,6 +230,12 @@ class View {
 
     bindDirector(handler) {
         $('#director').click(function (event) {
+            handler(this.dataset.serial);
+        });
+    }
+
+    bindActor(handler) {
+        $('#actor').find('a').click(function (event) {
             handler(this.dataset.serial);
         });
     }
@@ -280,7 +292,9 @@ class View {
                                     <br>
                                     <br>
                                     <h6 class="text-uppercase"><u>Producciones</u></h6>
+                                    <a href="#" id="production1" data-serial="${product.title}">
                                     <span class="text-muted brand">Nombre: ${product.title}</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -352,7 +366,9 @@ class View {
                                     <br>
                                     <br>
                                     <h6 class="text-uppercase"><u>Producciones</u></h6>
-                                    <span class="text-muted brand">Nombre: ${product.title}</span>
+                                    <a href="#" id="production2" data-serial="${product.title}">
+                                        <span class="text-muted brand">Nombre: ${product.title}</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -370,6 +386,15 @@ class View {
 			</div>`);
         }
         this.main.append(container);
+    }
+
+    bindProduction(handler) {
+        $('#production2').click(function (event) {
+            handler(this.dataset.serial);
+        });
+        $('#production1').click(function (event) {
+            handler(this.dataset.serial);
+        });
     }
 
 }

@@ -180,13 +180,15 @@ class Controller {
         //Obtenemos la categoría correspondiente
         let category = this.#model.getCategory(type);
 
+        // console.log(category);
+
         const iterator = category.producs[Symbol.iterator]();
 
-        if (type === "Categoria1") title = "Categoria 1";
+        if (type === "Acción") title = "Acción";
 
-        if (type === "Categoria2") title = "Categoria 2";
+        if (type === "Ficción") title = "Ficción";
 
-        if (type === "Categoria3") title = "Categoria 3";
+        if (type === "Aventura") title = "Aventura";
 
         //Llamamos al método para mostrar las producciones correspondientes a dicha categoría y llamamos al evento
         this.#view.showProductions(iterator, title);
@@ -219,11 +221,17 @@ class Controller {
         //Llamamos al método para mostrar la información de la producción con sus actores y directores correspondientes
         this.#view.showCardProduction(pro, director, actors);
         this.#view.bindDirector(this.handleDirector);
+        this.#view.bindActor(this.handleActor);
     }
 
     //Método handle que llama al handleShowCategory
     handleDirector = (serial) => {
         this.handleShowDirector(serial);
+    }
+
+    //Método handle que llama al handleShowCategory
+    handleActor = (serial) => {
+        this.handleShowActor(serial);
     }
 
     //Método onAddCategory que muestra las categorías en el menú
@@ -263,9 +271,8 @@ class Controller {
             produccion = pro;
         }
 
-        
-
         this.#view.showCardDirector(produccion, dir);
+        this.#view.bindProduction(this.handleShowProduct);
 
     }
 
@@ -293,7 +300,8 @@ class Controller {
             produccion = pro;
         }
 
-        this.#view.showCardActor(produccion, act)
+        this.#view.showCardActor(produccion, act);
+        this.#view.bindProduction(this.handleShowProduct);
 
     }
 
