@@ -801,6 +801,36 @@ let VideoSystem = (function () {
                 return pro;
             }
 
+            getDirector(title) {
+
+                let dir;
+
+                for (let i = 0; i < this.#directors.length; i++) {
+                    if (this.#directors[i].director.name === title) {
+                        dir = this.#directors[i];
+                    }
+                    
+
+                }
+
+                return dir;
+            }
+
+            getActor(title) {
+
+                let act;
+
+                for (let i = 0; i < this.#actors.length; i++) {
+                    if (this.#actors[i].actor.name === title) {
+                        act = this.#actors[i];
+                    }
+                    
+
+                }
+
+                return act;
+            }
+
             randomProduction(cantidad) {
 
                 // Crear un nuevo array para almacenar los números aleatorios

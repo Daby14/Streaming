@@ -181,6 +181,8 @@ class Controller {
     onLoad = () => {
         this.#loadObjects();
         this.onAddCategory();
+        this.onAddDirector();
+        this.onAddActor();
     }
 
     //Método handle que muestra las producciones correspondientes a una categoría
@@ -238,8 +240,65 @@ class Controller {
         );
     }
 
+    //Método handle que llama al handleShowCategory
     handleProductsCategoryList = (type) => {
         this.handleShowCategory(type);
+    }
+
+    //Método onAddDirector que muestra los directores en el menú
+    onAddDirector = () => {
+        this.#view.showDirectorInMenu(this.#model.directors);
+        this.#view.bindProductsDirectorListInMenu(
+            this.handleProductsDirectorList
+        );
+    }
+
+    //Método handle que llama al handleShowCategory
+    handleProductsDirectorList = (type) => {
+        this.handleShowDirector(type);
+    }
+
+    //Método handle que muestra la carta de una producción con sus actores y sus directores correspondientes
+    handleShowDirector = (serial) => {
+
+        let dir = this.#model.getDirector(serial);
+
+        let produccion;
+
+        for (let pro of dir.producs) {
+            produccion = pro;
+        }
+
+        this.#view.showCardDirector(produccion, dir)
+
+    }
+
+    //Método onAddActor que muestra los actores en el menú
+    onAddActor = () => {
+        this.#view.showActorInMenu(this.#model.actors);
+        this.#view.bindProductsActorListInMenu(
+            this.handleProductsActorList
+        );
+    }
+
+    //Método handle que llama al handleShowCategory
+    handleProductsActorList = (type) => {
+        this.handleShowActor(type);
+    }
+
+    //Método handle que muestra la carta de una producción con sus actores y sus directores correspondientes
+    handleShowActor = (serial) => {
+
+        let act = this.#model.getActor(serial);
+
+        let produccion;
+
+        for (let pro of act.producs) {
+            produccion = pro;
+        }
+
+        this.#view.showCardActor(produccion, act)
+
     }
 
 }
