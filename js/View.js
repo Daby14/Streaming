@@ -23,7 +23,7 @@ class View {
     }
 
     //Método que muestra los elementos de la página principal
-    showProductTypes(pros) {
+    showPrincipalElements(pros) {
         this.main.empty();
         this.main.append(`<div id="type-list" class="row inicial">
         <div id="cat1" class="col-lg-4 col-md-6"><a class="prueba" data-type="Categoria1" href="#product-list">
@@ -77,20 +77,22 @@ class View {
 
     }
 
-
-    bindShowMovies(handler) {
+    //Método que captura el evento de hacer click a una categoría
+    bindShowCategory(handler) {
         $('#type-list').children().find('a').click(function (event) {
             handler(this.dataset.type);
         });
     }
 
-    bindShowProducts(handler) {
+    //Método que captura el evento de hacer click a una producción
+    bindShowProduction(handler) {
         $('#types-list').children().find('a').click(function (event) {
             handler(this.dataset.type);
         });
     }
 
-    showMovies(iterator, title) {
+    //Método que muestra las producciones correspondientes a una categoría
+    showProductions(iterator, title) {
         this.main.empty();
         if (this.categorias.children().length > 1)
             this.categorias.children()[1].remove();
@@ -125,32 +127,7 @@ class View {
         id.prepend(`<h1>${title}</h1>`);
     }
 
-
-
-    showCategories(categories) {
-        if (this.categories.children().length > 1)
-            this.categories.children()[1].remove();
-        let container = $('<div id="category-list" class="row"></div>');
-        for (let category of categories) {
-            container.append(`<div class="col-lg-3 col-md-6"><a data-category="${category.title}" href="#product-list">
-					<div class="cat-list-image"><img alt="${category.title}" src="${category.url}" />
-					</div>
-					<div class="cat-list-text">
-						<h3>${category.title}</h3>
-						<div>${category.description}</div>
-					</div>
-				</a>
-			</div>`);
-        }
-        this.categories.append(container);
-    }
-
-    bindProductsCategoryList(handler) {
-        $('#category-list').find('a').click(function (event) {
-            handler(this.dataset.category);
-        });
-    }
-
+    //Método que muestra las categorías en el menú
     showCategoriesInMenu(categories) {
         let li = $(`<li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle enlaceMenu" href="#" id="navCats" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
@@ -168,15 +145,15 @@ class View {
         this.menu.append(li);
     }
 
+    //Método que captura el evento de hacer click en la categoría del menú
     bindProductsCategoryListInMenu(handler) {
-
         $('#navCats').next().children().click(function (event) {
             handler(this.dataset.category);
         });
-
     }
 
-    showProduct(product, director, actor) {
+    //Método que muestra la carta de la producción con sus actores y directores correspondientes
+    showCardProduction(product, director, actor) {
         this.main.empty();
 
         let container;
@@ -233,7 +210,8 @@ class View {
         this.main.append(container);
     }
 
-    bindShowProduct(handler) {
+    //Método que captura el evento de hacer click en una producción
+    bindShowCardProduct(handler) {
         $('#product-list').find('a.img-wrap').click(function (event) {
             handler(this.dataset.serial);
         });

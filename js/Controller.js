@@ -156,33 +156,39 @@ class Controller {
 
         // Enlazamos handlers con la vista
         this.#view.bindInit(this.handleInit);
-
-        this.#view.bindShowMovies(this.handleShowShoppingCart);
+        this.#view.bindShowCategory(this.handleShowCategory);
 
     }
 
+    //Método onInit
     onInit = () => {
 
+        //Obtenemos 3 producciones aleatorias
         let pros = this.#model.randomProduction(3);
 
-        this.#view.showProductTypes(pros);
-        this.#view.bindShowMovies(this.handleShowShoppingCart);
-        this.#view.bindShowProducts(this.handleShowProduct);
+        //Llamamos al método para mostrar esas producciones aleatorias y a los eventos
+        this.#view.showPrincipalElements(pros);
+        this.#view.bindShowCategory(this.handleShowCategory);
+        this.#view.bindShowProduction(this.handleShowProduct);
     }
 
+    //Método hHandle que llama al onInit
     handleInit = () => {
         this.onInit();
     }
 
+    //Método onLoad que carga los objetos con los que vamos a trabajar
     onLoad = () => {
         this.#loadObjects();
         this.onAddCategory();
     }
 
-    handleShowShoppingCart = (type) => {
+    //Método handle que muestra las producciones correspondientes a una categoría
+    handleShowCategory = (type) => {
 
         let title = "";
 
+        //Obtenemos la categoría correspondiente
         let category = this.#model.getCategory(type);
 
         const iterator = category.producs[Symbol.iterator]();
@@ -193,47 +199,47 @@ class Controller {
 
         if (type === "Categoria3") title = "Categoria 3";
 
-        this.#view.showMovies(iterator, title);
-        this.#view.bindShowProduct(this.handleShowProduct);
+        //Llamamos al método para mostrar las producciones correspondientes a dicha categoría y llamamos al evento
+        this.#view.showProductions(iterator, title);
+        this.#view.bindShowCardProduct(this.handleShowProduct);
 
     }
 
+    //Método handle que muestra la carta de una producción con sus actores y sus directores correspondientes
     handleShowProduct = (serial) => {
 
         let director;
         let actors = [];
         let pos = 0;
 
+        //Obtenemos la producción según su serial
         let pro = this.#model.getProduction(serial);
 
-
-
+        //Obtenemos el director correspondiente a la producción
         for (let pros of this.#model.getCast2(pro)) {
             director = pros;
         }
 
+        //Obtenemos los actores correspondiente a la producción
         for (let actor of this.#model.getCast(pro)) {
             actors[pos] = actor;
             pos++;
         }
 
-        this.#view.showProduct(pro, director, actors);
+        //Llamamos al método para mostrar la información de la producción con sus actores y directores correspondientes
+        this.#view.showCardProduction(pro, director, actors);
     }
 
+    //Método onAddCategory que muestra las categorías en el menú
     onAddCategory = () => {
-
         this.#view.showCategoriesInMenu(this.#model.categories);
         this.#view.bindProductsCategoryListInMenu(
             this.handleProductsCategoryList
         );
     }
 
-    onAddDirector = () => {
-
-    }
-
     handleProductsCategoryList = (type) => {
-        this.handleShowShoppingCart(type);
+        this.handleShowCategory(type);
     }
 
 }
