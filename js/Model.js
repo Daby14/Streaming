@@ -1099,30 +1099,23 @@ let VideoSystem = (function () {
                 return pro;
             }
 
-            randomProduction() {
+            randomProduction(cantidad) {
 
-                let pros = [];
-                let pos = 0;
+                // Crear un nuevo array para almacenar los números aleatorios
+                let numerosAleatorios = [];
 
-                for (let i = 0; i < 3; i++) {
+                // Generar números aleatorios únicos
+                while (numerosAleatorios.length < cantidad) {
+                    let indiceAleatorio = Math.floor(Math.random() * this.#producs.length);
+                    let numeroAleatorio = this.#producs[indiceAleatorio];
 
-                    pos = Math.floor(Math.random() * 11) + 1;
-
-                    pros[i] = this.#producs[pos];
-
-                    if (pros.includes(pos)) {
-                        pos = Math.floor(Math.random() * 11) + 1;
-                        pros[i] = this.#producs[pos];
-                    } else {
-                        pros[i] = this.#producs[pos];
+                    if (!numerosAleatorios.includes(numeroAleatorio)) {
+                        numerosAleatorios.push(numeroAleatorio);
                     }
-
                 }
 
-                return pros;
-
+                return numerosAleatorios;
             }
-
 
             //Devuelve los actores correspondientes a una producción
             * getCast(production) {

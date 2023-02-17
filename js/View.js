@@ -62,7 +62,7 @@ class View {
                     <img class="cat__img" alt="Produccion ${i}" src="./${pros[i].image}" />
                 </div>
                 <div class="cat__text">
-                    <h3>Producción ${i}</h3>
+                    <h3>Producción ${i+1}</h3>
                 </div>
             </a>
         </div>`);
@@ -73,6 +73,12 @@ class View {
 
     bindShowMovies(handler) {
         $('#type-list').children().find('a').click(function (event) {
+            handler(this.dataset.type);
+        });
+    }
+
+    bindShowProducts(handler) {
+        $('#types-list').children().find('a').click(function (event) {
             handler(this.dataset.type);
         });
     }
@@ -100,7 +106,7 @@ class View {
                     </div>
                 </div>
             </figcaption>
-            <div class="bottom-wrap"> <a href="#" data-serial="${product.value.title}" class="compra btn btn-primary float-right"> Comprar </a>
+            <div class="bottom-wrap"> <a href="#" data-serial="${product.value.title}" class="compra btn btn-primary float-right"> Acceder </a>
             </div>
         </figure>
     </div>`);
@@ -180,8 +186,9 @@ class View {
 								</div>
 								<div class="col-md-6">
 									<div class="product p-4">
-										<div class="mt-4 mb-3"> <span class="text-uppercase text-muted brand">${product.title}</span>
-											<h5 class="text-uppercase">${product.nationality}</h5>
+										<div class="mt-4 mb-3"> 
+											<h5 class="text-uppercase">${product.title}</h5>
+                                            <span class="text-uppercase text-muted brand">${product.nationality}</span>
 											<div class="price d-flex flex-row align-items-center">
 												
 											</div>
@@ -215,6 +222,9 @@ class View {
             handler(this.dataset.serial);
         });
         $('#product-list').find('figcaption a').click(function (event) {
+            handler(this.dataset.serial);
+        });
+        $('#product-list').find('a.compra').click(function (event) {
             handler(this.dataset.serial);
         });
     }
