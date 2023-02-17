@@ -62,7 +62,7 @@ class View {
                     <img class="cat__img" alt="Produccion ${i}" src="./${pros[i].image}" />
                 </div>
                 <div class="cat__text">
-                    <h3>Producción ${i+1}</h3>
+                    <h3>Producción ${i + 1}</h3>
                 </div>
             </a>
         </div>`);
@@ -169,43 +169,56 @@ class View {
 
     }
 
-    showProduct(product, message) {
+    showProduct(product, director, actor) {
         this.main.empty();
 
         let container;
+        let actor1 = `<span class="text-muted brand">Nombre: ${actor[0].name} ${actor[0].lastname1} ${actor[0].lastname2}</span><br>`
+        let actor2 = `<span class="text-muted brand">Nombre: ${actor[1].name} ${actor[1].lastname1} ${actor[1].lastname2}</span><br>`
+        
         if (product) {
             container = $(`<div id="single-product" class="${product.title}-style container mt-5 mb-5">
-				<div class="row d-flex justify-content-center">
-					<div class="col-md-10">
-						<div class="card">
-							<div class="row">
-								<div class="col-md-6">
-									<div class="images p-3">
-										<div class="text-center p-4"> <img id="main-image" src="./${product.image}"/> </div>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="product p-4">
-										<div class="mt-4 mb-3"> 
-											<h5 class="text-uppercase">${product.title}</h5>
-                                            <span class="text-uppercase text-muted brand">${product.nationality}</span>
-											<div class="price d-flex flex-row align-items-center">
-												
-											</div>
-										</div>
-										<p class="about">${product.synopsis}</p>
-										<div class="sizes mt-5">
-											<h6 class="text-uppercase">Características</h6>
-										</div>
-										<div class="cart mt-4 align-items-center"> <button data-serial="${product.title}" class="btn btn-primary text-uppercase mr-2 px-4">Comprar</button> </div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>`);
+            <div class="row d-flex justify-content-center">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="images p-3">
+                                <div class="text-center p-4"> <img id="main-image" src="./${product.image}"/> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="product p-4">
+                                <div class="mt-4 mb-3"> 
+                                    <h5 class="text-uppercase"><strong>${product.title}</strong></h5>
+                                    
+                                    <div class="price d-flex flex-row align-items-center">
+                                        
+                                    </div>
+                                </div>
+                                <p class="about">${product.synopsis}</p>
+                                <div class="sizes mt-5">
+                                    <h6 class="text-uppercase"><u>Características</u></h6>
+                                    <span class="text-uppercase text-muted brand">Origen: ${product.nationality}</span>
+                                    <br>
+                                    <span class="text-uppercase text-muted brand">Publicación: ${product.publication}</span>
+                                    <br>
+                                    <h6 class="text-uppercase"><u>Director</u></h6>
+                                    <span class="text-muted brand">Nombre: ${director.name} ${director.lastname1} ${director.lastname2}</span>
+                                    <br>
+                                    <h6 class="text-uppercase"><u>Actores</u></h6>
+                                    ${actor1}
+                                    ${actor2}
 
+                                </div>
+                                    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div>`);
 
         } else {
             container = $(` <div class="container mt-5 mb-5">

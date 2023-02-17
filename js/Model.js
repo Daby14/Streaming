@@ -1128,26 +1128,46 @@ let VideoSystem = (function () {
                 //Iteramos sobre los actores
                 for (let pro of this.#actors) {
 
-                    //Iteramos sobre producs de cada actor
-                    let actor = null;
-                    let i = 0;
-
-                    //Mientras no se encuentre el actor se sigue recorriendo el array
-                    while (i < pro.producs.length && !actor) {
-
-                        //Comparamos por url
-                        if (pro.producs[i].url === production.url) {
-                            actor = pro.actor;
-                        }
-                        i++;
-                    }
-
-                    //Si encuentra el actor lo devuelve
-                    if (actor) {
-                        yield actor;
+                    if(pro.actor.picture === production.image){
+                        yield(pro.actor);
                     }
                 }
             }
+
+            //Devuelve los directores correspondientes a una producción
+            * getCast2(production) {
+
+            //Comprobamos que la producción es una instancia de Production
+            if (!(production instanceof Production)) {
+                throw new ProductionTypeException();
+            }
+
+            //Iteramos sobre los directores
+            for (let pro of this.#directors) {
+
+                //Iteramos sobre producs de cada director
+                let director = null;
+                let i = 0;
+
+                //Mientras no se encuentre el actor se sigue recorriendo el array
+                while (i < pro.producs.length && !director) {
+
+                    //Comparamos por url
+                    if (pro.director.picture === production.image) {
+                        director = pro.director;
+                    }
+                    i++;
+                }
+
+                //Si encuentra el director lo devuelve
+                if (director) {
+                    yield director;
+                }
+
+                
+
+            }
+        }
 
         }
 
