@@ -231,17 +231,26 @@ class Controller {
         this.#view.showCardProduction(pro, director, actors);
         this.#view.bindDirector(this.handleShowDirector);
         this.#view.bindActor(this.handleShowActor);
+        this.#view.bindShowProductInNewWindow(this.handleProductNewWindow);
     }
 
-    // //Método handle que llama al handleShowDirector
-    // handleDirector = (serial) => {
-    //     this.handleShowDirector(serial);
-    // }
+    //Método handle que llama al handleShowDirector
+    handleDirector = (serial) => {
+        this.handleShowDirector(serial);
+    }
 
-    // //Método handle que llama al handleShowCategory
-    // handleActor = (serial) => {
-    //     this.handleShowActor(serial);
-    // }
+    //Método handle que llama al handleShowCategory
+    handleActor = (serial) => {
+        this.handleShowActor(serial);
+    }
+
+    handleProductNewWindow = (serial) => {
+        
+        //Obtenemos la producción según su serial
+        let pro = this.#model.getProduction(serial);
+
+        this.#view.showProductInNewWindow(pro, "hola");
+    }
 
     //Método onAddCategory que muestra las categorías en el menú
     onAddCategory = () => {

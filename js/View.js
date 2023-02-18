@@ -117,7 +117,7 @@ class View {
                     <h6 class="card-title"><u>CARACTERÍSTICAS</u></h6>
                     <p class="card-text">-Origen: ${product.value.nationality}</p>
                     <p class="card-text">-Publicación: ${product.value.publication}</p>
-                    <a href="#" class="btn btn-outline-primary " data-serial="${product.value.title}">Acceder</a>
+                    <a href="#" class="btn btn-outline-primary" data-serial="${product.value.title}">Acceder</a>
                 </div>
             </div>
             `);
@@ -215,6 +215,7 @@ class View {
                                             ${actor2}
                                         </a>
                                     </div>
+                                    <button id="b-open" data-serial="${product.title}" class="btn btn-primary text-uppercase mr-2 px-4">Abrir en nueva ventana</button>
                                 </div>
                             </div>
                         </div>
@@ -269,6 +270,7 @@ class View {
                                             ${actor2}
                                         </a>
                                     </div>
+                                    <button id="b-open" data-serial="${product.title}" class="btn btn-primary text-uppercase mr-2 px-4">Abrir en nueva ventana</button>
                                 </div>
                             </div>
                         </div>
@@ -281,8 +283,6 @@ class View {
         this.main.append(container);
     }
 
-
-
     bindDirector(handler) {
         $('#director').click(function (event) {
             handler(this.dataset.serial);
@@ -293,6 +293,74 @@ class View {
         $('#actor').find('a').click(function (event) {
             handler(this.dataset.serial);
         });
+    }
+
+    bindShowProductInNewWindow(handler) {
+        $('#b-open').click((event) => {
+            if (!this.productWindow || this.productWindow.closed) {
+                this.productWindow = window.open("product.html", "ProductWindow", "width=800, height=600, top=250, left=250, titlebar=yes, toolbar=no, menubar=no, location=no");
+                this.productWindow.addEventListener('DOMContentLoaded', () => {
+                    handler(event.target.dataset.serial)
+                });
+            } else {
+                if ($(this.productWindow.document).find('header nav h1').get(0).dataset.serial !== event.target.dataset.serial) {
+                    handler(event.target.dataset.serial);
+                }
+                this.productWindow.focus();
+            }
+            // console.log(event.target.dataset.serial);
+        });
+    }
+
+    showProductInNewWindow(product, message) {
+        let main = $(this.productWindow.document).find('main');
+        let header = $(this.productWindow.document).find('header nav');
+        main.empty();
+        header.empty();
+        let container;
+        if (product) {
+            this.productWindow.document.title = `${product.nationality} - ${product.publication}`;
+            header.append(`<h1 data-serial="${product.title}" class="display-5">${product.nationality} - ${product.publication}</h1>`);
+            container = $(`<div id="single-product" class="${product.constructor.name}-style container mt-5 mb-5">
+				<div class="row d-flex justify-content-center">
+					<div class="col-md-10">
+						<div class="card">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="images p-3">
+										<div class="text-center p-4"> <img id="main-image" src="./${product.image}"/> </div>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="product p-4">
+										<div class="mt-4 mb-3"> <span class="text-uppercase text-muted brand">${product.nationality}</span>
+											<h5 class="text-uppercase">${product.publication}</h5>
+										</div>
+										<p class="about">${product.synopsis}</p>
+										<div class="sizes mt-5">
+											<h6 class="text-uppercase">Características</h6>
+										</div>
+										<div class="cart mt-4 align-items-center"> <button data-serial="${product.title}" class="btn btn-primary text-uppercase mr-2 px-4">Comprar</button> </div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button class="btn btn-primary text-uppercase m-2 px-4" onClick="window.close()">Cerrar</button>`);
+
+            // container.find('h6').after(this.#instance[product.constructor.name]);
+
+        } else {
+            container = $(` <div class="container mt-5 mb-5">
+				<div class="row d-flex justify-content-center">
+					${message}
+				</div>
+			</div>`);
+        }
+        main.append(container);
+        this.productWindow.document.body.scrollIntoView();
     }
 
     //Método que muestra los actores en el menú
