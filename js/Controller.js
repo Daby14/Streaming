@@ -239,11 +239,12 @@ class Controller {
         this.handleShowDirector(serial);
     }
 
-    //Método handle que llama al handleShowCategory
+    //Método handle que llama al handleShowActor
     handleActor = (serial) => {
         this.handleShowActor(serial);
     }
 
+    //Método handle que muestra una producción en una ventana nueva
     handleProductNewWindow = (serial) => {
         
         //Obtenemos la producción según su serial
@@ -273,12 +274,12 @@ class Controller {
         );
     }
 
-    //Método handle que llama al handleShowCategory
+    //Método handle que llama al handleShowDirector
     handleProductsDirectorList = (type) => {
         this.handleShowDirector(type);
     }
 
-    //Método handle que muestra la carta de una producción con sus actores y sus directores correspondientes
+    //Método handle que muestra la carta de un director con sus producciones correspondientes
     handleShowDirector = (serial) => {
 
         let dir = this.#model.getDirector(serial);
@@ -302,12 +303,12 @@ class Controller {
         );
     }
 
-    //Método handle que llama al handleShowCategory
+    //Método handle que llama al handleShowActor
     handleProductsActorList = (type) => {
         this.handleShowActor(type);
     }
 
-    //Método handle que muestra la carta de una producción con sus actores y sus directores correspondientes
+    //Método handle que muestra la carta de un actor con sus producciones correspondientes
     handleShowActor = (serial) => {
 
         let act = this.#model.getActor(serial);
