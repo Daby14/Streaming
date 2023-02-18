@@ -23,26 +23,35 @@ class Controller {
         let categoria3 = new Category("Aventura", "Aventura");
 
         //!RESOURCE
-        let resource1 = new Resource("94", "movies/movie.mp4");
+        let resource1 = new Resource("169", "movies/movie1.mp4");
+        let resource2 = new Resource("106", "movies/movie2.mp4");
+        let resource3 = new Resource("100", "movies/movie3.mp4");
+        let resource4 = new Resource("115", "movies/movie4.mp4");
+        let resource5 = new Resource("104", "movies/movie5.mp4");
+        let resource6 = new Resource("132", "movies/movie6.mp4");
 
         //!COORDINATE
-        let coordinate1 = new Coordinate(-90, 90);
+        let coordinate1 = new Coordinate(42, 175);
+        let coordinate2 = new Coordinate(40, 3);
+        let coordinate3 = new Coordinate(37, -95);
+        let coordinate4 = new Coordinate(37, -119);
+
 
         //!SERIES
         let produccion1 = new Serie("El señor de los anillos", "Nueva Zelanda", "12/01/2022", "Los héroes se enfrentan al temido resurgimiento del mal en la Tierra Media, forjando legados que perdurarán mucho tiempo después de su desaparición", "images/image1.jpg", "Volcán", coordinate1, 3);
-        let produccion2 = new Serie("La que se avecina", "España", "24/09/2008", "Bruno propone a Enrique que se hagan veganos. Por otro lado, Berta propone un viaje a Antonio, pero éste, que sospecha que su mujer le está engañando, rechaza el plan y empieza a seguirla para descubrir al amante.", "images/image2.jpg", "Edificio Contubernio", coordinate1, 13);
-        let produccion3 = new Serie("La casa de papel", "España", "05/06/2018", "Una banda organizada de ladrones tiene el objetivo de cometer el atraco del siglo en la Fábrica Nacional de Moneda y Timbre. Cinco meses de preparación quedarán reducidos a once días para poder llevar a cabo con éxito el gran golpe", "images/image3.jpg", "Banco Nacional de Moneda y Timbre", coordinate1, 5);
-        let produccion4 = new Serie("The Shooter", "California", "15/11/2016", "El francotirador Bob Lee Swagger debe evitar un complot contra el presidente de los Estados Unidos. Isaac Johnson, un exmarine y ahora agente del Servicio Secreto, convence a Swagger para investigar dicho complot", "images/image4.jpg", "USA Network", coordinate1, 3);
-        let produccion5 = new Serie("The Witcher", "Estados Unidos", "20/12/2019", "El brujo Geralt, un cazador de monstruos, trata de encontrar su lugar en un mundo en el que las personas suelen ser más malvadas que las bestias", "images/image5.jpg", "Mundo medieval", coordinate1, 2);
-        let produccion6 = new Serie("Ni una palabra", "Estados Unidos", "22/04/2022", "Los residentes de una urbanización rica cerca de Varsovia están conmocionados por la desaparición de Adam, de 18 años. A medida que surgen más secretos, los padres preocupados hacen todo lo posible para proteger a sus hijos", "images/image6.jpg", "Volcán", coordinate1, 3);
+        let produccion2 = new Serie("La que se avecina", "España", "24/09/2008", "Bruno propone a Enrique que se hagan veganos. Por otro lado, Berta propone un viaje a Antonio, pero éste, que sospecha que su mujer le está engañando, rechaza el plan y empieza a seguirla para descubrir al amante.", "images/image2.jpg", "Edificio Contubernio", coordinate2, 13);
+        let produccion3 = new Serie("La casa de papel", "España", "05/06/2018", "Una banda organizada de ladrones tiene el objetivo de cometer el atraco del siglo en la Fábrica Nacional de Moneda y Timbre. Cinco meses de preparación quedarán reducidos a once días para poder llevar a cabo con éxito el gran golpe", "images/image3.jpg", "Banco Nacional de Moneda y Timbre", coordinate2, 5);
+        let produccion4 = new Serie("The Shooter", "California", "15/11/2016", "El francotirador Bob Lee Swagger debe evitar un complot contra el presidente de los Estados Unidos. Isaac Johnson, un exmarine y ahora agente del Servicio Secreto, convence a Swagger para investigar dicho complot", "images/image4.jpg", "USA Network", coordinate4, 3);
+        let produccion5 = new Serie("The Witcher", "Estados Unidos", "20/12/2019", "El brujo Geralt, un cazador de monstruos, trata de encontrar su lugar en un mundo en el que las personas suelen ser más malvadas que las bestias", "images/image5.jpg", "Mundo medieval", coordinate3, 2);
+        let produccion6 = new Serie("Ni una palabra", "Estados Unidos", "22/04/2022", "Los residentes de una urbanización rica cerca de Varsovia están conmocionados por la desaparición de Adam, de 18 años. A medida que surgen más secretos, los padres preocupados hacen todo lo posible para proteger a sus hijos", "images/image6.jpg", "Desaparición de Adam", coordinate3, 3);
 
         //!PELÍCULAS
         let produccion7 = new Movie("El Hobbit", "Nueva Zelanda", "28/11/2012", "La trilogía de El hobbit, adaptación cinematográfica basada en la novela homónima, comprende tres películas épicas de fantasía, acción y aventuras: El hobbit: un viaje inesperado, El hobbit: la desolación de Smaug y El hobbit: la batalla de los Cinco Ejércitos", "images/image7.jpg", resource1, coordinate1);
-        let produccion8 = new Movie("Jaula", "España", "09/09/2022", "Cuando una pareja encuentra a una niña traumatizada de origen desconocido, la esposa, Paula, debe descifrar los extraños comportamientos de la niña para desvelar su identidad y su oscuro pasado", "images/image8.jpg", resource1, coordinate1);
-        let produccion9 = new Movie("Objetos", "España", "30/09/2022", "Objetos es una película de suspenso de 2022 dirigida por Jorge  con guion de Natxo López y protagonizada por Álvaro Morte, China Suárez y Verónica Echegui. Es una coproducción hispano-argentina-alemana", "images/image9.jpg", resource1, coordinate1);
-        let produccion10 = new Movie("Smile", "Estados Unidos", "30/09/2022", "Tras presenciar el dramático incidente sufrido por un paciente, la Dra. Cotter experimenta hechos aterradores sin explicación aparente. A medida que el horror se adueña de su vida, comprende que la respuesta está en su propio pasado", "images/image10.jpg", resource1, coordinate1);
-        let produccion11 = new Movie("The Invitation", "Estados Unidos", "26/08/2022", "Tras morir su hermana, Evie queda sin familiares, pero un análisis de ADN le revela la existencia de un primo distante. La nueva familia la invita a una boda en Inglaterra, y lo que empieza como un cuento de hadas se transforma en una pesadilla", "images/image11.jpg", resource1, coordinate1);
-        let produccion12 = new Movie("Hacia la libertad", "Estados Unidos", "12/10/2022", "Peter, un esclavo, huye de una plantación en Luisiana después de haber sido azotado. Ahora, tiene que burlar a los cazadores de sangre fría y a los implacables pantanos de Luisiana en un tortuoso viaje hacia el norte", "images/image12.jpg", resource1, coordinate1);
+        let produccion8 = new Movie("Jaula", "España", "09/09/2022", "Cuando una pareja encuentra a una niña traumatizada de origen desconocido, la esposa, Paula, debe descifrar los extraños comportamientos de la niña para desvelar su identidad y su oscuro pasado", "images/image8.jpg", resource2, coordinate2);
+        let produccion9 = new Movie("Objetos", "España", "30/09/2022", "Objetos es una película de suspenso de 2022 dirigida por Jorge  con guion de Natxo López y protagonizada por Álvaro Morte, China Suárez y Verónica Echegui. Es una coproducción hispano-argentina-alemana", "images/image9.jpg", resource3, coordinate2);
+        let produccion10 = new Movie("Smile", "Estados Unidos", "30/09/2022", "Tras presenciar el dramático incidente sufrido por un paciente, la Dra. Cotter experimenta hechos aterradores sin explicación aparente. A medida que el horror se adueña de su vida, comprende que la respuesta está en su propio pasado", "images/image10.jpg", resource4, coordinate3);
+        let produccion11 = new Movie("The Invitation", "Estados Unidos", "26/08/2022", "Tras morir su hermana, Evie queda sin familiares, pero un análisis de ADN le revela la existencia de un primo distante. La nueva familia la invita a una boda en Inglaterra, y lo que empieza como un cuento de hadas se transforma en una pesadilla", "images/image11.jpg", resource5, coordinate3);
+        let produccion12 = new Movie("Hacia la libertad", "Estados Unidos", "12/10/2022", "Peter, un esclavo, huye de una plantación en Luisiana después de haber sido azotado. Ahora, tiene que burlar a los cazadores de sangre fría y a los implacables pantanos de Luisiana en un tortuoso viaje hacia el norte", "images/image12.jpg", resource6, coordinate3);
 
         //!DIRECTORES
         let director1 = new Person("Juan", "Antonio", "Bayona", "05/09/1968", "images/director1.jpg");
@@ -84,6 +93,9 @@ class Controller {
         let actor23 = new Person("Will", "Smith", "(Peter)", "23/01/2003", "images/actor23.jpg");
         let actor24 = new Person("Imani", "Pullum", "(Betsy)", "24/01/2003", "images/actor24.jpg");
 
+        //!USER
+        let usuario1 = new User("David", "davidletrado03@gmail.com", "ConTRasenIA");
+
         //!ADD CATEGORIE
         this.#model.addCategorie([categoria1, categoria2, categoria3]);
 
@@ -116,7 +128,6 @@ class Controller {
         this.#model.assignDirector(produccion12, director12);
 
         //!ASSIGN ACTOR
-
         this.#model.assignActor(produccion1, [actor1, actor2]);
         this.#model.assignActor(produccion2, [actor3, actor4]);
         this.#model.assignActor(produccion3, [actor5, actor6]);
@@ -180,10 +191,10 @@ class Controller {
         //Obtenemos la categoría correspondiente
         let category = this.#model.getCategory(type);
 
-        // console.log(category);
-
+        //Obtenemos el iterador de las producciones de dicha categoría
         const iterator = category.producs[Symbol.iterator]();
 
+        //Obtenemos el title que se muestra con las producciones
         if (type === "Acción") title = "Acción";
 
         if (type === "Ficción") title = "Ficción";
@@ -193,8 +204,6 @@ class Controller {
         //Llamamos al método para mostrar las producciones correspondientes a dicha categoría y llamamos al evento
         this.#view.showProductions(iterator, title);
         this.#view.bindShowCardProduct(this.handleShowProduct);
-
-
     }
 
     //Método handle que muestra la carta de una producción con sus actores y sus directores correspondientes
@@ -220,19 +229,19 @@ class Controller {
 
         //Llamamos al método para mostrar la información de la producción con sus actores y directores correspondientes
         this.#view.showCardProduction(pro, director, actors);
-        this.#view.bindDirector(this.handleDirector);
-        this.#view.bindActor(this.handleActor);
+        this.#view.bindDirector(this.handleShowDirector);
+        this.#view.bindActor(this.handleShowActor);
     }
 
-    //Método handle que llama al handleShowCategory
-    handleDirector = (serial) => {
-        this.handleShowDirector(serial);
-    }
+    // //Método handle que llama al handleShowDirector
+    // handleDirector = (serial) => {
+    //     this.handleShowDirector(serial);
+    // }
 
-    //Método handle que llama al handleShowCategory
-    handleActor = (serial) => {
-        this.handleShowActor(serial);
-    }
+    // //Método handle que llama al handleShowCategory
+    // handleActor = (serial) => {
+    //     this.handleShowActor(serial);
+    // }
 
     //Método onAddCategory que muestra las categorías en el menú
     onAddCategory = () => {
@@ -302,7 +311,6 @@ class Controller {
 
         this.#view.showCardActor(produccion, act);
         this.#view.bindProduction(this.handleShowProduct);
-
     }
 
 }

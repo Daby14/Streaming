@@ -1,35 +1,40 @@
 .carta {
-    width: 700px; 
-    height: 500px; 
-    border: 3px solid red;
-    align-items: center;
-    margin-left: 350px;
-    color: white;
+  width: 700px;
+  height: 500px;
+  border: 3px solid red;
+  align-items: center;
+  margin-left: 350px;
+  color: white;
 }
 
-img{
-    width: 370px;
-    height: 200px;
+img {
+  width: 370px;
+  height: 200px;
 }
 
-.header__logo{
-    width: 50;
-    height: 50px;
+.header__logo {
+  width: 50;
+  height: 50px;
 }
 
-.inicial{
-    margin: 100px;
+.inicial {
+  margin: 100px;
 }
 
 .enlaceMenu {
-    color: white;
+  color: white;
 }
 
-#main-image{
-    width: 425px;
-    height: 375px;
+#main-image {
+  width: 425px;
+  height: 375px;
 }
-/* .cat__img{
-    width: 350px;
-    height: 200px;
-} */
+
+.prueba {
+  gap: 60px;
+}
+
+.boton:hover {
+  background: black;
+}
+

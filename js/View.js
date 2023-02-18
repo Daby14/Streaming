@@ -1,5 +1,7 @@
 "use strict";
 
+import { Serie, Movie } from "../entities/products.js";
+
 //Clase View
 class View {
 
@@ -27,7 +29,7 @@ class View {
         this.main.empty();
         this.main.append(`<div id="type-list" class="row inicial">
         <div id="cat1" class="col-lg-4 col-md-6"><a class="prueba" data-type="Acción" href="#product-list">
-                <div><img class="cat__img" alt="Acción" src="./images/catcamara.jpg" />
+                <div><img class="cat__img" alt="Acción" src="./images/Acción.jpg" />
                 </div>
                 <div class="cat__text">
                     <h3><strong>Acción</strong></h3>
@@ -35,7 +37,7 @@ class View {
             </a>
         </div>
         <div id="cat2" class="col-lg-4 col-md-6"><a data-type="Ficción" href="#product-list">
-                <div><img class="cat__img" alt="Ficción" src="./images/catmovi.jpg" />
+                <div><img class="cat__img" alt="Ficción" src="./images/Ficción.jpg" />
                 </div>
                 <div class="cat__text">
                     <h3><strong>Ficción</strong></h3>
@@ -43,7 +45,7 @@ class View {
             </a>
         </div>
         <div id="cat3" class="col-lg-4 col-md-6"><a data-type="Aventura" href="#product-list">
-                <div><img class="cat__img" alt="Aventura" src="./images/catpportatil.jpg" />
+                <div><img class="cat__img" alt="Aventura" src="./images/Aventura.jpg" />
                 </div>
                 <div class="cat__text">
                     <h3><strong>Aventura</strong></h3>
@@ -55,12 +57,13 @@ class View {
         for (let i = 0; i < pros.length; i++) {
 
 
+
             this.main.append(`<div id="types-list" class="row inicial"></div>`);
 
             let id = $("#types-list");
 
             id.append(`
-        <div class="col-lg-4 col-md-6">
+            <div class="col-lg-4 col-md-6">
             <a data-type="${pros[i].title}" href="#product-list">
                 <div>
                     <img class="cat__img" alt="Produccion ${i}" src="./${pros[i].image}" />
@@ -69,8 +72,11 @@ class View {
                     <h3><strong>Producción ${i + 1}</strong></h3>
                 </div>
             </a>
-        </div>`);
+        </div>
+
+            `);
         }
+
 
     }
 
@@ -94,7 +100,7 @@ class View {
         if (this.categorias.children().length > 1)
             this.categorias.children()[1].remove();
 
-        this.main.append(`<div id="product-list" class="container my-3"><div class="row"> </div></div>`);
+        this.main.append(`<div id="product-list" class="container my-3" ><div class="row" style="gap: 80px;"> </div></div>`);
 
         let id = $("#product-list");
 
@@ -102,26 +108,33 @@ class View {
 
         while (!product.done) {
 
-            id.children().first().append(`<div class="col-md-4">
-        <figure class="card card-product-grid card-lg"> <a id="prueba2" data-serial="${product.value.title}" href="#single-product" class="img-wrap"><img class="Serie" src="./${product.value.image}"></a>
-            <figcaption class="info-wrap">
-                <div class="row">
-                    <div class="col-md-8"> <a data-serial="${product.value.title}" href="#single-product" class="title">${product.value.title} <br> ${product.value.nationality} | ${product.value.publication}</a> </div>
-                    <div class="col-md-4">
-                        <div class="rating text-right"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div>
-                    </div>
+            id.children().first().append(`
+            <div class="card col-md-4" style="width: 18rem;">
+                <img src="./${product.value.image}" class="card-img-top" alt="${product.value.title}">
+                <div class="card-body">
+                    <h5 class="card-title">${product.value.title}</h5>
+                    <br>
+                    <h6 class="card-title"><u>CARACTERÍSTICAS</u></h6>
+                    <p class="card-text">-Origen: ${product.value.nationality}</p>
+                    <p class="card-text">-Publicación: ${product.value.publication}</p>
+                    <a href="#" class="btn btn-outline-primary " data-serial="${product.value.title}">Acceder</a>
                 </div>
-            </figcaption>
-            <div class="bottom-wrap"> <a href="#" data-serial="${product.value.title}" class="compra btn btn-primary float-right"> Acceder </a>
             </div>
-        </figure>
-    </div>`);
+            `);
 
             product = iterator.next();
 
         }
 
-        id.prepend(`<h1>${title}</h1>`);
+        id.prepend(`<h1><strong>${title}</strong></h1>`);
+    }
+
+    //Método que captura el evento de hacer click en una producción
+    bindShowCardProduct(handler) {
+        $('#product-list').find('a.btn').click(function (event) {
+            handler(this.dataset.serial);
+            //console.log(this.dataset.serial);
+        });
     }
 
     //Método que muestra las categorías en el menú
@@ -157,7 +170,7 @@ class View {
         let actor1 = `<span class="text-muted brand">Nombre: ${actor[0].name} ${actor[0].lastname1} ${actor[0].lastname2}</span><br>`
         let actor2 = `<span class="text-muted brand">Nombre: ${actor[1].name} ${actor[1].lastname1} ${actor[1].lastname2}</span><br>`
 
-        if (product) {
+        if (product && product instanceof Serie) {
             container = $(`<div id="single-product" class="${product.title}-style container mt-5 mb-5">
             <div class="row d-flex justify-content-center">
             <div class="col-md-10">
@@ -179,6 +192,12 @@ class View {
                                     <span class="text-uppercase text-muted brand">Origen: ${product.nationality}</span>
                                     <br>
                                     <span class="text-uppercase text-muted brand">Publicación: ${product.publication}</span>
+                                    <br>
+                                    <span class="text-uppercase text-muted brand">Temporadas: ${product.seasons}</span>
+                                    <br>
+                                    <span class="text-uppercase text-muted brand">Localización: ${product.locations}</span>
+                                    <br>
+                                    <span class="text-uppercase text-muted brand">Resource: ${product.resources}</span>
                                     <br>
                                     <br>
                                     <h6 class="text-uppercase"><u>Director</u></h6>
@@ -205,28 +224,64 @@ class View {
         </div>
     <div>`);
 
-        } else {
-            container = $(` <div class="container mt-5 mb-5">
-				<div class="row d-flex justify-content-center">
-					${message}
-				</div>
-			</div>`);
+        } else if (product && product instanceof Movie) {
+            container = $(` <div id="single-product" class="${product.title}-style container mt-5 mb-5">
+            <div class="row d-flex justify-content-center">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="images p-3">
+                                <div class="text-center p-4"> <img id="main-image" src="./${product.image}"/> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="product p-4">
+                                <div class="mt-4 mb-3"> 
+                                    <h5 class="text-uppercase"><strong>${product.title}</strong></h5>
+                                </div>
+                                <p class="about">${product.synopsis}</p>
+                                <div class="sizes mt-5">
+                                    <h6 class="text-uppercase"><u>Características</u></h6>
+                                    <span class="text-uppercase text-muted brand">Origen: ${product.nationality}</span>
+                                    <br>
+                                    <span class="text-uppercase text-muted brand">Publicación: ${product.publication}</span>
+                                    <br>
+                                    <span class="text-uppercase text-muted brand">Localización: ${product.locations}</span>
+                                    <br>
+                                    <span class="text-uppercase text-muted brand">Duración: ${product.resource.duration} min</span>
+                                    <br>
+                                    <span class="text-uppercase text-muted brand">Ruta: ${product.resource.link}</span>
+                                    <br>
+                                    <br>
+                                    <h6 class="text-uppercase"><u>Director</u></h6>
+                                    <a href="#" id="director" data-serial="${director.name}">
+                                    <span class="text-muted brand">Nombre: ${director.name} ${director.lastname1} ${director.lastname2}</span>
+                                    </a>
+                                    <br>
+                                    <br>
+                                    <h6 class="text-uppercase"><u>Actores</u></h6>
+                                    <div id="actor">
+                                        <a href="#" data-serial="${actor[0].name}">
+                                            ${actor1}
+                                        </a>
+                                        <a href="#" data-serial="${actor[1].name}">
+                                            ${actor2}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div>`);
         }
         this.main.append(container);
     }
 
-    //Método que captura el evento de hacer click en una producción
-    bindShowCardProduct(handler) {
-        $('#product-list').find('a.img-wrap').click(function (event) {
-            handler(this.dataset.serial);
-        });
-        $('#product-list').find('figcaption a').click(function (event) {
-            handler(this.dataset.serial);
-        });
-        $('#product-list').find('a.compra').click(function (event) {
-            handler(this.dataset.serial);
-        });
-    }
+
 
     bindDirector(handler) {
         $('#director').click(function (event) {
@@ -284,11 +339,12 @@ class View {
                         </div>
                         <div class="col-md-6">
                             <div class="product p-4">
-                                <div class="mt-4 mb-3"> 
-                                    <h5 class="text-uppercase"><strong>DIRECTOR</strong></h5>
-                                </div>
                                 <div class="sizes mt-5">
+                                    <h5 class="text-uppercase"><strong>DIRECTOR</strong></h5>
                                     <span class="text-muted brand">Nombre: ${dir.director.name} ${dir.director.lastname1} ${dir.director.lastname2}</span>
+                                    <br>
+                                    <span class="text-muted brand">Nacimiento: ${dir.director.born}</span>
+                                    <br>
                                     <br>
                                     <br>
                                     <h6 class="text-uppercase"><u>Producciones</u></h6>
@@ -358,11 +414,12 @@ class View {
                         </div>
                         <div class="col-md-6">
                             <div class="product p-4">
-                                <div class="mt-4 mb-3"> 
-                                    <h5 class="text-uppercase"><strong>Actor</strong></h5>
-                                </div>
                                 <div class="sizes mt-5">
+                                    <h5 class="text-uppercase"><strong>Actor</strong></h5>
                                     <span class="text-muted brand">Nombre: ${act.actor.name} ${act.actor.lastname1} ${act.actor.lastname2}</span>
+                                    <br>
+                                    <span class="text-muted brand">Nacimiento: ${act.actor.born}</span>
+                                    <br>
                                     <br>
                                     <br>
                                     <h6 class="text-uppercase"><u>Producciones</u></h6>
