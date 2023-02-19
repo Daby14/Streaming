@@ -121,35 +121,6 @@ let VideoSystem = (function () {
                 return this.#categories.findIndex(compareElements);
             }
 
-            // //Método que añade categorías
-            // addCategorie(categorie) {
-
-            //     //Comprobamos si la categoria es un objeto Category
-            //     if ((categorie === null) || !(categorie instanceof Category)) {
-            //         throw new CategorieTypeException();
-            //     }
-
-            //     //Almacenamos la posición de la categoría
-            //     let position = this.#getCategoryPosition(categorie);
-
-            //     //Si esa categoría no está registrada, la registramos
-            //     if (position === -1) {
-
-            //         this.#categories.push(
-            //             {
-            //                 category: categorie,
-            //                 producs: []
-            //             }
-            //         );
-
-            //     } else {
-            //         throw new ExistedException();
-            //     }
-
-            //     return this.#categories.length;
-
-            // }
-
             //Método que añade categorías
             addCategorie(categorys) {
 
@@ -176,8 +147,6 @@ let VideoSystem = (function () {
                     } else {
                         throw new ExistedException();
                     }
-
-
 
                 }
 
@@ -810,6 +779,7 @@ let VideoSystem = (function () {
                 }
             }
 
+            //Método getCategory que obtiene la categoría correspondiente a un título
             getCategory(title) {
 
                 let cat;
@@ -824,6 +794,7 @@ let VideoSystem = (function () {
                 return cat;
             }
 
+            //Método getProduction que obtiene la producción correspondiente a un título
             getProduction(title) {
 
                 let pro;
@@ -838,6 +809,7 @@ let VideoSystem = (function () {
                 return pro;
             }
 
+            //Método getDirector que obtiene el director correspondiente a un título
             getDirector(title) {
 
                 let dir;
@@ -853,6 +825,7 @@ let VideoSystem = (function () {
                 return dir;
             }
 
+            //Método getActor que obtiene el actor correspondiente a un título
             getActor(title) {
 
                 let act;
@@ -868,6 +841,7 @@ let VideoSystem = (function () {
                 return act;
             }
 
+            //Método randomProduction que devuelve las producciones aleatorias que le indiques por parámetro
             randomProduction(cantidad) {
 
                 // Crear un nuevo array para almacenar los números aleatorios

@@ -246,7 +246,7 @@ class Controller {
 
     //Método handle que muestra una producción en una ventana nueva
     handleProductNewWindow = (serial) => {
-        
+
         //Obtenemos la producción según su serial
         let pro = this.#model.getProduction(serial);
 

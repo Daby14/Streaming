@@ -103,7 +103,7 @@ class View {
     //!SHOW PRODUCTIONS
     //Método que muestra las producciones correspondientes a una categoría
     showProductions(iterator, title) {
-        
+
         this.main.empty();
 
         this.main.append(`<div id="producciones" class="container my-3" ><div class="row" style="gap: 80px;"> </div></div>`);
@@ -227,7 +227,8 @@ class View {
                                             ${actor2}
                                         </a>
                                     </div>
-                                    <button id="b-open" data-serial="${product.title}" class="btn btn-primary text-uppercase mr-2 px-4">Abrir</button>
+                                    <br>
+                                    <button id="botonVentanaNueva" data-serial="${product.title}" class="btn btn-primary mr-2 px-4">Abrir</button>
                                 </div>
                             </div>
                         </div>
@@ -282,7 +283,8 @@ class View {
                                             ${actor2}
                                         </a>
                                     </div>
-                                    <button id="b-open" data-serial="${product.title}" class="btn btn-primary text-uppercase mr-2 px-4">Abrir</button>
+                                    <br>
+                                    <button id="botonVentanaNueva" data-serial="${product.title}" class="btn btn-primary mr-2 px-4">Abrir</button>
                                 </div>
                             </div>
                         </div>
@@ -316,9 +318,9 @@ class View {
     bindShowProductInNewWindow(handler) {
 
         //Si hacemos click en dicho botón, abrimos una nueva ventana (product.html) con los datos de dicha producción
-        $('#b-open').click((event) => {
+        $('#botonVentanaNueva').click((event) => {
             if (!this.productWindow || this.productWindow.closed) {
-                this.productWindow = window.open("product.html", "ProductWindow", "width=800, height=600, top=250, left=250, titlebar=yes, toolbar=no, menubar=no, location=no");
+                this.productWindow = window.open("production.html", "ProductWindow", "width=1000, height=750, top=250, left=175");
                 this.productWindow.addEventListener('DOMContentLoaded', () => {
                     handler(event.target.dataset.serial)
                 });
@@ -336,43 +338,95 @@ class View {
     showProductInNewWindow(product, message) {
         let main = $(this.productWindow.document).find('main');
         let header = $(this.productWindow.document).find('header nav');
+
         main.empty();
         header.empty();
         let container;
-        if (product) {
-            this.productWindow.document.title = `${product.nationality} - ${product.publication}`;
-            header.append(`<h1 data-serial="${product.title}" class="display-5">${product.nationality} - ${product.publication}</h1>`);
-            container = $(`<div id="single-product" class="${product.constructor.name}-style container mt-5 mb-5">
-				<div class="row d-flex justify-content-center">
-					<div class="col-md-10">
-						<div class="card">
-							<div class="row">
-								<div class="col-md-12">
-									<div class="images p-3">
-										<div class="text-center p-4"> <img id="main-image" src="./${product.image}"/> </div>
-									</div>
-								</div>
-								<div class="col-md-12">
-									<div class="product p-4">
-										<div class="mt-4 mb-3"> <span class="text-uppercase text-muted brand">${product.nationality}</span>
-											<h5 class="text-uppercase">${product.publication}</h5>
-										</div>
-										<p class="about">${product.synopsis}</p>
-										<div class="sizes mt-5">
-											<h6 class="text-uppercase">Características</h6>
-										</div>
-										<div class="cart mt-4 align-items-center"> <button data-serial="${product.title}" class="btn btn-primary text-uppercase mr-2 px-4">Comprar</button> </div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+        if (product && product instanceof Serie) {
+            this.productWindow.document.title = `${product.title}`;
+            header.append(`<h1>${product.title}</h1>`);
+            container = $(`<div id="single-product" class="${product.title}-style container mt-5 mb-5">
+            <div class="row d-flex justify-content-center">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="images p-3">
+                                <div class="text-center p-4"> <img id="main-image" src="./${product.image}" style="width: 500px; height: 300px;" /> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="product p-4">
+                                <div class="mt-4 mb-3"> 
+                                    <h5 class="text-uppercase"><strong>${product.title}</strong></h5>
+                                </div>
+                                <p class="about">${product.synopsis}</p>
+                                <div class="sizes mt-5">
+                                    <h6 class="text-uppercase"><u>Características</u></h6>
+                                    <span class="text-uppercase text-muted brand">Origen: ${product.nationality}</span>
+                                    <br>
+                                    <span class="text-uppercase text-muted brand">Publicación: ${product.publication}</span>
+                                    <br>
+                                    <span class="text-uppercase text-muted brand">Temporadas: ${product.seasons}</span>
+                                    <br>
+                                    <span class="text-uppercase text-muted brand">Localización: ${product.locations}</span>
+                                    <br>
+                                    <span class="text-uppercase text-muted brand">Resource: ${product.resources}</span>
+                                    <br>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div>
 			<button class="btn btn-primary text-uppercase m-2 px-4" onClick="window.close()">Cerrar</button>`);
 
             // container.find('h6').after(this.#instance[product.constructor.name]);
 
+        } else if (product && product instanceof Movie) {
+            this.productWindow.document.title = `${product.nationality} - ${product.publication}`;
+            header.append(`<h1>${product.title}</h1>`);
+            container = $(`<div id="single-product" class="${product.title}-style container mt-5 mb-5">
+            <div class="row d-flex justify-content-center">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="images p-3">
+                                <div class="text-center p-4"> <img id="main-image" src="./${product.image}" style="width: 500px; height: 300px;" /> </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="product p-4">
+                                <div class="mt-4 mb-3"> 
+                                    <h5 class="text-uppercase"><strong>${product.title}</strong></h5>
+                                </div>
+                                <p class="about">${product.synopsis}</p>
+                                <div class="sizes mt-5">
+                                    <h6 class="text-uppercase"><u>Características</u></h6>
+                                    <span class="text-uppercase text-muted brand">Origen: ${product.nationality}</span>
+                                    <br>
+                                    <span class="text-uppercase text-muted brand">Publicación: ${product.publication}</span>
+                                    <br>
+                                    <span class="text-uppercase text-muted brand">Localización: ${product.locations}</span>
+                                    <br>
+                                    <span class="text-uppercase text-muted brand">Duración: ${product.resource.duration} min</span>
+                                    <br>
+                                    <span class="text-uppercase text-muted brand">Ruta: ${product.resource.link}</span>
+                                    <br>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div>
+			<button class="btn btn-primary text-uppercase m-2 px-4" onClick="window.close()">Volver</button>`);
         } else {
             container = $(` <div class="container mt-5 mb-5">
 				<div class="row d-flex justify-content-center">
@@ -383,7 +437,7 @@ class View {
         main.append(container);
         this.productWindow.document.body.scrollIntoView();
     }
-    
+
     //!SHOW DIRECTOR IN MENU
     //Método que muestra los directores en el menú
     showDirectorInMenu(directors) {
