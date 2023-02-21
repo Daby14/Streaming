@@ -74,7 +74,7 @@ class View {
                     <img class="cat__img" alt="Produccion ${i}" src="./${pros[i].image}" />
                 </div>
                 <div class="cat__text">
-                    <h3><strong>Producción ${i + 1}</strong></h3>
+                    <h3><strong>${pros[i].title}</strong></h3>
                 </div>
             </a>
         </div>
@@ -471,6 +471,8 @@ class View {
         this.main.empty();
 
         let container;
+
+        console.log(dir)
 
         if (product) {
             container = $(`<div id="single-product" class="${dir.director.name}-style container mt-5 mb-5">
