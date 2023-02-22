@@ -181,6 +181,7 @@ class Controller {
         this.onAddCategory();
         this.onAddDirector();
         this.onAddActor();
+        this.onAddButtonWindow();
     }
 
     //Método handle que muestra las producciones correspondientes a una categoría
@@ -244,15 +245,6 @@ class Controller {
         this.handleShowActor(serial);
     }
 
-    //Método handle que muestra una producción en una ventana nueva
-    handleProductNewWindow = (serial) => {
-
-        //Obtenemos la producción según su serial
-        let pro = this.#model.getProduction(serial);
-
-        this.#view.showProductInNewWindow(pro, "hola");
-    }
-
     //Método onAddCategory que muestra las categorías en el menú
     onAddCategory = () => {
         this.#view.showCategoriesInMenu(this.#model.categories);
@@ -264,6 +256,39 @@ class Controller {
     //Método handle que llama al handleShowCategory
     handleProductsCategoryList = (type) => {
         this.handleShowCategory(type);
+    }
+
+    //Método handle que muestra una producción en una ventana nueva
+    handleProductNewWindow = (serial) => {
+
+        //Obtenemos la producción según su serial
+        let pro = this.#model.getProduction(serial);
+
+        this.#view.showProductInNewWindow(pro, "hola");
+
+        let ventanas;
+
+        ventanas = this.#model.pushWindows(pro);
+
+    }
+
+    //Método onAddButtonWindow que muestra un botón para cerrar todas las ventanas en el menú
+    onAddButtonWindow = () => {
+
+        this.#view.showButtonWindowsInMenu();
+        this.#view.bindButtonWindows(this.handleCloseWindows);
+    }
+
+    //Método handle que cierra todas las ventanas abiertas
+    handleCloseWindows = () => {
+        let ventanas;
+
+        ventanas = this.#model.getWindows();
+
+        this.#view.closeWindows(ventanas);
+
+        this.#model.cleanWindows();
+
     }
 
     //Método onAddDirector que muestra los directores en el menú

@@ -171,19 +171,40 @@ class View {
         });
     }
 
+    //!SHOW BUTTON WINDOWS IN MENU
+    //Método que muestra un botón para cerrar todas las ventanas en el menú
+    showButtonWindowsInMenu() {
+        let li = $(`<button id="cerrarVentanas" class="btn btn-warning mr-2">Cerrar Ventanas</button>`);
+
+        let container = $(`<div class="dropdown-menu" aria-labelledby="menuBoton"></div>`);
+
+        li.append(container);
+        this.menu.append(li);
+    }
+
+    //!BIND BUTTON WINDOWS 
+    //Método bindButtonWindows que captura el evento de hacer click en el botón del menú
+    bindButtonWindows(handler) {
+
+        $('#cerrarVentanas').click(function () {
+            handler();
+        });
+
+    }
+
     //!SHOW CARD PRODUCTION
     //Método que muestra la carta de la producción con sus actores y directores correspondientes
     showCardProduction(product, director, actor) {
         this.main.empty();
 
         let container;
-        let actor1 = `<span class="text-muted brand">Nombre: ${actor[0].name} ${actor[0].lastname1} ${actor[0].lastname2}</span><br>`
-        let actor2 = `<span class="text-muted brand">Nombre: ${actor[1].name} ${actor[1].lastname1} ${actor[1].lastname2}</span><br>`
+        let actor1 = `<span class="text-muted brand">Nombre: ${actor[0].name} ${actor[0].lastname1} ${actor[0].lastname2}</span><br>`;
+        let actor2 = `<span class="text-muted brand">Nombre: ${actor[1].name} ${actor[1].lastname1} ${actor[1].lastname2}</span><br>`;
 
 
         //Comprobamos si la producción es una serie o una pelicula ya que una serie tiene una propiedad seasons que una película no tiene
         if (product && product instanceof Serie) {
-            container = $(`<div id="single-product" class="${product.title}-style container mt-5 mb-5">
+            container = $(`<div id="single-product" class="${product.title}-style container-fluid my-5">
             <div class="row d-flex justify-content-center">
             <div class="col-md-10">
                 <div class="card">
@@ -239,7 +260,7 @@ class View {
     <div>`);
 
         } else if (product && product instanceof Movie) {
-            container = $(` <div id="single-product" class="${product.title}-style container mt-5 mb-5">
+            container = $(` <div id="single-product" class="${product.title}-style container-fluid my-5">
             <div class="row d-flex justify-content-center">
             <div class="col-md-10">
                 <div class="card">
@@ -313,24 +334,33 @@ class View {
         });
     }
 
+
+
     //!BIND SHOW PRODUCT IN NEW WINDOW
     //Método bindShowProductInNewWindow que captura el evento de hacer click en el botón de abrir nueva ventana
     bindShowProductInNewWindow(handler) {
 
         //Si hacemos click en dicho botón, abrimos una nueva ventana (product.html) con los datos de dicha producción
         $('#botonVentanaNueva').click((event) => {
-            if (!this.productWindow || this.productWindow.closed) {
-                this.productWindow = window.open("production.html", "ProductWindow", "width=1000, height=750, top=250, left=175");
-                this.productWindow.addEventListener('DOMContentLoaded', () => {
-                    handler(event.target.dataset.serial)
-                });
-            } else {
-                if ($(this.productWindow.document).find('header nav h1').get(0).dataset.serial !== event.target.dataset.serial) {
-                    handler(event.target.dataset.serial);
-                }
-                this.productWindow.focus();
-            }
+
+            this.productWindow = window.open("production.html", event.target.dataset.serial, "width=1300, height=750, top=250, left=175");
+            this.productWindow.addEventListener('DOMContentLoaded', () => {
+                handler(event.target.dataset.serial)
+            });
+
         });
+    }
+
+    closeWindows(ventanas) {
+
+        for (let i = 0; i < ventanas.length; i++) {
+            // window.close("production.html", ventanas[i].title);
+            // console.log(ventanas[i].title)
+
+            let miVentana = window.open('production.html', ventanas[i].title);
+            miVentana.close();
+        }
+
     }
 
     //!SHOW PRODUCT IN NEW WINDOW
@@ -347,7 +377,7 @@ class View {
             header.append(`<h1>${product.title}</h1>`);
             container = $(`<div id="single-product" class="${product.title}-style container mt-5 mb-5">
             <div class="row d-flex justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="row">
                         <div class="col-md-6">
@@ -374,6 +404,7 @@ class View {
                                     <span class="text-uppercase text-muted brand">Resource: ${product.resources}</span>
                                     <br>
                                     <br>
+                                    <button class="btn btn-primary text-uppercase m-2 px-4" onClick="window.close()">Volver</button>
                                 </div>
                             </div>
                         </div>
@@ -382,24 +413,24 @@ class View {
             </div>
         </div>
     <div>
-			<button class="btn btn-primary text-uppercase m-2 px-4" onClick="window.close()">Cerrar</button>`);
+    `);
 
             // container.find('h6').after(this.#instance[product.constructor.name]);
 
         } else if (product && product instanceof Movie) {
-            this.productWindow.document.title = `${product.nationality} - ${product.publication}`;
+            this.productWindow.document.title = `${product.title}`;
             header.append(`<h1>${product.title}</h1>`);
             container = $(`<div id="single-product" class="${product.title}-style container mt-5 mb-5">
             <div class="row d-flex justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-7">
                             <div class="images p-3">
-                                <div class="text-center p-4"> <img id="main-image" src="./${product.image}" style="width: 500px; height: 300px;" /> </div>
+                                <div class="text-center p-4"> <img id="main-image" src="./${product.image}" style="width: 400px; height: 300px;" /> </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <div class="product p-4">
                                 <div class="mt-4 mb-3"> 
                                     <h5 class="text-uppercase"><strong>${product.title}</strong></h5>
@@ -418,6 +449,7 @@ class View {
                                     <span class="text-uppercase text-muted brand">Ruta: ${product.resource.link}</span>
                                     <br>
                                     <br>
+                                    <button class="btn btn-primary text-uppercase m-2 px-4" onClick="window.close()">Volver</button>
                                 </div>
                             </div>
                         </div>
@@ -426,7 +458,7 @@ class View {
             </div>
         </div>
     <div>
-			<button class="btn btn-primary text-uppercase m-2 px-4" onClick="window.close()">Volver</button>`);
+			`);
         } else {
             container = $(` <div class="container mt-5 mb-5">
 				<div class="row d-flex justify-content-center">
@@ -475,7 +507,7 @@ class View {
         console.log(dir)
 
         if (product) {
-            container = $(`<div id="single-product" class="${dir.director.name}-style container mt-5 mb-5">
+            container = $(`<div id="single-product" class="${dir.director.name}-style container-fluid mt-5 mb-5">
             <div class="row d-flex justify-content-center">
             <div class="col-md-10">
                 <div class="card">
@@ -553,7 +585,7 @@ class View {
         let container;
 
         if (product) {
-            container = $(`<div id="single-product" class="${act.actor.name} container mt-5 mb-5">
+            container = $(`<div id="single-product" class="${act.actor.name} container-fluid my-5">
             <div class="row d-flex justify-content-center">
             <div class="col-md-10">
                 <div class="card">

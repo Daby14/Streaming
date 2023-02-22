@@ -66,6 +66,9 @@ let VideoSystem = (function () {
             //Declaramos la lista productions donde vamos a ir almacenando las producciones del sistema
             #productions = [];
 
+            //Declaramos la lista ventanas donde vamos a almacenar todas las ventanas que se vayan abriendo
+            #ventanas = [];
+
             constructor(name) {
 
                 this.#name = name;
@@ -860,6 +863,27 @@ let VideoSystem = (function () {
                 return numerosAleatorios;
             }
 
+            //Método que añade las ventanas que se van abriendo
+            pushWindows(production) {
+
+                let indice = this.#ventanas.findIndex((elemento) => elemento.title === production.title);
+
+                if (indice === -1) this.#ventanas.push(production);
+
+                return this.#ventanas;
+
+            }
+
+            //Método que devuelve las ventanas que están abiertas en ese momento
+            getWindows() {
+                return this.#ventanas;
+            }
+
+            //Método que vacía la lista una vez cerradas todas las ventanas
+            cleanWindows() {
+                this.#ventanas = [];
+            }
+
             //Devuelve los actores correspondientes a una producción
             * getCast(production) {
 
@@ -871,9 +895,9 @@ let VideoSystem = (function () {
                 //Iteramos sobre los actores
                 for (let pros of this.#actors) {
 
-                    for(let i=0; i<pros.producs.length; i++){
+                    for (let i = 0; i < pros.producs.length; i++) {
 
-                        if(pros.producs[i].title === production.title) yield (pros.actor);
+                        if (pros.producs[i].title === production.title) yield (pros.actor);
 
                     }
 
@@ -883,22 +907,22 @@ let VideoSystem = (function () {
             //Devuelve los actores correspondientes a una producción
             * getCast2(production) {
 
-            //Comprobamos que la producción es una instancia de Production
-            if (!(production instanceof Production)) {
-                throw new ProductionTypeException();
-            }
-
-            //Iteramos sobre los actores
-            for (let pros of this.#directors) {
-
-                for(let i=0; i<pros.producs.length; i++){
-
-                    if(pros.producs[i].title === production.title) yield (pros.director);
-
+                //Comprobamos que la producción es una instancia de Production
+                if (!(production instanceof Production)) {
+                    throw new ProductionTypeException();
                 }
 
+                //Iteramos sobre los actores
+                for (let pros of this.#directors) {
+
+                    for (let i = 0; i < pros.producs.length; i++) {
+
+                        if (pros.producs[i].title === production.title) yield (pros.director);
+
+                    }
+
+                }
             }
-        }
 
         }
 
