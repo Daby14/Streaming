@@ -10,6 +10,7 @@
 img {
   width: 370px;
   height: 200px;
+  border-radius: 1rem;
 }
 
 .header__logo {
@@ -18,7 +19,7 @@ img {
 }
 
 .inicial {
-  margin: 100px;
+  margin: 80px 80px 0px 80px;
 }
 
 .enlaceMenu {

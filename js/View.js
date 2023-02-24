@@ -5,6 +5,13 @@ import { Serie, Movie } from "../entities/products.js";
 //Clase View
 class View {
 
+    #executeHandlerHistory(handler, handlerArguments, scrollElement, data, url, event) {
+        handler(...handlerArguments);
+        $(scrollElement).get(0).scrollIntoView();
+        history.pushState(data, null, url);
+        event.preventDefault();
+    }
+
     //Constructor
     constructor() {
 
@@ -12,16 +19,17 @@ class View {
         this.main = $('#main');
         this.categorias = $('#categorias');
         this.menu = $('#menu');
+        this.productWindow = null;
     }
 
     //!BIND INIT
     //Método que captura el evento de volver a la página principal de la página web
     bindInit(handler) {
-        $('#init').click(() => {
-            handler();
+        $('#init').click((event) => {
+            this.#executeHandlerHistory(handler, [], 'body', { action: 'init' }, '#', event);
         });
-        $('#logo').click(() => {
-            handler();
+        $('#logo').click((event) => {
+            this.#executeHandlerHistory(handler, [], 'body', { action: 'init' }, '#', event);
         });
     }
 
@@ -34,7 +42,7 @@ class View {
 
         //Añadimos al main las 3 categorías iniciales
         this.main.append(`<div id="categoriasIniciales" class="row inicial">
-        <div id="cat1" class="col-lg-4 col-md-6"><a class="prueba" data-type="Acción" href="#">
+        <div id="cat1" class="col-lg-4 col-md-6"><a class="prueba" data-type="Acción" href="#categoriasIniciales">
                 <div><img class="cat__img" alt="Acción" src="./images/Acción.jpg" />
                 </div>
                 <div class="cat__text">
@@ -42,7 +50,7 @@ class View {
                 </div>
             </a>
         </div>
-        <div id="cat2" class="col-lg-4 col-md-6"><a data-type="Ficción" href="#">
+        <div id="cat2" class="col-lg-4 col-md-6"><a data-type="Ficción" href="#categoriasIniciales">
                 <div><img class="cat__img" alt="Ficción" src="./images/Ficción.jpg" />
                 </div>
                 <div class="cat__text">
@@ -50,7 +58,7 @@ class View {
                 </div>
             </a>
         </div>
-        <div id="cat3" class="col-lg-4 col-md-6"><a data-type="Aventura" href="#">
+        <div id="cat3" class="col-lg-4 col-md-6"><a data-type="Aventura" href="#categoriasIniciales">
                 <div><img class="cat__img" alt="Aventura" src="./images/Aventura.jpg" />
                 </div>
                 <div class="cat__text">
@@ -69,7 +77,7 @@ class View {
 
             id.append(`
             <div class="col-lg-4 col-md-6">
-            <a data-type="${pros[i].title}" href="#product-list">
+            <a data-type="${pros[i].title}" href="#productRandom">
                 <div>
                     <img class="cat__img" alt="Produccion ${i}" src="./${pros[i].image}" />
                 </div>
@@ -77,9 +85,7 @@ class View {
                     <h3><strong>${pros[i].title}</strong></h3>
                 </div>
             </a>
-        </div>
-
-            `);
+        </div>`);
         }
 
     }
@@ -87,16 +93,29 @@ class View {
     //!BIND SHOW CATEGORY
     //Método que captura el evento de hacer click a una categoría
     bindShowCategory(handler) {
-        $('#categoriasIniciales').children().find('a').click(function () {
-            handler(this.dataset.type);
+        $('#categoriasIniciales').children().find('a').click((event) => {
+            let type = $(event.target).closest($('a')).get(0).dataset.type;
+            this.#executeHandlerHistory(
+                handler, [type],
+                'body',
+                { action: 'categoriasIniciales', type: type },
+                '#categoriasIniciales', event
+            );
         });
+
     }
 
     //!BIND SHOW PRODUCTION
     //Método que captura el evento de hacer click a una de las producciones aleatorias
     bindShowProduction(handler) {
-        $('#produccionesAleatorias').children().find('a').click(function () {
-            handler(this.dataset.type);
+        $('#produccionesAleatorias').children().find('a').click((event) => {
+            let type = $(event.target).closest($('a')).get(0).dataset.type;
+            this.#executeHandlerHistory(
+                handler, [type],
+                'body',
+                { action: 'produccionesAleatorias', type: type },
+                '#productRandom', event
+            );
         });
     }
 
@@ -123,7 +142,7 @@ class View {
                     <h6 class="card-title"><u>CARACTERÍSTICAS</u></h6>
                     <p class="card-text">-Origen: ${product.value.nationality}</p>
                     <p class="card-text">-Publicación: ${product.value.publication}</p>
-                    <a href="#" class="btn btn-outline-primary" data-serial="${product.value.title}">Acceder</a>
+                    <a href="#produccion" class="btn btn-outline-primary" data-serial="${product.value.title}">Acceder</a>
                 </div>
             </div>
             `);
@@ -138,9 +157,15 @@ class View {
     //!BIND SHOW CARD PRODUCT
     //Método que captura el evento de hacer click en una producción correspondiente a una categoría
     bindShowCardProduct(handler) {
-        $('#producciones').find('a.btn').click(function () {
-            handler(this.dataset.serial);
-            //console.log(this.dataset.serial);
+        $('#producciones').find('a.btn').click((event) => {
+            let serial = $(event.target).closest($('a')).get(0).dataset.serial;
+
+            this.#executeHandlerHistory(
+                handler, [serial],
+                'body',
+                { action: 'producciones', serial: serial },
+                '#produccion', event
+            );
         });
     }
 
@@ -166,30 +191,34 @@ class View {
     //!BIND PRODUCTS CATEGORY LIST IN MENU 
     //Método que captura el evento de hacer click en la categoría del menú
     bindProductsCategoryListInMenu(handler) {
-        $('#menuCategorias').next().children().click(function (event) {
-            handler(this.dataset.category);
+        $('#menuCategorias').next().children().click((event) => {
+            let category = $(event.target).closest($('a')).get(0).dataset.category;
+            this.#executeHandlerHistory(
+                handler, [category],
+                'body',
+                { action: 'categoriasMenu', category: category },
+                '#categoriasMenu', event
+            );
         });
     }
 
     //!SHOW BUTTON WINDOWS IN MENU
     //Método que muestra un botón para cerrar todas las ventanas en el menú
     showButtonWindowsInMenu() {
-        let li = $(`<button id="cerrarVentanas" class="btn btn-warning mr-2">Cerrar Ventanas</button>`);
+        let button = $(`<button id="cerrarVentanas" class="btn btn-warning mr-2">Cerrar Ventanas</button>`);
 
         let container = $(`<div class="dropdown-menu" aria-labelledby="menuBoton"></div>`);
 
-        li.append(container);
-        this.menu.append(li);
+        button.append(container);
+        this.menu.append(button);
     }
 
     //!BIND BUTTON WINDOWS 
     //Método bindButtonWindows que captura el evento de hacer click en el botón del menú
     bindButtonWindows(handler) {
-
         $('#cerrarVentanas').click(function () {
             handler();
         });
-
     }
 
     //!SHOW CARD PRODUCTION
@@ -204,8 +233,8 @@ class View {
 
         //Comprobamos si la producción es una serie o una pelicula ya que una serie tiene una propiedad seasons que una película no tiene
         if (product && product instanceof Serie) {
-            container = $(`<div id="single-product" class="${product.title}-style container-fluid my-5">
-            <div class="row d-flex justify-content-center">
+            container = $(`<div id="single-product" class=" container-fluid my-5">
+            <div class="row d-flex justify-content-center ">
             <div class="col-md-10">
                 <div class="card">
                     <div class="row">
@@ -260,8 +289,8 @@ class View {
     <div>`);
 
         } else if (product && product instanceof Movie) {
-            container = $(` <div id="single-product" class="${product.title}-style container-fluid my-5">
-            <div class="row d-flex justify-content-center">
+            container = $(` <div id="single-product" class=" container-fluid my-5">
+            <div class="row d-flex justify-content-center ">
             <div class="col-md-10">
                 <div class="card">
                     <div class="row">
@@ -290,17 +319,17 @@ class View {
                                     <br>
                                     <br>
                                     <h6 class="text-uppercase"><u>Director</u></h6>
-                                    <a href="#" id="director" data-serial="${director.name}">
+                                    <a href="#directorProduccion" id="director" data-serial="${director.name}">
                                     <span class="text-muted brand">Nombre: ${director.name} ${director.lastname1} ${director.lastname2}</span>
                                     </a>
                                     <br>
                                     <br>
                                     <h6 class="text-uppercase"><u>Actores</u></h6>
                                     <div id="actor">
-                                        <a href="#" data-serial="${actor[0].name}">
+                                        <a href="#actorProduccion" data-serial="${actor[0].name}">
                                             ${actor1}
                                         </a>
-                                        <a href="#" data-serial="${actor[1].name}">
+                                        <a href="#actorProduccion" data-serial="${actor[1].name}">
                                             ${actor2}
                                         </a>
                                     </div>
@@ -321,20 +350,32 @@ class View {
     //!BIND DIRECTOR
     //Método bindDirector que captura el evento de hacer click en el nombre del director
     bindDirector(handler) {
-        $('#director').click(function () {
-            handler(this.dataset.serial);
+        $('#director').click((event) => {
+            let serial = $(event.target).closest($('a')).get(0).dataset.serial;
+            this.#executeHandlerHistory(
+                handler, [serial],
+                'body',
+                { action: 'directorProduccion', serial: serial },
+                '#directorProduccion', event
+            );
         });
+
     }
 
     //!BIND ACTOR
     //Método bindActor que captura el evento de hacer click en el nombre del actor
     bindActor(handler) {
-        $('#actor').find('a').click(function () {
-            handler(this.dataset.serial);
+        $('#actor').find('a').click((event) => {
+            let serial = $(event.target).closest($('a')).get(0).dataset.serial;
+
+            this.#executeHandlerHistory(
+                handler, [serial],
+                'body',
+                { action: 'actorProduccion', serial: serial },
+                '#actorProduccion', event
+            );
         });
     }
-
-
 
     //!BIND SHOW PRODUCT IN NEW WINDOW
     //Método bindShowProductInNewWindow que captura el evento de hacer click en el botón de abrir nueva ventana
@@ -342,25 +383,18 @@ class View {
 
         //Si hacemos click en dicho botón, abrimos una nueva ventana (product.html) con los datos de dicha producción
         $('#botonVentanaNueva').click((event) => {
-
             this.productWindow = window.open("production.html", event.target.dataset.serial, "width=1300, height=750, top=250, left=175");
             this.productWindow.addEventListener('DOMContentLoaded', () => {
                 handler(event.target.dataset.serial)
             });
-
         });
     }
 
     closeWindows(ventanas) {
-
         for (let i = 0; i < ventanas.length; i++) {
-            // window.close("production.html", ventanas[i].title);
-            // console.log(ventanas[i].title)
-
             let miVentana = window.open('production.html', ventanas[i].title);
             miVentana.close();
         }
-
     }
 
     //!SHOW PRODUCT IN NEW WINDOW
@@ -474,7 +508,7 @@ class View {
     //Método que muestra los directores en el menú
     showDirectorInMenu(directors) {
         let li = $(`<li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle enlaceMenu" href="#" id="menuDirectores" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+        <a class="nav-link dropdown-toggle enlaceMenu" href="#menuDirectores" id="menuDirectores" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
           Directores
         </a>
         </li>`);
@@ -492,8 +526,14 @@ class View {
     //!BIND PRODUCTS DIRECTOR LIST IN MENU
     //Método que captura el evento de hacer click en el director del menú
     bindProductsDirectorListInMenu(handler) {
-        $('#menuDirectores').next().children().click(function () {
-            handler(this.dataset.category);
+        $('#menuDirectores').next().children().click((event) => {
+            let category = $(event.target).closest($('a')).get(0).dataset.category;
+            this.#executeHandlerHistory(
+                handler, [category],
+                'body',
+                { action: 'menuDirectores', category: category },
+                '#menuDirectores', event
+            );
         });
     }
 
@@ -503,8 +543,6 @@ class View {
         this.main.empty();
 
         let container;
-
-        console.log(dir)
 
         if (product) {
             container = $(`<div id="single-product" class="${dir.director.name}-style container-fluid mt-5 mb-5">
@@ -528,7 +566,7 @@ class View {
                                     <br>
                                     <br>
                                     <h6 class="text-uppercase"><u>Producciones</u></h6>
-                                    <a href="#" id="production1" data-serial="${product.title}">
+                                    <a href="#productionDirector" id="production1" data-serial="${product.title}">
                                     <span class="text-muted brand">Nombre: ${product.title}</span>
                                     </a>
                                 </div>
@@ -554,7 +592,7 @@ class View {
     //Método que muestra los actores en el menú
     showActorInMenu(actors) {
         let li = $(`<li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle enlaceMenu" href="#" id="menuActores" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+        <a class="nav-link dropdown-toggle enlaceMenu" href="#menuActores" id="menuActores" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
           Actores
         </a>
         </li>`);
@@ -572,8 +610,14 @@ class View {
     //!BIND PRODUCTS ACTOR LIST IN MENU
     //Método que captura el evento de hacer click en el actor del menú
     bindProductsActorListInMenu(handler) {
-        $('#menuActores').next().children().click(function () {
-            handler(this.dataset.category);
+        $('#menuActores').next().children().click((event) => {
+            let category = $(event.target).closest($('a')).get(0).dataset.category;
+            this.#executeHandlerHistory(
+                handler, [category],
+                'body',
+                { action: 'menuActores', category: category },
+                '#menuActores', event
+            );
         });
     }
 
@@ -606,7 +650,7 @@ class View {
                                     <br>
                                     <br>
                                     <h6 class="text-uppercase"><u>Producciones</u></h6>
-                                    <a href="#" id="production2" data-serial="${product.title}">
+                                    <a href="#productionActor" id="production2" data-serial="${product.title}">
                                         <span class="text-muted brand">Nombre: ${product.title}</span>
                                     </a>
                                 </div>
@@ -630,11 +674,25 @@ class View {
 
     //!BIND PRODUCTS DIRECTOR LIST IN MENU
     bindProduction(handler) {
-        $('#production2').click(function () {
-            handler(this.dataset.serial);
+        $('#production2').click((event) => {
+            let serial = $(event.target).closest($('a')).get(0).dataset.serial;
+            this.#executeHandlerHistory(
+                handler, [serial],
+                'body',
+                { action: 'productionActor', serial: serial },
+                '#productionActor', event
+            );
         });
-        $('#production1').click(function () {
-            handler(this.dataset.serial);
+
+        $('#production1').click((event) => {
+            let serial = $(event.target).closest($('a')).get(0).dataset.serial;
+
+            this.#executeHandlerHistory(
+                handler, [serial],
+                'body',
+                { action: 'productionDirector', serial: serial },
+                '#productionDirector', event
+            );
         });
     }
 

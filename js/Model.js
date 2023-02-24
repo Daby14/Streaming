@@ -870,8 +870,6 @@ let VideoSystem = (function () {
 
                 if (indice === -1) this.#ventanas.push(production);
 
-                return this.#ventanas;
-
             }
 
             //Método que devuelve las ventanas que están abiertas en ese momento

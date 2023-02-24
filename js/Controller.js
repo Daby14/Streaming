@@ -154,8 +154,6 @@ class Controller {
 
         // Enlazamos handlers con la vista
         this.#view.bindInit(this.handleInit);
-        this.#view.bindShowCategory(this.handleShowCategory);
-
     }
 
     //Método onInit
@@ -205,6 +203,10 @@ class Controller {
         //Llamamos al método para mostrar las producciones correspondientes a dicha categoría y llamamos al evento
         this.#view.showProductions(iterator, title);
         this.#view.bindShowCardProduct(this.handleShowProduct);
+    }
+
+    handlePrueba = (serial) => {
+        console.log(serial);
     }
 
     //Método handle que muestra la carta de una producción con sus actores y sus directores correspondientes
@@ -266,9 +268,7 @@ class Controller {
 
         this.#view.showProductInNewWindow(pro, "hola");
 
-        let ventanas;
-
-        ventanas = this.#model.pushWindows(pro);
+        this.#model.pushWindows(pro);
 
     }
 
