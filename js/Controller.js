@@ -205,10 +205,6 @@ class Controller {
         this.#view.bindShowCardProduct(this.handleShowProduct);
     }
 
-    handlePrueba = (serial) => {
-        console.log(serial);
-    }
-
     //Método handle que muestra la carta de una producción con sus actores y sus directores correspondientes
     handleShowProduct = (serial) => {
 

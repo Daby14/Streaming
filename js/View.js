@@ -5,6 +5,8 @@ import { Serie, Movie } from "../entities/products.js";
 //Clase View
 class View {
 
+    //!EXECUTE HANDLER HISTORY
+    //Método executeHandlerHistory para mandar el handler y poder almacenar la acción y url del objeto history
     #executeHandlerHistory(handler, handlerArguments, scrollElement, data, url, event) {
         handler(...handlerArguments);
         $(scrollElement).get(0).scrollIntoView();

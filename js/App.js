@@ -7,7 +7,8 @@ $(function () {
 	App = new Controller(
 		VideoSystem.getInstance(), new View()
 	);
-
+	
+	//Declaramos el historial de las acciones para poder implementar el objeto History
 	const AccionesHistory = {
 		init: () => {
 			App.handleInit();
@@ -24,6 +25,7 @@ $(function () {
 		productionActor: (event) => App.handleShowProduct(event.state.serial),
 	}
 
+	//Con el evento popstate llamaos al historial declarado anteriormente
 	window.addEventListener('popstate', function (event) {
 		if (event.state) {
 			AccionesHistory[event.state.action](event);
