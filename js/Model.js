@@ -625,41 +625,45 @@ let VideoSystem = (function () {
             }
 
             //Método que asigna una producción a un director
-            assignDirector(production, director) {
+            assignDirector(production, directors) {
 
                 //Comprobamos si la producción es un objeto Production
                 if (!(production instanceof Production)) {
                     throw new ProductionTypeException();
                 }
 
-                //Comprobamos si el director es un objeto Person
-                if (!(director instanceof Person)) {
-                    throw new PersonTypeException();
+                for (let i = 0; i < directors.length; i++) {
+                    //Comprobamos si el director es un objeto Person
+                    if (!(directors[i] instanceof Person)) {
+                        throw new PersonTypeException();
+                    }
+
+                    //Almacenamos la posición del director
+                    let directorPosition = this.#getDirectorPosition(directors[i]);
+
+                    //Si no existe el director lo añadimos y asignamos la última posición a directorPosition
+                    if (directorPosition === -1) {
+                        this.addDirector(directors[i]);
+                        directorPosition = this.#directors.length - 1;
+                    }
+
+                    //Si no existe la producción la añadimos y asignamos la última posición a productionPosition
+                    let productionPosition = this.#getProductionPosition(production);
+                    if (productionPosition === -1) {
+                        this.#producs.push(production);
+                        productionPosition = this.#producs.length - 1;
+                    }
+
+                    //Si la producción no está asignada al director correspondiente, la asignamos
+                    if (this.#getProductionPosition(production, this.#directors[directorPosition].producs) === -1) {
+                        this.#directors[directorPosition].producs.push(this.#producs[productionPosition]);
+                    }
                 }
 
-                //Almacenamos la posición del director
-                let directorPosition = this.#getDirectorPosition(director);
 
-                //Si no existe el director lo añadimos y asignamos la última posición a directorPosition
-                if (directorPosition === -1) {
-                    this.addDirector(director);
-                    directorPosition = this.#directors.length - 1;
-                }
-
-                //Si no existe la producción la añadimos y asignamos la última posición a productionPosition
-                let productionPosition = this.#getProductionPosition(production);
-                if (productionPosition === -1) {
-                    this.#producs.push(production);
-                    productionPosition = this.#producs.length - 1;
-                }
-
-                //Si la producción no está asignada al director correspondiente, la asignamos
-                if (this.#getProductionPosition(production, this.#directors[directorPosition].producs) === -1) {
-                    this.#directors[directorPosition].producs.push(this.#producs[productionPosition]);
-                }
 
                 //Devolvemos el total de producciones asignadas al director
-                return this.#directors[directorPosition].producs.length;
+                return this.#directors.length;
 
             }
 
@@ -910,7 +914,7 @@ let VideoSystem = (function () {
                     throw new ProductionTypeException();
                 }
 
-                //Iteramos sobre los actores
+                //Iteramos sobre los directores
                 for (let pros of this.#directors) {
 
                     for (let i = 0; i < pros.producs.length; i++) {
@@ -918,8 +922,10 @@ let VideoSystem = (function () {
                         if (pros.producs[i].title === production.title) yield (pros.director);
 
                     }
-
+                    
                 }
+
+                console.log(this.#directors)
             }
 
         }

@@ -114,18 +114,18 @@ class Controller {
         this.#model.assignCategory(produccion12, categoria3);
 
         //!ASSIGN DIRECTOR
-        this.#model.assignDirector(produccion1, director1);
-        this.#model.assignDirector(produccion2, director2);
-        this.#model.assignDirector(produccion3, director3);
-        this.#model.assignDirector(produccion4, director4);
-        this.#model.assignDirector(produccion5, director5);
-        this.#model.assignDirector(produccion6, director6);
-        this.#model.assignDirector(produccion7, director7);
-        this.#model.assignDirector(produccion8, director8);
-        this.#model.assignDirector(produccion9, director9);
-        this.#model.assignDirector(produccion10, director10);
-        this.#model.assignDirector(produccion11, director11);
-        this.#model.assignDirector(produccion12, director12);
+        this.#model.assignDirector(produccion1, [director1]);
+        this.#model.assignDirector(produccion2, [director2]);
+        this.#model.assignDirector(produccion3, [director3]);
+        this.#model.assignDirector(produccion4, [director4]);
+        this.#model.assignDirector(produccion5, [director5]);
+        this.#model.assignDirector(produccion6, [director6]);
+        this.#model.assignDirector(produccion7, [director7]);
+        this.#model.assignDirector(produccion8, [director8]);
+        this.#model.assignDirector(produccion9, [director9]);
+        this.#model.assignDirector(produccion10, [director10]);
+        this.#model.assignDirector(produccion11, [director11]);
+        this.#model.assignDirector(produccion12, [director12]);
 
         //!ASSIGN ACTOR
         this.#model.assignActor(produccion1, [actor1, actor2]);
@@ -166,6 +166,75 @@ class Controller {
         this.#view.showPrincipalElements(pros);
         this.#view.bindShowCategory(this.handleShowCategory);
         this.#view.bindShowProduction(this.handleShowProduct);
+        this.#view.bindShowForm(this.handleShowForm);
+    }
+
+    handleShowForm = (value) => {
+
+        let actores = [];
+
+        for (const iterator of this.#model.actors) {
+            actores.push(iterator);
+        }
+
+        let directores = [];
+
+        for (const iterator of this.#model.directors) {
+            directores.push(iterator);
+        }
+
+        let categorias = [];
+
+        for (const iterator of this.#model.categories) {
+            categorias.push(iterator);
+        }
+
+        if (value === "opcion1") {
+            this.#view.showForm(actores, directores, categorias);
+        }
+
+        this.#view.bindSubmitForm(this.handleAssignDataForm);
+        this.#view.bindShowProduction(this.handleShowProduct);
+    }
+
+    handleAssignDataForm = (produccion, actores, directores, categorias) => {
+
+        let done, error;
+
+        try {
+            for (let i = 0; i < actores.length; i++) {
+
+                let act = this.#model.getActor(actores[i]);
+
+                let actorFull = new Person(act.actor.name, act.actor.lastname1, act.actor.lastname2, act.actor.born, act.actor.picture);
+
+                this.#model.assignActor(produccion, [actorFull]);
+            }
+
+            for (let i = 0; i < directores.length; i++) {
+
+                let dir = this.#model.getDirector(directores[i]);
+
+                let directorFull = new Person(dir.director.name, dir.director.lastname1, dir.director.lastname2, dir.director.born, dir.director.picture);
+
+                this.#model.assignDirector(produccion, [directorFull]);
+
+            }
+
+            for (let i = 0; i < categorias.length; i++) {
+                let cat = this.#model.getCategory(categorias[i]);
+                let categoriaFull = new Category(cat.category.name, cat.category.description);
+                this.#model.assignCategory(produccion, categoriaFull);
+            }
+
+            done = true;
+        } catch (error) {
+            done = false;
+            error = error
+        }
+
+        this.#view.showProductModal(done, produccion, error);
+
     }
 
     //Método hHandle que llama al onInit
@@ -208,7 +277,7 @@ class Controller {
     //Método handle que muestra la carta de una producción con sus actores y sus directores correspondientes
     handleShowProduct = (serial) => {
 
-        let director;
+        let directors = [];
         let actors = [];
         let pos = 0;
 
@@ -217,17 +286,24 @@ class Controller {
 
         //Obtenemos el director correspondiente a la producción
         for (let pros of this.#model.getCast2(pro)) {
-            director = pros;
+            directors.push(pros);
+            // directors[pos] = pros;
+            // pos++;
+            // console.log(pros);
         }
+
+        // this.#model.getCast2(pro);
 
         //Obtenemos los actores correspondiente a la producción
         for (let actor of this.#model.getCast(pro)) {
-            actors[pos] = actor;
-            pos++;
+            actors.push(actor);
+            // actors[pos] = actor;
+            // pos++;
+            // console.log(actor);
         }
 
         //Llamamos al método para mostrar la información de la producción con sus actores y directores correspondientes
-        this.#view.showCardProduction(pro, director, actors);
+        this.#view.showCardProduction(pro, directors, actors);
         this.#view.bindDirector(this.handleShowDirector);
         this.#view.bindActor(this.handleShowActor);
         this.#view.bindShowProductInNewWindow(this.handleProductNewWindow);
@@ -305,13 +381,13 @@ class Controller {
 
         let dir = this.#model.getDirector(serial);
 
-        let produccion;
+        let producciones = [];
 
         for (let pro of dir.producs) {
-            produccion = pro;
+            producciones.push(pro);
         }
 
-        this.#view.showCardDirector(produccion, dir);
+        this.#view.showCardDirector(producciones, dir);
         this.#view.bindProduction(this.handleShowProduct);
 
     }
@@ -334,13 +410,13 @@ class Controller {
 
         let act = this.#model.getActor(serial);
 
-        let produccion;
+        let producciones = [];
 
         for (let pro of act.producs) {
-            produccion = pro;
+            producciones.push(pro);
         }
 
-        this.#view.showCardActor(produccion, act);
+        this.#view.showCardActor(producciones, act);
         this.#view.bindProduction(this.handleShowProduct);
     }
 

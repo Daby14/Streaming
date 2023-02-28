@@ -1,6 +1,6 @@
 "use strict";
 
-import { Serie, Movie } from "../entities/products.js";
+import { Serie, Movie, Resource, Coordinate } from "../entities/products.js";
 
 //Clase View
 class View {
@@ -90,6 +90,13 @@ class View {
         </div>`);
         }
 
+        this.main.append(`
+        <select id="select">
+            <option value="opcion1">Nueva Producción</option>
+            <option value="opcion2">Opción 2</option>
+            <option value="opcion3">Opción 3</option>
+        </select>`);
+
     }
 
     //!BIND SHOW CATEGORY
@@ -121,6 +128,293 @@ class View {
         });
     }
 
+    bindShowForm(handler) {
+        $('#select').children().click((event) => {
+            handler(event.target.value);
+        })
+    }
+
+    showForm(actores, directores, categorias) {
+        this.main.empty();
+        this.main.append(`
+        <div class="container m-5" id="cValidation">
+			<h1 class="d-flex justify-content-center">Nueva Producción</h1>
+			<form id="form" name="fValidation" role="form" class="text-white m-5">
+				<!-- Requiered -->
+				<div id="row" class="form-row row">
+					<div class="col-md-4 mb-3">
+						<label for="vfTitulo">Título</label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="vfTitulo" name="vfTitulo" placeholder="Título" value="" required>
+							<div class="invalid-feedback">El título es obligatorio</div>
+							<div class="valid-feedback">Correcto.</div>
+						</div>
+					</div>
+					<div class="col-md-4 mb-3">
+						<label for="vfNacionalidad">Nacionalidad</label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="vfNacionalidad" name="vfNacionalidad"
+								placeholder="Nacionalidad" value="" required>
+							<div class="invalid-feedback">La nacionalidad es obligatoria</div>
+							<div class="valid-feedback">Correcto.</div>
+						</div>
+					</div>
+					<div class="col-md-4 mb-3">
+						<label for="vfPublicacion">Publicación</label>
+						<div class="input-group">
+							<input type="date" class="form-control" id="vfPublicacion" name="vfPublicacion"
+								placeholder="Publicación" value="" required>
+                            <div class="invalid-feedback">La publicación es obligatoria</div>
+							<div class="valid-feedback">Correcto.</div>
+						</div>
+					</div>
+
+                    <div class="col-md-4 mb-3">
+						<label for="vfDescripcion">Descripción</label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="vfDescripcion" name="vfDescripcion"
+								placeholder="Descripción" value="" required>
+                            <div class="invalid-feedback">La descripción es obligatoria</div>
+							<div class="valid-feedback">Correcto.</div>
+						</div>
+					</div>
+
+                    <div class="col-md-8 mb-3">
+						<label for="vfImagen">Imagen</label>
+						<div class="input-group">
+							<input type="file" class="form-control" id="vfImagen" name="vfImagen"
+								placeholder="Imagen" value="" required>
+                            <div class="invalid-feedback">La imagen es obligatoria</div>
+							<div class="valid-feedback">Correcto.</div>
+						</div>
+					</div>
+
+                    <div class="col-md-4 mb-3">
+						<label for="vfContenido">Contenido</label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="vfContenido" name="vfContenido"
+								placeholder="Contenido" value="" required>
+                            <div class="invalid-feedback">El contenido es obligatorio</div>
+							<div class="valid-feedback">Correcto.</div>
+						</div>
+					</div>
+
+                    <div class="col-md-4 mb-3">
+						<label for="vfLatitud">Latitud</label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="vfLatitud" name="vfLatitud"
+								placeholder="Latitud" value="" required>
+                            <div class="invalid-feedback">La latitud es obligatoria</div>
+							<div class="valid-feedback">Correcto.</div>
+						</div>
+					</div>
+
+                    <div class="col-md-4 mb-3">
+						<label for="vfLongitud">Longitud</label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="vfLongitud" name="vfLongitud"
+								placeholder="Longitud" value="" required>
+                            <div class="invalid-feedback">La longitud es obligatoria</div>
+							<div class="valid-feedback">Correcto.</div>
+						</div>
+					</div>
+
+                    <div class="col-md-4 mb-3">
+						<label for="vfTemporadas">Temporadas</label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="vfTemporadas" name="vfTemporadas"
+								placeholder="Temporadas" value="" required>
+                            <div class="invalid-feedback">Las temporadas son obligatorias</div>
+							<div class="valid-feedback">Correcto.</div>
+						</div>
+					</div>
+
+
+
+				</div>
+
+
+				<button class="btn btn-primary" type="submit">Enviar</button>
+				<button class="btn btn-primary" type="reset">Cancelar</button>
+			</form>
+		</div>`);
+
+        //Actores
+        $("#row").append(`
+        <div class="col-md-3 mb-3">
+            <label for="vfActores">Actores</label>
+            <div class="form-group">
+                <select class="custom-select" id="vfActores" name="vfActores" required multiple></select>
+                <div class="invalid-feedback">Los actores son obligatorios</div>
+                <div class="valid-feedback">Correcto.</div>
+            </div>
+        </div>`);
+
+        for (let i = 0; i < actores.length; i++) {
+            let option = `
+            <option value="${actores[i].actor.name}">${actores[i].actor.name}</option>`;
+            $("#vfActores").append(option);
+        }
+
+        //Directores
+        $("#row").append(`
+        <div class="col-md-3 mb-3">
+            <label for="vfDirectores">Directores</label>
+            <div class="form-group">
+                <select class="custom-select" id="vfDirectores" name="vfDirectores" required multiple></select>
+                <div class="invalid-feedback">Los directores son obligatorios</div>
+                <div class="valid-feedback">Correcto.</div>
+            </div>
+        </div>`);
+
+        for (let i = 0; i < directores.length; i++) {
+            let option = `
+            <option value="${directores[i].director.name}">${directores[i].director.name}</option>`;
+            $("#vfDirectores").append(option);
+        }
+
+        //Categorías
+        $("#row").append(`
+        <div class="col-md-3 mb-3">
+            <label for="vfCategorias">Categorías</label>
+            <div class="form-group">
+                <select class="custom-select" id="vfCategorias" name="vfCategorias" required multiple></select>
+                <div class="invalid-feedback">Las categorías son obligatorias</div>
+                <div class="valid-feedback">Correcto.</div>
+            </div>
+        </div>`);
+
+        for (let i = 0; i < categorias.length; i++) {
+            let option = `
+            <option value="${categorias[i].category.name}">${categorias[i].category.name}</option>`;
+            $("#vfCategorias").append(option);
+        }
+
+        // $("#row").append(`<select name="selectAct2" id="selectActores2"></select>`);
+
+        // for (let i = 0; i < actores.length; i++) {
+        //     let option = `<option value="${actores[i].actor.name}">${actores[i].actor.name}</option>`;
+        //     $("#selectActores2").append(option);
+        // }
+
+        // $("#row").append(`<select name="selectDir" id="selectDirectores"></select>`);
+
+        // for (let i = 0; i < directores.length; i++) {
+        //     let option = `<option value="${directores[i].director.name}">${directores[i].director.name}</option>`;
+        //     $("#selectDirectores").append(option);
+        // }
+
+        // $("#row").append(`<select name="selectCat" id="selectCategorias"></select>`);
+
+        // for (let i = 0; i < categorias.length; i++) {
+        //     let option = `<option value="${categorias[i].category.name}">${categorias[i].category.name}</option>`;
+        //     $("#selectCategorias").append(option);
+
+        // }
+
+    }
+
+    bindSubmitForm(handler) {
+
+        document.getElementById("form").addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+            let titulo = document.getElementById("vfTitulo").value;
+            let nacionalidad = document.getElementById("vfNacionalidad").value;
+            let publicacion = document.getElementById("vfPublicacion").value;
+            let descripcion = document.getElementById("vfDescripcion").value;
+
+            let imagen = document.getElementById("vfImagen").value;
+            let segundaParte = imagen.substring(12);
+            let imagenFull = "images/" + segundaParte;
+
+            let contenido = document.getElementById("vfContenido").value;
+            let latitud = document.getElementById("vfLatitud").value;
+            let longitud = document.getElementById("vfLongitud").value;
+            let temporadas = document.getElementById("vfTemporadas").value;
+
+            //Actores
+            let actores = [];
+
+            const selectActor = document.getElementById("vfActores");
+            const opcionesSeleccionadasActor = selectActor.selectedOptions;
+            for (let i = 0; i < opcionesSeleccionadasActor.length; i++) {
+                actores.push(opcionesSeleccionadasActor[i].value);
+            }
+
+            //Directores
+            let directores = [];
+
+            const selectDirector = document.getElementById("vfDirectores");
+            const opcionesSeleccionadasDirector = selectDirector.selectedOptions;
+            for (let i = 0; i < opcionesSeleccionadasDirector.length; i++) {
+                directores.push(opcionesSeleccionadasDirector[i].value);
+            }
+
+            //Categorías
+            let categorias = [];
+
+            const selectCategoria = document.getElementById("vfCategorias");
+            const opcionesSeleccionadasCategoria = selectCategoria.selectedOptions;
+            for (let i = 0; i < opcionesSeleccionadasCategoria.length; i++) {
+                categorias.push(opcionesSeleccionadasCategoria[i].value);
+            }
+
+            let coordinate = new Coordinate(latitud, longitud);
+
+            let produccion = new Serie(titulo, nacionalidad, publicacion, descripcion, imagenFull, contenido, coordinate, temporadas);
+
+            handler(produccion, actores, directores, categorias);
+
+
+        });
+
+    }
+
+    showProductModal(done, product, error) {
+        $(document.fNewProduct).find('div.error').remove();
+        if (done) {
+            let modal = $(`<div class="modal fade" id="newProductModal" tabindex="-1"
+				data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="newCategoryModalLabel">Producto creado</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							La producción <strong>${product.title}</strong> ha sido creada correctamente.
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+						</div>
+					</div>
+				</div>
+			</div>`);
+            $('body').append(modal);
+            let newProductModal = $('#newProductModal');
+            newProductModal.modal('show');
+            newProductModal.find('button').click(() => {
+                // newProductModal.on('hidden.bs.modal', function (event) {
+                //     document.fNewProduct.reset();
+                //     document.fNewProduct.npSerial.focus();
+                //     this.remove();
+                // });
+                newProductModal.modal('hide');
+                newProductModal.remove();
+                // $("#form").reset();
+                const formulario = document.getElementById("form");
+                formulario.reset();
+                // newProductModal.modal('hide');
+            })
+        } else {
+            $(document.fNewProduct).prepend(`<div class="error text-danger p-3"><i class="fas fa-exclamation-triangle"></i> La producción <strong>${product.title}</strong> no ha podido crearse correctamente.</div>`);
+        }
+    }
+
     //!SHOW PRODUCTIONS
     //Método que muestra las producciones correspondientes a una categoría
     showProductions(iterator, title) {
@@ -131,7 +425,11 @@ class View {
 
         let id = $("#producciones");
 
+
+
         let product = iterator.next();
+
+        let publication = (product.value.publication).replace(/-/g, "/");
 
         while (!product.done) {
 
@@ -143,7 +441,7 @@ class View {
                     <br>
                     <h6 class="card-title"><u>CARACTERÍSTICAS</u></h6>
                     <p class="card-text">-Origen: ${product.value.nationality}</p>
-                    <p class="card-text">-Publicación: ${product.value.publication}</p>
+                    <p class="card-text">-Publicación: ${publication}</p>
                     <a href="#produccion" class="btn btn-outline-primary" data-serial="${product.value.title}">Acceder</a>
                 </div>
             </div>
@@ -190,7 +488,7 @@ class View {
         this.menu.append(li);
     }
 
-    //!BIND PRODUCTS CATEGORY LIST IN MENU 
+    //!BIND PRODUCTS CATEGORY LIST IN MENU
     //Método que captura el evento de hacer click en la categoría del menú
     bindProductsCategoryListInMenu(handler) {
         $('#menuCategorias').next().children().click((event) => {
@@ -215,7 +513,7 @@ class View {
         this.menu.append(button);
     }
 
-    //!BIND BUTTON WINDOWS 
+    //!BIND BUTTON WINDOWS
     //Método bindButtonWindows que captura el evento de hacer click en el botón del menú
     bindButtonWindows(handler) {
         $('#cerrarVentanas').click(function () {
@@ -225,17 +523,19 @@ class View {
 
     //!SHOW CARD PRODUCTION
     //Método que muestra la carta de la producción con sus actores y directores correspondientes
-    showCardProduction(product, director, actor) {
+    showCardProduction(product, directors, actors) {
         this.main.empty();
 
-        let container;
-        let actor1 = `<span class="text-muted brand">Nombre: ${actor[0].name} ${actor[0].lastname1} ${actor[0].lastname2}</span><br>`;
-        let actor2 = `<span class="text-muted brand">Nombre: ${actor[1].name} ${actor[1].lastname1} ${actor[1].lastname2}</span><br>`;
+        console.log(product.publication);
+
+        let publication = (product.publication).replace(/-/g, "/");
+
+        console.log(publication)
 
 
         //Comprobamos si la producción es una serie o una pelicula ya que una serie tiene una propiedad seasons que una película no tiene
         if (product && product instanceof Serie) {
-            container = $(`<div id="single-product" class=" container-fluid my-5">
+            this.main.append(`<div id="single-product" class=" container-fluid my-5">
             <div class="row d-flex justify-content-center ">
             <div class="col-md-10">
                 <div class="card">
@@ -247,7 +547,7 @@ class View {
                         </div>
                         <div class="col-md-6">
                             <div class="product p-4">
-                                <div class="mt-4 mb-3"> 
+                                <div class="mt-4 mb-3">
                                     <h5 class="text-uppercase"><strong>${product.title}</strong></h5>
                                 </div>
                                 <p class="about">${product.synopsis}</p>
@@ -255,7 +555,7 @@ class View {
                                     <h6 class="text-uppercase"><u>Características</u></h6>
                                     <span class="text-uppercase text-muted brand">Origen: ${product.nationality}</span>
                                     <br>
-                                    <span class="text-uppercase text-muted brand">Publicación: ${product.publication}</span>
+                                    <span class="text-uppercase text-muted brand">Publicación: ${publication}</span>
                                     <br>
                                     <span class="text-uppercase text-muted brand">Temporadas: ${product.seasons}</span>
                                     <br>
@@ -264,20 +564,15 @@ class View {
                                     <span class="text-uppercase text-muted brand">Resource: ${product.resources}</span>
                                     <br>
                                     <br>
-                                    <h6 class="text-uppercase"><u>Director</u></h6>
-                                    <a href="#" id="director" data-serial="${director.name}">
-                                    <span class="text-muted brand">Nombre: ${director.name} ${director.lastname1} ${director.lastname2}</span>
-                                    </a>
+                                    <h6 class="text-uppercase"><u>Directores</u></h6>
+                                    <div id="directores">
+
+                                    </div>
                                     <br>
                                     <br>
                                     <h6 class="text-uppercase"><u>Actores</u></h6>
-                                    <div id="actor">
-                                        <a href="#" data-serial="${actor[0].name}">
-                                            ${actor1}
-                                        </a>
-                                        <a href="#" data-serial="${actor[1].name}">
-                                            ${actor2}
-                                        </a>
+                                    <div id="actores">
+
                                     </div>
                                     <br>
                                     <button id="botonVentanaNueva" data-serial="${product.title}" class="btn btn-primary mr-2 px-4">Abrir</button>
@@ -290,8 +585,20 @@ class View {
         </div>
     <div>`);
 
+            for (let i = 0; i < directors.length; i++) {
+                $("#directores").append(`
+                <a href="#" id="director" data-serial="${directors[i].name}"><span class="text-muted brand">Nombre: ${directors[i].name} ${directors[i].lastname1} ${directors[i].lastname2}</span><br></a>`);
+                // console.log(directors[i].name)
+            }
+
+            for (let i = 0; i < actors.length; i++) {
+                $("#actores").append(`
+                <a href="#" id="actor" data-serial="${actors[i].name}"><span class="text-muted brand">Nombre: ${actors[i].name} ${actors[i].lastname1} ${actors[i].lastname2}</span><br></a>`);
+                // console.log(actors[i].name)
+            }
+
         } else if (product && product instanceof Movie) {
-            container = $(` <div id="single-product" class=" container-fluid my-5">
+            this.main.append(` <div id="single-product" class=" container-fluid my-5">
             <div class="row d-flex justify-content-center ">
             <div class="col-md-10">
                 <div class="card">
@@ -303,7 +610,7 @@ class View {
                         </div>
                         <div class="col-md-6">
                             <div class="product p-4">
-                                <div class="mt-4 mb-3"> 
+                                <div class="mt-4 mb-3">
                                     <h5 class="text-uppercase"><strong>${product.title}</strong></h5>
                                 </div>
                                 <p class="about">${product.synopsis}</p>
@@ -320,20 +627,15 @@ class View {
                                     <span class="text-uppercase text-muted brand">Ruta: ${product.resource.link}</span>
                                     <br>
                                     <br>
-                                    <h6 class="text-uppercase"><u>Director</u></h6>
-                                    <a href="#directorProduccion" id="director" data-serial="${director.name}">
-                                    <span class="text-muted brand">Nombre: ${director.name} ${director.lastname1} ${director.lastname2}</span>
-                                    </a>
+                                    <h6 class="text-uppercase"><u>Directores</u></h6>
+                                    <div id="directores">
+
+                                    </div>
                                     <br>
                                     <br>
                                     <h6 class="text-uppercase"><u>Actores</u></h6>
-                                    <div id="actor">
-                                        <a href="#actorProduccion" data-serial="${actor[0].name}">
-                                            ${actor1}
-                                        </a>
-                                        <a href="#actorProduccion" data-serial="${actor[1].name}">
-                                            ${actor2}
-                                        </a>
+                                    <div id="actores">
+
                                     </div>
                                     <br>
                                     <button id="botonVentanaNueva" data-serial="${product.title}" class="btn btn-primary mr-2 px-4">Abrir</button>
@@ -345,14 +647,28 @@ class View {
             </div>
         </div>
     <div>`);
+
+            for (let i = 0; i < directors.length; i++) {
+                $("#directores").append(`<a href="#" id="director" data-serial="${directors[i].name}"><span class="text-muted brand">Nombre: ${directors[i].name} ${directors[i].lastname1} ${directors[i].lastname2}</span><br></a>`);
+                // console.log(directors[i].name)
+            }
+
+            for (let i = 0; i < actors.length; i++) {
+                $("#actores").append(`<a href="#" id="actor" data-serial="${actors[i].name}"><span class="text-muted brand">Nombre: ${actors[i].name} ${actors[i].lastname1} ${actors[i].lastname2}</span><br></a>`);
+                // console.log(actors[i].name)
+            }
+
+
         }
-        this.main.append(container);
+
+
+        // this.main.append(container);
     }
 
     //!BIND DIRECTOR
     //Método bindDirector que captura el evento de hacer click en el nombre del director
     bindDirector(handler) {
-        $('#director').click((event) => {
+        $('#directores').find('a').click((event) => {
             let serial = $(event.target).closest($('a')).get(0).dataset.serial;
             this.#executeHandlerHistory(
                 handler, [serial],
@@ -367,7 +683,7 @@ class View {
     //!BIND ACTOR
     //Método bindActor que captura el evento de hacer click en el nombre del actor
     bindActor(handler) {
-        $('#actor').find('a').click((event) => {
+        $('#actores').find('a').click((event) => {
             let serial = $(event.target).closest($('a')).get(0).dataset.serial;
 
             this.#executeHandlerHistory(
@@ -423,7 +739,7 @@ class View {
                         </div>
                         <div class="col-md-6">
                             <div class="product p-4">
-                                <div class="mt-4 mb-3"> 
+                                <div class="mt-4 mb-3">
                                     <h5 class="text-uppercase"><strong>${product.title}</strong></h5>
                                 </div>
                                 <p class="about">${product.synopsis}</p>
@@ -468,7 +784,7 @@ class View {
                         </div>
                         <div class="col-md-5">
                             <div class="product p-4">
-                                <div class="mt-4 mb-3"> 
+                                <div class="mt-4 mb-3">
                                     <h5 class="text-uppercase"><strong>${product.title}</strong></h5>
                                 </div>
                                 <p class="about">${product.synopsis}</p>
@@ -541,13 +857,10 @@ class View {
 
     //!SHOW CARD DIRECTOR
     //Método que muestra la carta del director con sus producciones correspondientes
-    showCardDirector(product, dir) {
+    showCardDirector(products, dir) {
         this.main.empty();
 
-        let container;
-
-        if (product) {
-            container = $(`<div id="single-product" class="${dir.director.name}-style container-fluid mt-5 mb-5">
+        this.main.append(`<div id="single-product" class="${dir.director.name}-style container-fluid mt-5 mb-5">
             <div class="row d-flex justify-content-center">
             <div class="col-md-10">
                 <div class="card">
@@ -568,9 +881,9 @@ class View {
                                     <br>
                                     <br>
                                     <h6 class="text-uppercase"><u>Producciones</u></h6>
-                                    <a href="#productionDirector" id="production1" data-serial="${product.title}">
-                                    <span class="text-muted brand">Nombre: ${product.title}</span>
-                                    </a>
+                                    <div id="producciones">
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -580,14 +893,12 @@ class View {
         </div>
     <div>`);
 
-        } else {
-            container = $(` <div class="container mt-5 mb-5">
-				<div class="row d-flex justify-content-center">
-					${message}
-				</div>
-			</div>`);
+        for (let i = 0; i < products.length; i++) {
+            $("#producciones").append(`
+            <a href="#productionDirector" class="text-muted brand" id="productionDirector" data-serial="${products[i].title}">
+                <span>Nombre: ${products[i].title}</span><br>
+            </a>`);
         }
-        this.main.append(container);
     }
 
     //!SHOW ACTOR IN MENU
@@ -625,13 +936,10 @@ class View {
 
     //!SHOW CARD ACTOR
     //Método que muestra la carta del actor con sus producciones correspondientes
-    showCardActor(product, act) {
+    showCardActor(products, act) {
         this.main.empty();
 
-        let container;
-
-        if (product) {
-            container = $(`<div id="single-product" class="${act.actor.name} container-fluid my-5">
+        this.main.append(`<div id="single-product" class="${act.actor.name} container-fluid my-5">
             <div class="row d-flex justify-content-center">
             <div class="col-md-10">
                 <div class="card">
@@ -652,9 +960,9 @@ class View {
                                     <br>
                                     <br>
                                     <h6 class="text-uppercase"><u>Producciones</u></h6>
-                                    <a href="#productionActor" id="production2" data-serial="${product.title}">
-                                        <span class="text-muted brand">Nombre: ${product.title}</span>
-                                    </a>
+                                    <div id="produccionesActores">
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -664,19 +972,18 @@ class View {
         </div>
     <div>`);
 
-        } else {
-            container = $(` <div class="container mt-5 mb-5">
-				<div class="row d-flex justify-content-center">
-					${message}
-				</div>
-			</div>`);
+        for (let i = 0; i < products.length; i++) {
+            $("#produccionesActores").append(`
+        <a href="#productionActor" id="production2" data-serial="${products[i].title}">
+            <span class="text-muted brand">Nombre: ${products[i].title}</span><br>
+        </a>`);
         }
-        this.main.append(container);
+
     }
 
     //!BIND PRODUCTS DIRECTOR LIST IN MENU
     bindProduction(handler) {
-        $('#production2').click((event) => {
+        $('#produccionesActores').find('a').click((event) => {
             let serial = $(event.target).closest($('a')).get(0).dataset.serial;
             this.#executeHandlerHistory(
                 handler, [serial],
@@ -686,7 +993,7 @@ class View {
             );
         });
 
-        $('#production1').click((event) => {
+        $('#producciones').find('a').click((event) => {
             let serial = $(event.target).closest($('a')).get(0).dataset.serial;
 
             this.#executeHandlerHistory(
