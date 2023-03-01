@@ -124,6 +124,7 @@ class View {
 
     showFormProduction(actores, directores, categorias) {
         this.main.empty();
+
         this.main.append(`
         <div class="container m-5" id="cValidation">
 			<h1 class="d-flex justify-content-center">Nueva Producción</h1>
@@ -274,6 +275,8 @@ class View {
             $("#vfCategorias").append(option);
         }
 
+
+
     }
 
     bindSubmitForm(handler) {
@@ -329,6 +332,7 @@ class View {
 
             handler(produccion, actores, directores, categorias);
         });
+
 
     }
 
@@ -414,6 +418,43 @@ class View {
             let category = new Category(nombre, descripcion);
 
             handler(category);
+        });
+
+    }
+
+    showFormDeleteCategory() {
+        this.main.empty();
+        this.main.append(`
+        <div class="container m-5" id="cValidation">
+			<h1 class="d-flex justify-content-center">Eliminar Categoría</h1>
+			<form id="formDeleteCategory" name="fValidation" role="form" class="text-white m-5">
+				<div id="row" class="form-row row">
+					<div class="col-md-4 mb-3">
+						<label for="vfNombreCategoria">Nombre</label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="vfNombreCategoria" name="vfNombreCategoria" placeholder="Título" value="" required>
+							<div class="invalid-feedback">El nombre es obligatorio</div>
+							<div class="valid-feedback">Correcto.</div>
+						</div>
+					</div>
+
+				</div>
+
+				<button class="btn btn-primary" type="submit">Enviar</button>
+				<button class="btn btn-primary" type="reset">Cancelar</button>
+			</form>
+		</div>`);
+    }
+
+    bindSubmitDeleteFormCategory(handler) {
+
+        document.getElementById("formDeleteCategory").addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+            let nombre = document.getElementById("vfNombreCategoria").value;
+
+            handler(nombre);
         });
 
     }
@@ -1051,7 +1092,6 @@ class View {
                                     <br>
                                     <br>
                                     <br>
-                                    <h6 class="text-uppercase"><u>Producciones</u></h6>
                                     <div id="producciones">
 
                                     </div>
@@ -1064,6 +1104,9 @@ class View {
         </div>
     <div>`);
 
+        if (products.length !== 0) {
+            $("#producciones").append(`<h6 class="text-uppercase"><u>Producciones</u></h6>`);
+        }
         for (let i = 0; i < products.length; i++) {
             $("#producciones").append(`
             <a href="#productionDirector" class="text-muted brand" id="productionDirector" data-serial="${products[i].title}">
@@ -1130,7 +1173,6 @@ class View {
                                     <br>
                                     <br>
                                     <br>
-                                    <h6 class="text-uppercase"><u>Producciones</u></h6>
                                     <div id="produccionesActores">
 
                                     </div>
@@ -1142,6 +1184,10 @@ class View {
             </div>
         </div>
     <div>`);
+
+        if (products.length !== 0) {
+            $("#produccionesActores").append(`<h6 class="text-uppercase"><u>Producciones</u></h6>`);
+        }
 
         for (let i = 0; i < products.length; i++) {
             $("#produccionesActores").append(`

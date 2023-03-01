@@ -221,9 +221,10 @@ class Controller {
         } else if (value === "Crear categoría") {
             this.#view.showFormCategory();
             this.#view.bindSubmitFormCategory(this.handleAssignDataFormCategory);
+        } else if (value === "Eliminar categoría") {
+            this.#view.showFormDeleteCategory();
+            this.#view.bindSubmitDeleteFormCategory(this.handleDeleteCategory);
         }
-
-
 
         this.#view.bindShowProduction(this.handleShowProduct);
     }
@@ -297,34 +298,55 @@ class Controller {
         let done = true;
         let error;
 
+        //Obtenemos la producción a borrar
         let produccion = this.#model.getProduction(titulo);
 
-        if(!(produccion instanceof Production)){
+        //Le deasignamos los actores
+        let actores = [];
+
+        for (const elem3 of this.#model.getCast(produccion)) {
+            actores.push(elem3);
+        }
+
+        for (let i = 0; i < actores.length; i++) {
+            this.#model.deassignActor(produccion, actores[i]);
+        }
+
+        //Le deasignamos los directores
+        let directores = [];
+
+        for (const elem3 of this.#model.getCast2(produccion)) {
+            directores.push(elem3);
+        }
+
+        for (let i = 0; i < directores.length; i++) {
+            this.#model.deassignDirector(produccion, directores[i]);
+        }
+
+
+        if (!(produccion instanceof Production)) {
             done = false;
         }
 
         try {
-
+            //Borramos la producción
             this.#model.removeProduction(produccion);
 
             let production;
             let categorie;
 
             for (const elem of this.#model.categories) {
+                console.log(elem);
                 for (const elem2 of elem.producs) {
                     if (titulo === elem2.title) {
                         production = elem2;
                         categorie = elem.category;
                     }
-
                 }
             }
 
+            //A la categoría correspondiente le deasignamos dicha producción
             this.#model.deassignCategory(production, categorie);
-
-            for (const elem of this.#model.categories) {
-                console.log(elem);
-            }
 
             // done = true;
         } catch (error) {
@@ -336,27 +358,78 @@ class Controller {
 
     }
 
+    handleDeleteCategory = (nombre) => {
+
+        let done = true;
+        let error;
+
+        let categoria = this.#model.getCategory(nombre);
+
+        // console.log(categoria.category instanceof Category);
+
+        // let categoriaFull = new Category(categoria.category);
+
+        // console.log(categoriaFull);
+
+        if (!(categoria instanceof Category)) {
+            done = false;
+        }
+
+        try {
+
+            this.#model.removeCategorie(categoria.category);
+
+            this.onAddCategory();
+            this.onAddDirector();
+            this.onAddActor();
+            this.onAddButtonWindow();
+            this.onAddForm();
+
+        } catch (error) {
+
+        }
+
+        // this.#view.showCategoryModal(done, categoria, error);
+
+    }
+
     //Método handle que muestra las producciones correspondientes a una categoría
     handleShowCategory = (type) => {
 
         let title = "";
 
-        //Obtenemos la categoría correspondiente
-        let category = this.#model.getCategory(type);
+        let category;
 
-        //Obtenemos el iterador de las producciones de dicha categoría
-        const iterator = category.producs[Symbol.iterator]();
+        try {
+            //Obtenemos la categoría correspondiente
+            category = this.#model.getCategory(type);
 
-        //Obtenemos el title que se muestra con las producciones
-        if (type === "Acción") title = "Acción";
+            //Obtenemos el iterador de las producciones de dicha categoría
+            let iterator = category.producs[Symbol.iterator]();
 
-        if (type === "Ficción") title = "Ficción";
+            //Comprobamos si está vacía la categoría
+            let estaVacio = iterator.next().done;
 
-        if (type === "Aventura") title = "Aventura";
+            if (!estaVacio) {
 
-        //Llamamos al método para mostrar las producciones correspondientes a dicha categoría y llamamos al evento
-        this.#view.showProductions(iterator, title);
-        this.#view.bindShowCardProduct(this.handleShowProduct);
+                iterator = category.producs[Symbol.iterator]();
+                //Obtenemos el title que se muestra con las producciones
+                if (type === "Acción") title = "Acción";
+
+                if (type === "Ficción") title = "Ficción";
+
+                if (type === "Aventura") title = "Aventura";
+
+                //Llamamos al método para mostrar las producciones correspondientes a dicha categoría y llamamos al evento
+                this.#view.showProductions(iterator, title);
+                this.#view.bindShowCardProduct(this.handleShowProduct);
+            } else {
+                console.log("ESA CATEGORÍA ESTÁ VACÍA");
+            }
+        } catch (error) {
+            console.error("LA CATEGORÍA NO EXISTE");
+        }
+
     }
 
     //Método handle que muestra la carta de una producción con sus actores y sus directores correspondientes
