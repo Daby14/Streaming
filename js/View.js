@@ -1,6 +1,6 @@
 "use strict";
 
-import { Serie, Movie, Resource, Coordinate } from "../entities/products.js";
+import { Category, Serie, Movie, Resource, Coordinate } from "../entities/products.js";
 
 //Clase View
 class View {
@@ -37,38 +37,39 @@ class View {
 
     //!SHOW PRINCIPAL ELEMENTS
     //Método que muestra los elementos de la página principal
-    showPrincipalElements(pros) {
+    showPrincipalElements(pros, categories) {
 
         //Vaciamos el main
         this.main.empty();
 
         //Añadimos al main las 3 categorías iniciales
         this.main.append(`<div id="categoriasIniciales" class="row inicial">
-        <div id="cat1" class="col-lg-4 col-md-6"><a class="prueba" data-type="Acción" href="#categoriasIniciales">
-                <div><img class="cat__img" alt="Acción" src="./images/Acción.jpg" />
-                </div>
-                <div class="cat__text">
-                    <h3><strong>Acción</strong></h3>
-                </div>
-            </a>
-        </div>
-        <div id="cat2" class="col-lg-4 col-md-6"><a data-type="Ficción" href="#categoriasIniciales">
-                <div><img class="cat__img" alt="Ficción" src="./images/Ficción.jpg" />
-                </div>
-                <div class="cat__text">
-                    <h3><strong>Ficción</strong></h3>
-                </div>
-            </a>
-        </div>
-        <div id="cat3" class="col-lg-4 col-md-6"><a data-type="Aventura" href="#categoriasIniciales">
-                <div><img class="cat__img" alt="Aventura" src="./images/Aventura.jpg" />
-                </div>
-                <div class="cat__text">
-                    <h3><strong>Aventura</strong></h3>
-                </div>
-            </a>
-        </div>
-    </div>`);
+            <div id="cat1" class="col-lg-4 col-md-6"><a class="prueba" data-type="Acción" href="#categoriasIniciales">
+                    <div><img class="cat__img" alt="Acción" src="./images/Acción.jpg" />
+                    </div>
+                    <div class="cat__text">
+                        <h3><strong>Acción</strong></h3>
+                    </div>
+                </a>
+            </div>
+            <div id="cat2" class="col-lg-4 col-md-6"><a data-type="Ficción" href="#categoriasIniciales">
+                    <div><img class="cat__img" alt="Ficción" src="./images/Ficción.jpg" />
+                    </div>
+                    <div class="cat__text">
+                        <h3><strong>Ficción</strong></h3>
+                    </div>
+                </a>
+            </div>
+            <div id="cat3" class="col-lg-4 col-md-6"><a data-type="Aventura" href="#categoriasIniciales">
+                    <div><img class="cat__img" alt="Aventura" src="./images/Aventura.jpg" />
+                    </div>
+                    <div class="cat__text">
+                        <h3><strong>Aventura</strong></h3>
+                    </div>
+                </a>
+            </div>
+        </div>`);
+
 
         //Recorremos el array con las producciones aleatorias que se recibe y las añadimos al main
         for (let i = 0; i < pros.length; i++) {
@@ -89,13 +90,6 @@ class View {
             </a>
         </div>`);
         }
-
-        this.main.append(`
-        <select id="select">
-            <option value="opcion1">Nueva Producción</option>
-            <option value="opcion2">Opción 2</option>
-            <option value="opcion3">Opción 3</option>
-        </select>`);
 
     }
 
@@ -128,19 +122,12 @@ class View {
         });
     }
 
-    bindShowForm(handler) {
-        $('#select').children().click((event) => {
-            handler(event.target.value);
-        })
-    }
-
-    showForm(actores, directores, categorias) {
+    showFormProduction(actores, directores, categorias) {
         this.main.empty();
         this.main.append(`
         <div class="container m-5" id="cValidation">
 			<h1 class="d-flex justify-content-center">Nueva Producción</h1>
 			<form id="form" name="fValidation" role="form" class="text-white m-5">
-				<!-- Requiered -->
 				<div id="row" class="form-row row">
 					<div class="col-md-4 mb-3">
 						<label for="vfTitulo">Título</label>
@@ -229,10 +216,7 @@ class View {
 						</div>
 					</div>
 
-
-
 				</div>
-
 
 				<button class="btn btn-primary" type="submit">Enviar</button>
 				<button class="btn btn-primary" type="reset">Cancelar</button>
@@ -290,28 +274,6 @@ class View {
             $("#vfCategorias").append(option);
         }
 
-        // $("#row").append(`<select name="selectAct2" id="selectActores2"></select>`);
-
-        // for (let i = 0; i < actores.length; i++) {
-        //     let option = `<option value="${actores[i].actor.name}">${actores[i].actor.name}</option>`;
-        //     $("#selectActores2").append(option);
-        // }
-
-        // $("#row").append(`<select name="selectDir" id="selectDirectores"></select>`);
-
-        // for (let i = 0; i < directores.length; i++) {
-        //     let option = `<option value="${directores[i].director.name}">${directores[i].director.name}</option>`;
-        //     $("#selectDirectores").append(option);
-        // }
-
-        // $("#row").append(`<select name="selectCat" id="selectCategorias"></select>`);
-
-        // for (let i = 0; i < categorias.length; i++) {
-        //     let option = `<option value="${categorias[i].category.name}">${categorias[i].category.name}</option>`;
-        //     $("#selectCategorias").append(option);
-
-        // }
-
     }
 
     bindSubmitForm(handler) {
@@ -366,10 +328,129 @@ class View {
             let produccion = new Serie(titulo, nacionalidad, publicacion, descripcion, imagenFull, contenido, coordinate, temporadas);
 
             handler(produccion, actores, directores, categorias);
-
-
         });
 
+    }
+
+    showFormDeleteProduction() {
+        this.main.empty();
+        this.main.append(`
+        <div class="container m-5" id="cValidation">
+			<h1 class="d-flex justify-content-center">Eliminar Producción</h1>
+			<form id="formProduction" name="fValidation" role="form" class="text-white m-5">
+				<div id="row" class="form-row row">
+					<div class="col-md-4 mb-3">
+						<label for="vfTituloProduccion">Título</label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="vfTituloProduccion" name="vfTituloProduccion" placeholder="Título" value="" required>
+							<div class="invalid-feedback">El título es obligatorio</div>
+							<div class="valid-feedback">Correcto.</div>
+						</div>
+					</div>
+
+				</div>
+
+				<button class="btn btn-primary" type="submit">Enviar</button>
+				<button class="btn btn-primary" type="reset">Cancelar</button>
+			</form>
+		</div>`);
+    }
+
+    bindSubmitFormProduction(handler) {
+
+        document.getElementById("formProduction").addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+            let titulo = document.getElementById("vfTituloProduccion").value;
+
+            handler(titulo);
+        });
+
+    }
+
+    showFormCategory() {
+        this.main.empty();
+        this.main.append(`
+        <div class="container m-5" id="cValidation">
+			<h1 class="d-flex justify-content-center">Nueva Categoría</h1>
+			<form id="formCategory" name="fValidation" role="form" class="text-white m-5">
+				<div id="row" class="form-row row">
+					<div class="col-md-6 mb-3">
+						<label for="vfNombre">Nombre</label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="vfNombre" name="vfNombre" placeholder="Título" value="" required>
+							<div class="invalid-feedback">El nombre es obligatorio</div>
+							<div class="valid-feedback">Correcto.</div>
+						</div>
+					</div>
+
+                    <div class="col-md-6 mb-3">
+						<label for="vfDescripcion">Descripción</label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="vfDescripcion" name="vfDescripcion" placeholder="Título" value="" required>
+							<div class="invalid-feedback">La descripción es obligatoria</div>
+							<div class="valid-feedback">Correcto.</div>
+						</div>
+					</div>
+				</div>
+
+				<button class="btn btn-primary" type="submit">Enviar</button>
+				<button class="btn btn-primary" type="reset">Cancelar</button>
+			</form>
+		</div>`);
+
+    }
+
+    bindSubmitFormCategory(handler) {
+
+        document.getElementById("formCategory").addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+            let nombre = document.getElementById("vfNombre").value;
+            let descripcion = document.getElementById("vfDescripcion").value;
+
+            let category = new Category(nombre, descripcion);
+
+            handler(category);
+        });
+
+    }
+
+    showFormInMenu() {
+        let li = $(`<li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle enlaceMenu" href="#menuForm" id="menuForm" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+          Formularios
+        </a>
+        </li>`);
+
+        let container = $(`<div class="dropdown-menu" aria-labelledby="menuForm" id="formularios"></div>`);
+
+        let forms = [];
+
+        forms.push("Crear Producción");
+        forms.push("Eliminar Producción");
+        forms.push("Asignar y desasignar actores/directores");
+        forms.push("Crear categoría");
+        forms.push("Eliminar categoría");
+        forms.push("Crear person");
+        forms.push("Eliminar person");
+
+        for (let i = 0; i < forms.length; i++) {
+            container.append(`<a data-category="${forms[i]}" class="dropdown-item" href="#formList">${forms[i]}</a>`);
+        }
+
+        li.append(container);
+        this.menu.append(li);
+    }
+
+    bindFormInMenu(handler) {
+        $('#formularios').find('a').click((event) => {
+            let category = $(event.target).closest($('a')).get(0).dataset.category;
+
+            handler(category);
+        });
     }
 
     showProductModal(done, product, error) {
@@ -380,7 +461,7 @@ class View {
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="newCategoryModalLabel">Producto creado</h5>
+							<h5 class="modal-title" id="newCategoryModalLabel">Producción creada</h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
@@ -398,20 +479,112 @@ class View {
             let newProductModal = $('#newProductModal');
             newProductModal.modal('show');
             newProductModal.find('button').click(() => {
-                // newProductModal.on('hidden.bs.modal', function (event) {
-                //     document.fNewProduct.reset();
-                //     document.fNewProduct.npSerial.focus();
-                //     this.remove();
-                // });
                 newProductModal.modal('hide');
                 newProductModal.remove();
-                // $("#form").reset();
                 const formulario = document.getElementById("form");
                 formulario.reset();
-                // newProductModal.modal('hide');
             })
         } else {
             $(document.fNewProduct).prepend(`<div class="error text-danger p-3"><i class="fas fa-exclamation-triangle"></i> La producción <strong>${product.title}</strong> no ha podido crearse correctamente.</div>`);
+        }
+    }
+
+    showDeleteProductModal(done, product, error) {
+        if (done) {
+            let modal = $(`<div class="modal fade" id="deleteProductModal" tabindex="-1"
+				data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="newCategoryModalLabel">Producción eliminada</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							La producción <strong>${product.title}</strong> ha sido eliminada correctamente.
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+						</div>
+					</div>
+				</div>
+			</div>`);
+            $('body').append(modal);
+            let newProductModal = $('#deleteProductModal');
+            newProductModal.modal('show');
+            newProductModal.find('button').click(() => {
+                newProductModal.modal('hide');
+                newProductModal.remove();
+                const formulario = document.getElementById("formProduction");
+                formulario.reset();
+            })
+        } else {
+            let modal = $(`<div class="modal fade" id="deleteProductModal" tabindex="-1"
+            data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="newCategoryModalLabel">Producción Inexistente</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-danger">
+                        <p class="text-danger">Esa producción no existe!!!!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>`);
+
+            $('body').append(modal);
+            let newProductModal = $('#deleteProductModal');
+            newProductModal.modal('show');
+            newProductModal.find('button').click(() => {
+                newProductModal.modal('hide');
+                newProductModal.remove();
+                const formulario = document.getElementById("formProduction");
+                formulario.reset();
+            })
+        }
+    }
+
+    showCategoryModal(done, category, error) {
+        $(document.fNewProduct).find('div.error').remove();
+        if (done) {
+            let modal = $(`<div class="modal fade" id="modalCat" tabindex="-1"
+				data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="newCategoryModalLabel">Categoría creada</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							La categoría <strong>${category.name}</strong> ha sido creada correctamente.
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+						</div>
+					</div>
+				</div>
+			</div>`);
+            $('body').append(modal);
+            let newProductModal = $('#modalCat');
+            newProductModal.modal('show');
+            newProductModal.find('button').click(() => {
+                newProductModal.modal('hide');
+                newProductModal.remove();
+                const formulario = document.getElementById("formCategory");
+                formulario.reset();
+            })
+        } else {
+            $(document.fNewProduct).prepend(`<div class="error text-danger p-3"><i class="fas fa-exclamation-triangle"></i> La categoría <strong>${category.name}</strong> no ha podido crearse correctamente.</div>`);
         }
     }
 
@@ -424,8 +597,6 @@ class View {
         this.main.append(`<div id="producciones" class="container my-3" ><div class="row" style="gap: 80px;"> </div></div>`);
 
         let id = $("#producciones");
-
-
 
         let product = iterator.next();
 
@@ -469,10 +640,15 @@ class View {
         });
     }
 
+    showPrueba() {
+        this.main.empty();
+    }
+
     //!SHOW CATEGORIES IN MENU
     //Método que muestra las categorías en el menú
     showCategoriesInMenu(categories) {
-        let li = $(`<li class="nav-item dropdown">
+        this.menu.empty();
+        let li = $(`<li id="menuCat" class="nav-item dropdown">
         <a class="nav-link dropdown-toggle enlaceMenu" href="#" id="menuCategorias" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
           Categorías
         </a>
@@ -526,12 +702,7 @@ class View {
     showCardProduction(product, directors, actors) {
         this.main.empty();
 
-        console.log(product.publication);
-
         let publication = (product.publication).replace(/-/g, "/");
-
-        console.log(publication)
-
 
         //Comprobamos si la producción es una serie o una pelicula ya que una serie tiene una propiedad seasons que una película no tiene
         if (product && product instanceof Serie) {

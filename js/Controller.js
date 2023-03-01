@@ -162,11 +162,34 @@ class Controller {
         //Obtenemos 3 producciones aleatorias
         let pros = this.#model.randomProduction(3);
 
+        let categorias = this.#model.categories;
+
         //Llamamos al método para mostrar esas producciones aleatorias y a los eventos
-        this.#view.showPrincipalElements(pros);
+        this.#view.showPrincipalElements(pros, categorias);
         this.#view.bindShowCategory(this.handleShowCategory);
         this.#view.bindShowProduction(this.handleShowProduct);
-        this.#view.bindShowForm(this.handleShowForm);
+
+    }
+
+    //Método hHandle que llama al onInit
+    handleInit = () => {
+        this.onInit();
+    }
+
+    //Método onLoad que carga los objetos con los que vamos a trabajar
+    onLoad = () => {
+        this.#loadObjects();
+        this.onAddCategory();
+        this.onAddDirector();
+        this.onAddActor();
+        this.onAddButtonWindow();
+        this.onAddForm();
+    }
+
+    //Método onAddForm que muestra los formularios en el menú
+    onAddForm = () => {
+        this.#view.showFormInMenu();
+        this.#view.bindFormInMenu(this.handleShowForm);
     }
 
     handleShowForm = (value) => {
@@ -189,11 +212,19 @@ class Controller {
             categorias.push(iterator);
         }
 
-        if (value === "opcion1") {
-            this.#view.showForm(actores, directores, categorias);
+        if (value === "Crear Producción") {
+            this.#view.showFormProduction(actores, directores, categorias);
+            this.#view.bindSubmitForm(this.handleAssignDataForm);
+        } else if (value === "Eliminar Producción") {
+            this.#view.showFormDeleteProduction(actores, directores, categorias);
+            this.#view.bindSubmitFormProduction(this.handleDeleteProduction);
+        } else if (value === "Crear categoría") {
+            this.#view.showFormCategory();
+            this.#view.bindSubmitFormCategory(this.handleAssignDataFormCategory);
         }
 
-        this.#view.bindSubmitForm(this.handleAssignDataForm);
+
+
         this.#view.bindShowProduction(this.handleShowProduct);
     }
 
@@ -237,18 +268,72 @@ class Controller {
 
     }
 
-    //Método hHandle que llama al onInit
-    handleInit = () => {
-        this.onInit();
+    handleAssignDataFormCategory = (category) => {
+
+        let done, error;
+
+        try {
+            this.#model.addCategorie([category]);
+
+            this.onAddCategory();
+            this.onAddDirector();
+            this.onAddActor();
+            this.onAddButtonWindow();
+            this.onAddForm();
+
+            done = true;
+        } catch (error) {
+            done = false;
+            error = error;
+        }
+
+
+        this.#view.showCategoryModal(done, category, error);
+
     }
 
-    //Método onLoad que carga los objetos con los que vamos a trabajar
-    onLoad = () => {
-        this.#loadObjects();
-        this.onAddCategory();
-        this.onAddDirector();
-        this.onAddActor();
-        this.onAddButtonWindow();
+    handleDeleteProduction = (titulo) => {
+
+        let done = true;
+        let error;
+
+        let produccion = this.#model.getProduction(titulo);
+
+        if(!(produccion instanceof Production)){
+            done = false;
+        }
+
+        try {
+
+            this.#model.removeProduction(produccion);
+
+            let production;
+            let categorie;
+
+            for (const elem of this.#model.categories) {
+                for (const elem2 of elem.producs) {
+                    if (titulo === elem2.title) {
+                        production = elem2;
+                        categorie = elem.category;
+                    }
+
+                }
+            }
+
+            this.#model.deassignCategory(production, categorie);
+
+            for (const elem of this.#model.categories) {
+                console.log(elem);
+            }
+
+            // done = true;
+        } catch (error) {
+            // done = false;
+            // error = error;
+        }
+
+        this.#view.showDeleteProductModal(done, produccion, error);
+
     }
 
     //Método handle que muestra las producciones correspondientes a una categoría

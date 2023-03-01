@@ -153,7 +153,7 @@ let VideoSystem = (function () {
 
                 }
 
-                return this.#categories.length;
+                return this.#categories;
 
             }
 
@@ -364,17 +364,17 @@ let VideoSystem = (function () {
                 }
 
                 //Almacenamos la posición de la producción
-                let index = this.#productions.findIndex((pro) => pro.title === production.title);
+                let index = this.#producs.findIndex((pro) => pro.title === production.title);
 
                 //Si la producción existe la borramos
                 if ((index !== -1)) {
-                    this.#productions.splice(index, 1);
+                    this.#producs.splice(index, 1);
                 } else {
                     throw new IndexOutException();
                 }
 
                 //Devolvemos el total de producciones del sistema
-                return this.#productions.length;
+                return this.#producs.length;
 
             }
 
@@ -816,6 +816,20 @@ let VideoSystem = (function () {
                 return pro;
             }
 
+            get producciones() {
+
+                //Guardamos la referencia de la lista
+                let array = this.#producs;
+
+                return {
+                    *[Symbol.iterator]() {
+                        for (let pro of array) {
+                            yield pro;
+                        }
+                    }
+                }
+            }
+
             //Método getDirector que obtiene el director correspondiente a un título
             getDirector(title) {
 
@@ -924,8 +938,6 @@ let VideoSystem = (function () {
                     }
                     
                 }
-
-                console.log(this.#directors)
             }
 
         }
