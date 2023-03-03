@@ -83,3 +83,11 @@ img {
 .serie_peli{
   margin: 100px;
 }
+
+.invalid-feedback {
+  color: white;
+}
+
+.valid-feedback{
+  color: white;
+}

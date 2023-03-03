@@ -121,7 +121,7 @@ class View {
         this.main.append(`
         <div id="serie_peli" class="serie_peli text-light" class="container m-5" id="cValidation">
             <h1 class="d-flex justify-content-center">Nueva Producción</h1>
-            <form id="form" name="fValidation" role="form" class="text-white m-5">
+            <form id="form" name="fValidationProduction" role="form" class="text-white m-5" novalidate>
                 <div id="prueba">
                     <label for="vfOpcion">¿Serie o Pelicula?</label>
                     <select id="selectOption" class="form-select" aria-label="Default select example">
@@ -422,158 +422,6 @@ class View {
 
         });
 
-
-        // this.main.append(`
-        //  <div class="container m-5" id="cValidation">
-        //  	<h1 class="d-flex justify-content-center">Nueva Producción</h1>
-        //  	<form id="form" name="fValidation" role="form" class="text-white m-5">
-        //  		<div id="row" class="form-row row">
-        //  			<div class="col-md-4 mb-3">
-        //  				<label for="vfTitulo">Título</label>
-        //  				<div class="input-group">
-        //  					<input type="text" class="form-control" id="vfTitulo" name="vfTitulo" placeholder="Título" value="" required>
-        //  					<div class="invalid-feedback">El título es obligatorio</div>
-        //  					<div class="valid-feedback">Correcto.</div>
-        //  				</div>
-        //  			</div>
-        //  			<div class="col-md-4 mb-3">
-        //  				<label for="vfNacionalidad">Nacionalidad</label>
-        //  				<div class="input-group">
-        //  					<input type="text" class="form-control" id="vfNacionalidad" name="vfNacionalidad"
-        //  						placeholder="Nacionalidad" value="" required>
-        //  					<div class="invalid-feedback">La nacionalidad es obligatoria</div>
-        //  					<div class="valid-feedback">Correcto.</div>
-        //  				</div>
-        //  			</div>
-        //  			<div class="col-md-4 mb-3">
-        //  				<label for="vfPublicacion">Publicación</label>
-        //  				<div class="input-group">
-        //  					<input type="date" class="form-control" id="vfPublicacion" name="vfPublicacion"
-        //  						placeholder="Publicación" value="" required>
-        //                      <div class="invalid-feedback">La publicación es obligatoria</div>
-        //  					<div class="valid-feedback">Correcto.</div>
-        //  				</div>
-        //  			</div>
-
-        //              <div class="col-md-4 mb-3">
-        //  				<label for="vfDescripcion">Descripción</label>
-        //  				<div class="input-group">
-        //  					<input type="text" class="form-control" id="vfDescripcion" name="vfDescripcion"
-        //  						placeholder="Descripción" value="" required>
-        //                      <div class="invalid-feedback">La descripción es obligatoria</div>
-        //  					<div class="valid-feedback">Correcto.</div>
-        //  				</div>
-        //  			</div>
-
-        //              <div class="col-md-8 mb-3">
-        //  				<label for="vfImagen">Imagen</label>
-        //  				<div class="input-group">
-        //  					<input type="file" class="form-control" id="vfImagen" name="vfImagen"
-        //  						placeholder="Imagen" value="" required>
-        //                      <div class="invalid-feedback">La imagen es obligatoria</div>
-        //  					<div class="valid-feedback">Correcto.</div>
-        //  				</div>
-        //  			</div>
-
-        //              <div class="col-md-4 mb-3">
-        //  				<label for="vfContenido">Contenido</label>
-        //  				<div class="input-group">
-        //  					<input type="text" class="form-control" id="vfContenido" name="vfContenido"
-        //  						placeholder="Contenido" value="" required>
-        //                      <div class="invalid-feedback">El contenido es obligatorio</div>
-        //  					<div class="valid-feedback">Correcto.</div>
-        //  				</div>
-        //  			</div>
-
-        //              <div class="col-md-4 mb-3">
-        //  				<label for="vfLatitud">Latitud</label>
-        //  				<div class="input-group">
-        //  					<input type="text" class="form-control" id="vfLatitud" name="vfLatitud"
-        //  						placeholder="Latitud" value="" required>
-        //                      <div class="invalid-feedback">La latitud es obligatoria</div>
-        //  					<div class="valid-feedback">Correcto.</div>
-        //  				</div>
-        //  			</div>
-
-        //              <div class="col-md-4 mb-3">
-        //  				<label for="vfLongitud">Longitud</label>
-        //  				<div class="input-group">
-        //  					<input type="text" class="form-control" id="vfLongitud" name="vfLongitud"
-        //  						placeholder="Longitud" value="" required>
-        //                      <div class="invalid-feedback">La longitud es obligatoria</div>
-        //  					<div class="valid-feedback">Correcto.</div>
-        //  				</div>
-        //  			</div>
-
-        //              <div class="col-md-4 mb-3">
-        //  				<label for="vfTemporadas">Temporadas</label>
-        //  				<div class="input-group">
-        //  					<input type="text" class="form-control" id="vfTemporadas" name="vfTemporadas"
-        //  						placeholder="Temporadas" value="" required>
-        //                      <div class="invalid-feedback">Las temporadas son obligatorias</div>
-        //  					<div class="valid-feedback">Correcto.</div>
-        //  				</div>
-        //  			</div>
-
-        //  		</div>
-
-        //  		<button class="btn btn-primary" type="submit">Enviar</button>
-        //  		<button class="btn btn-primary" type="reset">Cancelar</button>
-        //  	</form>
-        //  </div>`);
-
-        // //Actores
-        // $("#row").append(`
-        //  <div class="col-md-8 mb-3">
-        //      <label for="vfActores">Actores</label>
-        //      <div class="form-group">
-        //          <select class="form-select custom-select" id="vfActores" name="vfActores" required multiple></select>
-        //          <div class="invalid-feedback">Los actores son obligatorios</div>
-        //          <div class="valid-feedback">Correcto.</div>
-        //      </div>
-        //  </div>`);
-
-        // for (let i = 0; i < actores.length; i++) {
-        //     let option = `
-        //      <option value="${actores[i].actor.name}">${actores[i].actor.name}</option>`;
-        //     $("#vfActores").append(option);
-        // }
-
-        // //Directores
-        // $("#row").append(`
-        //  <div class="col-md-6 mb-3">
-        //      <label for="vfDirectores">Directores</label>
-        //      <div class="form-group">
-        //          <select class="form-select custom-select" id="vfDirectores" name="vfDirectores" required multiple></select>
-        //          <div class="invalid-feedback">Los directores son obligatorios</div>
-        //          <div class="valid-feedback">Correcto.</div>
-        //      </div>
-        //  </div>`);
-
-        // for (let i = 0; i < directores.length; i++) {
-        //     let option = `
-        //      <option value="${directores[i].director.name}">${directores[i].director.name}</option>`;
-        //     $("#vfDirectores").append(option);
-        // }
-
-        // //Categorías
-        // $("#row").append(`
-        //  <div class="col-md-6 mb-3">
-        //      <label for="vfCategorias">Categorías</label>
-        //      <div class="form-group">
-        //          <select class="form-select custom-select" id="vfCategorias" name="vfCategorias" required multiple></select>
-        //          <div class="invalid-feedback">Las categorías son obligatorias</div>
-        //          <div class="valid-feedback">Correcto.</div>
-        //      </div>
-        //  </div>`);
-
-        // for (let i = 0; i < categorias.length; i++) {
-        //     let option = `
-        //      <option value="${categorias[i].category.name}">${categorias[i].category.name}</option>`;
-        //     $("#vfCategorias").append(option);
-        // }
-
-
     }
 
     //!BIND SUBMIT FORM
@@ -584,71 +432,81 @@ class View {
 
             event.preventDefault();
 
-            let produccion;
+            $("#form").addClass('was-validated');
 
-            let titulo = document.getElementById("vfTitulo").value;
-            let nacionalidad = document.getElementById("vfNacionalidad").value;
-            let publicacion = document.getElementById("vfPublicacion").value;
-            let descripcion = document.getElementById("vfDescripcion").value;
+            if (this.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+            } else {
+                let produccion;
 
-            let imagen = document.getElementById("vfImagen").value;
-            let segundaParte = imagen.substring(12);
-            let imagenFull = "./images/" + segundaParte;
+                let titulo = document.getElementById("vfTitulo").value;
+                let nacionalidad = document.getElementById("vfNacionalidad").value;
+                let publicacion = document.getElementById("vfPublicacion").value;
+                let descripcion = document.getElementById("vfDescripcion").value;
 
-            let temporadas = document.getElementById("vfTemporadas");
+                let imagen = document.getElementById("vfImagen").value;
+                let segundaParte = imagen.substring(12);
+                let imagenFull = "./images/" + segundaParte;
 
-            if (temporadas != null) {
+                let temporadas = document.getElementById("vfTemporadas");
 
-                let contenido = document.getElementById("vfContenido").value;
-                let latitud = document.getElementById("vfLatitud").value;
-                let longitud = document.getElementById("vfLongitud").value;
+                if (temporadas != null) {
 
-                let coordinate = new Coordinate(latitud, longitud);
+                    let contenido = document.getElementById("vfContenido").value;
+                    let latitud = document.getElementById("vfLatitud").value;
+                    let longitud = document.getElementById("vfLongitud").value;
 
-                produccion = new Serie(titulo, nacionalidad, publicacion, descripcion, imagenFull, contenido, coordinate, temporadas);
+                    let coordinate = new Coordinate(latitud, longitud);
 
-            } else if (temporadas == null) {
+                    produccion = new Serie(titulo, nacionalidad, publicacion, descripcion, imagenFull, contenido, coordinate, temporadas);
 
-                let latitud = document.getElementById("vfLatitud").value;
-                let longitud = document.getElementById("vfLongitud").value;
+                } else if (temporadas == null) {
 
-                let duracion = document.getElementById("vfDuracion").value;
+                    let latitud = document.getElementById("vfLatitud").value;
+                    let longitud = document.getElementById("vfLongitud").value;
 
-                let coordinate = new Coordinate(latitud, longitud);
+                    let duracion = document.getElementById("vfDuracion").value;
 
-                let resource = new Resource(duracion, "movies/movie.mp4");
+                    let coordinate = new Coordinate(latitud, longitud);
 
-                produccion = new Movie(titulo, nacionalidad, publicacion, descripcion, imagenFull, resource, coordinate);
+                    let resource = new Resource(duracion, "movies/movie.mp4");
+
+                    produccion = new Movie(titulo, nacionalidad, publicacion, descripcion, imagenFull, resource, coordinate);
+                }
+
+                //Actores
+                let actores = [];
+
+                const selectActor = document.getElementById("vfActores");
+                const opcionesSeleccionadasActor = selectActor.selectedOptions;
+                for (let i = 0; i < opcionesSeleccionadasActor.length; i++) {
+                    actores.push(opcionesSeleccionadasActor[i].value);
+                }
+
+                //Directores
+                let directores = [];
+
+                const selectDirector = document.getElementById("vfDirectores");
+                const opcionesSeleccionadasDirector = selectDirector.selectedOptions;
+                for (let i = 0; i < opcionesSeleccionadasDirector.length; i++) {
+                    directores.push(opcionesSeleccionadasDirector[i].value);
+                }
+
+                //Categorías
+                let categorias = [];
+
+                const selectCategoria = document.getElementById("vfCategorias");
+                const opcionesSeleccionadasCategoria = selectCategoria.selectedOptions;
+                for (let i = 0; i < opcionesSeleccionadasCategoria.length; i++) {
+                    categorias.push(opcionesSeleccionadasCategoria[i].value);
+                }
+
+                handler(produccion, actores, directores, categorias);
             }
 
-            //Actores
-            let actores = [];
 
-            const selectActor = document.getElementById("vfActores");
-            const opcionesSeleccionadasActor = selectActor.selectedOptions;
-            for (let i = 0; i < opcionesSeleccionadasActor.length; i++) {
-                actores.push(opcionesSeleccionadasActor[i].value);
-            }
 
-            //Directores
-            let directores = [];
-
-            const selectDirector = document.getElementById("vfDirectores");
-            const opcionesSeleccionadasDirector = selectDirector.selectedOptions;
-            for (let i = 0; i < opcionesSeleccionadasDirector.length; i++) {
-                directores.push(opcionesSeleccionadasDirector[i].value);
-            }
-
-            //Categorías
-            let categorias = [];
-
-            const selectCategoria = document.getElementById("vfCategorias");
-            const opcionesSeleccionadasCategoria = selectCategoria.selectedOptions;
-            for (let i = 0; i < opcionesSeleccionadasCategoria.length; i++) {
-                categorias.push(opcionesSeleccionadasCategoria[i].value);
-            }
-
-            handler(produccion, actores, directores, categorias);
         });
 
     }
@@ -660,7 +518,7 @@ class View {
         this.main.append(`
         <div class="container m-5" id="cValidation">
 			<h1 class="d-flex justify-content-center">Eliminar Producción</h1>
-			<form id="formProduction" name="fValidation" role="form" class="text-white m-5">
+			<form id="formProduction" name="fValidation" role="form" class="text-white m-5" novalidate>
 				<div id="row" class="d-flex justify-content-center form-row row">
 					<div class="col-md-4 mb-3">
 						<label for="vfTituloProduccion">Título</label>
@@ -690,9 +548,18 @@ class View {
 
             event.preventDefault();
 
-            let titulo = document.getElementById("vfTituloProduccion").value;
+            $("#formProduction").addClass('was-validated');
 
-            handler(titulo);
+            if (this.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+            } else {
+                let titulo = document.getElementById("vfTituloProduccion").value;
+
+                handler(titulo);
+            }
+
+
         });
 
     }
@@ -705,19 +572,23 @@ class View {
         this.main.append(`<div class="container m-5" id="cValidation">
         <h1 class="d-flex justify-content-center tituloFormAssignDirectorsActors">Asignar Actores/Directores</h1>
         <br>
-        <form id="formAssignDirectorsActors" name="fValidation" role="form" class="text-white">
+        <form id="formAssignDirectorsActors" name="fValidation" role="form" class="text-white" novalidate>
             <div id="row" class="form-row row">
 
                 
                 <div class="col-md-4 mb-3">
                 <label for="vfDirectores">Directores</label>
-                    <select class="form-select custom-select" id="selectDirectores" name="selectDirectores" required multiple></select>    
+                    <select class="form-select custom-select" id="selectDirectores" name="selectDirectores" required multiple></select> 
+                    <div class="invalid-feedback">Los directores son obligatorios</div>
+                    <div class="valid-feedback">Correcto.</div>   
                 </div>
 
                 
                 <div class="col-md-4 mb-3">
                 <label for="vfActores">Actores</label>
                     <select class="form-select custom-select" id="selectActores" name="selectActores" required multiple></select>
+                    <div class="invalid-feedback">Los actores son obligatorios</div>
+                    <div class="valid-feedback">Correcto.</div>  
                 </div>
 
                 
@@ -725,6 +596,8 @@ class View {
                 <div class="col-md-4 mb-3">
                 <label for="vfProducciones">Producciones</label>
                     <select class="form-select custom-select" id="selectProducciones" name="selectProducciones" required multiple></select>
+                    <div class="invalid-feedback">Las producciones son obligatorias</div>
+                    <div class="valid-feedback">Correcto.</div>  
                 </div>
 
             </div>
@@ -756,34 +629,42 @@ class View {
 
             event.preventDefault();
 
-            //Actores
-            let actores = [];
+            $("#formAssignDirectorsActors").addClass('was-validated');
 
-            const selectActor = document.getElementById("selectActores");
-            const opcionesSeleccionadasActor = selectActor.selectedOptions;
-            for (let i = 0; i < opcionesSeleccionadasActor.length; i++) {
-                actores.push(opcionesSeleccionadasActor[i].value);
+            if (this.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+            } else {
+                //Actores
+                let actores = [];
+
+                const selectActor = document.getElementById("selectActores");
+                const opcionesSeleccionadasActor = selectActor.selectedOptions;
+                for (let i = 0; i < opcionesSeleccionadasActor.length; i++) {
+                    actores.push(opcionesSeleccionadasActor[i].value);
+                }
+
+                //Directores
+                let directores = [];
+
+                const selectDirector = document.getElementById("selectDirectores");
+                const opcionesSeleccionadasDirector = selectDirector.selectedOptions;
+                for (let i = 0; i < opcionesSeleccionadasDirector.length; i++) {
+                    directores.push(opcionesSeleccionadasDirector[i].value);
+                }
+
+                //Producciones
+                let producciones = [];
+
+                const selectProduccion = document.getElementById("selectProducciones");
+                const opcionesSeleccionadasProducciones = selectProduccion.selectedOptions;
+                for (let i = 0; i < opcionesSeleccionadasProducciones.length; i++) {
+                    producciones.push(opcionesSeleccionadasProducciones[i].value);
+                }
+
+                handler(actores, directores, producciones);
             }
 
-            //Directores
-            let directores = [];
-
-            const selectDirector = document.getElementById("selectDirectores");
-            const opcionesSeleccionadasDirector = selectDirector.selectedOptions;
-            for (let i = 0; i < opcionesSeleccionadasDirector.length; i++) {
-                directores.push(opcionesSeleccionadasDirector[i].value);
-            }
-
-            //Producciones
-            let producciones = [];
-
-            const selectProduccion = document.getElementById("selectProducciones");
-            const opcionesSeleccionadasProducciones = selectProduccion.selectedOptions;
-            for (let i = 0; i < opcionesSeleccionadasProducciones.length; i++) {
-                producciones.push(opcionesSeleccionadasProducciones[i].value);
-            }
-
-            handler(actores, directores, producciones);
         });
 
     }
@@ -796,21 +677,27 @@ class View {
         this.main.append(`<div class="container m-5" id="cValidation">
         <h1 class="d-flex justify-content-center tituloFormDeassignDirectorsActors">Desasignar Actores/Directores</h1>
         <br>
-        <form id="formDeassignDirectorsActors" name="fValidation" role="form" class="text-white">
+        <form id="formDeassignDirectorsActors" name="fValidation" role="form" class="text-white" novalidate>
             <div id="row" class="form-row row">
                 <div class="col-md-4 mb-3">
                     <label for="vfDirectores">Directores</label>
                     <select class="form-select custom-select" id="selectDirectores" name="selectDirectores" required multiple></select>
+                    <div class="invalid-feedback">Los directores son obligatorios</div>
+                    <div class="valid-feedback">Correcto.</div> 
                 </div>
 
                 <div class="col-md-4 mb-3">
                     <label for="vfActores">Actores</label>
                     <select class="form-select custom-select" id="selectActores" name="selectActores" required multiple></select>
+                    <div class="invalid-feedback">Los actores son obligatorios</div>
+                    <div class="valid-feedback">Correcto.</div> 
                 </div>
 
                 <div class="col-md-4 mb-3">
                     <label for="vfProducciones">Producciones</label>
                     <select class="form-select custom-select" id="selectProducciones" name="selectProducciones" required multiple></select>
+                    <div class="invalid-feedback">Las producciones son obligatorias</div>
+                    <div class="valid-feedback">Correcto.</div> 
                 </div>
 
             </div>
@@ -842,34 +729,43 @@ class View {
 
             event.preventDefault();
 
-            //Actores
-            let actores = [];
+            $("#formDeassignDirectorsActors").addClass('was-validated');
 
-            const selectActor = document.getElementById("selectActores");
-            const opcionesSeleccionadasActor = selectActor.selectedOptions;
-            for (let i = 0; i < opcionesSeleccionadasActor.length; i++) {
-                actores.push(opcionesSeleccionadasActor[i].value);
+            if (this.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+            } else {
+                //Actores
+                let actores = [];
+
+                const selectActor = document.getElementById("selectActores");
+                const opcionesSeleccionadasActor = selectActor.selectedOptions;
+                for (let i = 0; i < opcionesSeleccionadasActor.length; i++) {
+                    actores.push(opcionesSeleccionadasActor[i].value);
+                }
+
+                //Directores
+                let directores = [];
+
+                const selectDirector = document.getElementById("selectDirectores");
+                const opcionesSeleccionadasDirector = selectDirector.selectedOptions;
+                for (let i = 0; i < opcionesSeleccionadasDirector.length; i++) {
+                    directores.push(opcionesSeleccionadasDirector[i].value);
+                }
+
+                //Producciones
+                let producciones = [];
+
+                const selectProduccion = document.getElementById("selectProducciones");
+                const opcionesSeleccionadasProducciones = selectProduccion.selectedOptions;
+                for (let i = 0; i < opcionesSeleccionadasProducciones.length; i++) {
+                    producciones.push(opcionesSeleccionadasProducciones[i].value);
+                }
+
+                handler(actores, directores, producciones);
             }
 
-            //Directores
-            let directores = [];
 
-            const selectDirector = document.getElementById("selectDirectores");
-            const opcionesSeleccionadasDirector = selectDirector.selectedOptions;
-            for (let i = 0; i < opcionesSeleccionadasDirector.length; i++) {
-                directores.push(opcionesSeleccionadasDirector[i].value);
-            }
-
-            //Producciones
-            let producciones = [];
-
-            const selectProduccion = document.getElementById("selectProducciones");
-            const opcionesSeleccionadasProducciones = selectProduccion.selectedOptions;
-            for (let i = 0; i < opcionesSeleccionadasProducciones.length; i++) {
-                producciones.push(opcionesSeleccionadasProducciones[i].value);
-            }
-
-            handler(actores, directores, producciones);
         });
 
     }
@@ -881,7 +777,7 @@ class View {
         this.main.append(`
         <div class="container m-5" id="cValidation">
 			<h1 class="d-flex justify-content-center">Nueva Categoría</h1>
-			<form id="formCategory" name="fValidation" role="form" class="text-white m-5">
+			<form id="formCategory" name="fValidation" role="form" class="text-white m-5" novalidate>
 				<div id="row" class="form-row row">
 					<div class="col-md-6 mb-3">
 						<label for="vfNombre">Nombre</label>
@@ -926,13 +822,22 @@ class View {
 
             event.preventDefault();
 
-            let nombre = document.getElementById("vfNombre").value;
-            let descripcion = document.getElementById("vfDescripcion").value;
-            let imagen = document.getElementById("vfImagen").value;
+            $("#formCategory").addClass('was-validated');
 
-            let category = new Category(nombre, descripcion, imagen);
+            if (this.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+            } else {
+                let nombre = document.getElementById("vfNombre").value;
+                let descripcion = document.getElementById("vfDescripcion").value;
+                let imagen = document.getElementById("vfImagen").value;
 
-            handler(category);
+                let category = new Category(nombre, descripcion, imagen);
+
+                handler(category);
+            }
+
+
         });
 
     }
@@ -944,10 +849,14 @@ class View {
 
         this.main.append(`<div class="container m-5" id="cValidation">
         <h1 class="tituloFormCategory">Eliminar Categoría</h1>
-        <form id="formDeleteCategory" name="fValidation" role="form" class="text-white">
+        <form id="formDeleteCategory" name="fValidation" role="form" class="text-white" novalidate>
             <div id="row" class="form-row row">
                 <div class="col-md-6 mb-3">
-                    <select class="form-select" id="selectCategorias"></select>
+                    <select class="form-select" id="selectCategorias" required>
+                        <option value=""></option>
+                    </select>
+                    <div class="invalid-feedback">La categoría es obligatoria</div>
+					<div class="valid-feedback">Correcto.</div>
                 </div>
 
             </div>
@@ -971,10 +880,19 @@ class View {
 
             event.preventDefault();
 
-            const select = document.getElementById("selectCategorias");
-            const opcionSeleccionada = select.value;
+            $("#formDeleteCategory").addClass('was-validated');
 
-            handler(opcionSeleccionada);
+            if (this.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+            } else {
+                const select = document.getElementById("selectCategorias");
+                const opcionSeleccionada = select.value;
+
+                handler(opcionSeleccionada);
+            }
+
+
         });
 
     }
@@ -986,7 +904,7 @@ class View {
         this.main.append(`
         <div class="container m-5" id="cValidation">
 			<h1 class="d-flex justify-content-center">Nueva Person</h1>
-			<form id="formPerson" name="fValidation" role="form" class="text-white m-5">
+			<form id="formPerson" name="fValidation" role="form" class="text-white m-5" novalidate>
 				<div id="row" class="form-row row">
 					<div class="col-md-6 mb-3">
 						<label for="vfNombre">Nombre</label>
@@ -1036,7 +954,8 @@ class View {
                     <div class="col-md-6 mb-3">
 						<label for="vfTipoPerson">Tipo Person</label>
 						<div class="input-group">
-                            <select class="form-select" id="selectPerson">
+                            <select class="form-select" id="selectPerson" required>
+                                <option value=""></option>
                                 <option value="Actor">Actor</option>
                                 <option value="Director">Director</option>
                             </select>
@@ -1059,32 +978,37 @@ class View {
 
             event.preventDefault();
 
-            let nombre = document.getElementById("vfNombre").value;
-            let apellido1 = document.getElementById("vfApellido1").value;
-            let apellido2 = document.getElementById("vfApellido2").value;
-            let nacimiento = document.getElementById("vfNacimiento").value;
-            let imagen = document.getElementById("vfPicture").value;
+            $("#formPerson").addClass('was-validated');
 
-            let imagenFull = "./images/" + imagen + ".jpg";
+            if (this.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+            } else {
+                let nombre = document.getElementById("vfNombre").value;
+                let apellido1 = document.getElementById("vfApellido1").value;
+                let apellido2 = document.getElementById("vfApellido2").value;
+                let nacimiento = document.getElementById("vfNacimiento").value;
+                let imagen = document.getElementById("vfPicture").value;
 
-            const select = document.getElementById("selectPerson");
-            let opcionSeleccionada = select.value;
+                let imagenFull = "./images/" + imagen + ".jpg";
 
-            let tipoPerson;
+                const select = document.getElementById("selectPerson");
+                let opcionSeleccionada = select.value;
 
-            if (opcionSeleccionada === "Actor") {
-                tipoPerson = "Actor";
-            } else if (opcionSeleccionada === "Director") {
-                tipoPerson = "Director";
+                let tipoPerson;
+
+                if (opcionSeleccionada === "Actor") {
+                    tipoPerson = "Actor";
+                } else if (opcionSeleccionada === "Director") {
+                    tipoPerson = "Director";
+                }
+
+                let person = new Person(nombre, apellido1, apellido2, nacimiento, imagenFull);
+
+                handler(person, tipoPerson);
             }
 
-            let person = new Person(nombre, apellido1, apellido2, nacimiento, imagenFull);
 
-            // console.log(person);
-
-            // let category = new Category(nombre, descripcion, imagen);
-
-            handler(person, tipoPerson);
         });
 
     }
@@ -1097,15 +1021,18 @@ class View {
         this.main.append(`<div class="container m-5" id="cValidation">
         <h1 class="tituloFormCategory">Eliminar Person</h1>
         <br>
-        <form id="formDeletePerson" name="fValidation" role="form" class="text-white">
+        <form id="formDeletePerson" name="fValidation" role="form" class="text-white" novalidate>
             <div id="row" class="form-row row">
                 <div class="col-md-4 mb-3">
                     <select class="form-select custom-select" id="selectDirectores" name="selectDirectores" required multiple></select>
-                    
+                    <div class="invalid-feedback">Los directores son obligatorios</div>
+					<div class="valid-feedback">Correcto.</div>
                 </div>
 
                 <div class="col-md-4 mb-3">
                     <select  class="form-select custom-select" id="selectActores" name="selectActores" required multiple></select>
+                    <div class="invalid-feedback">Los actores son obligatorios</div>
+					<div class="valid-feedback">Correcto.</div>
                 </div>
 
             </div>
@@ -1135,26 +1062,35 @@ class View {
 
             event.preventDefault();
 
-            //Actores
-            let actores = [];
+            $("#formDeletePerson").addClass('was-validated');
 
-            const selectActor = document.getElementById("selectActores");
-            const opcionesSeleccionadasActor = selectActor.selectedOptions;
-            for (let i = 0; i < opcionesSeleccionadasActor.length; i++) {
-                actores.push(opcionesSeleccionadasActor[i].value);
+            if (this.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+            } else {
+                //Actores
+                let actores = [];
+
+                const selectActor = document.getElementById("selectActores");
+                const opcionesSeleccionadasActor = selectActor.selectedOptions;
+                for (let i = 0; i < opcionesSeleccionadasActor.length; i++) {
+                    actores.push(opcionesSeleccionadasActor[i].value);
+                }
+
+                //Directores
+                let directores = [];
+
+                const selectDirector = document.getElementById("selectDirectores");
+                const opcionesSeleccionadasDirector = selectDirector.selectedOptions;
+                for (let i = 0; i < opcionesSeleccionadasDirector.length; i++) {
+                    directores.push(opcionesSeleccionadasDirector[i].value);
+                }
+
+
+                handler(actores, directores);
             }
 
-            //Directores
-            let directores = [];
 
-            const selectDirector = document.getElementById("selectDirectores");
-            const opcionesSeleccionadasDirector = selectDirector.selectedOptions;
-            for (let i = 0; i < opcionesSeleccionadasDirector.length; i++) {
-                directores.push(opcionesSeleccionadasDirector[i].value);
-            }
-
-
-            handler(actores, directores);
         });
 
     }
@@ -1235,6 +1171,7 @@ class View {
                 newProductModal.remove();
                 const formulario = document.getElementById("form");
                 formulario.reset();
+                formulario.setAttribute("class", "text-white m-5");
             })
         } else {
             $(document.fNewProduct).prepend(`<div class="error text-danger p-3"><i class="fas fa-exclamation-triangle"></i> La producción <strong>${product.title}</strong> no ha podido crearse correctamente.</div>`);
@@ -1272,6 +1209,7 @@ class View {
                 newProductModal.remove();
                 const formulario = document.getElementById("formProduction");
                 formulario.reset();
+                formulario.setAttribute("class", "text-white m-5");
             })
         } else {
             let modal = $(`<div class="modal fade" id="deleteProductModal" tabindex="-1"
@@ -1302,6 +1240,7 @@ class View {
                 newProductModal.remove();
                 const formulario = document.getElementById("formProduction");
                 formulario.reset();
+                formulario.setAttribute("class", "text-white m-5");
             })
         }
     }
@@ -1338,6 +1277,7 @@ class View {
                 newProductModal.remove();
                 const formulario = document.getElementById("formCategory");
                 formulario.reset();
+                formulario.setAttribute("class", "text-white m-5");
             })
         } else {
             $(document.fNewProduct).prepend(`<div class="error text-danger p-3"><i class="fas fa-exclamation-triangle"></i> La categoría <strong>${category.name}</strong> no ha podido crearse correctamente.</div>`);
@@ -1412,6 +1352,7 @@ class View {
                 newProductModal.remove();
                 const formulario = document.getElementById("formPerson");
                 formulario.reset();
+                formulario.setAttribute("class", "text-white m-5");
             })
         } else {
             $(document.fNewProduct).prepend(`<div class="error text-danger p-3"><i class="fas fa-exclamation-triangle"></i> El ${tipoPerson} <strong>${person.name}</strong> no ha podido crearse correctamente.</div>`);
@@ -1455,8 +1396,9 @@ class View {
             newProductModal.find('button').click(() => {
                 newProductModal.modal('hide');
                 newProductModal.remove();
-                const formulario = document.getElementById("formDeletePerson");
-                formulario.reset();
+                // const formulario = document.getElementById("formDeletePerson");
+                // formulario.reset();
+                // formulario.setAttribute("class", "text-white");
             })
         } else {
             $(document.fNewProduct).prepend(`<div class="error text-danger p-3"><i class="fas fa-exclamation-triangle"></i> El ${tipoPerson} <strong>${person.name}</strong> no ha podido crearse correctamente.</div>`);
@@ -1507,6 +1449,7 @@ class View {
                 newProductModal.remove();
                 const formulario = document.getElementById("formAssignDirectorsActors");
                 formulario.reset();
+                formulario.setAttribute("class", "text-white");
             })
         }
     }
@@ -1555,6 +1498,7 @@ class View {
                 newProductModal.remove();
                 const formulario = document.getElementById("formDeassignDirectorsActors");
                 formulario.reset();
+                formulario.setAttribute("class", "text-white");
             })
         } else {
             $('body').append(`<div class="modal fade" id="modalDeassignDirectorsActors" tabindex="-1"
@@ -1589,6 +1533,7 @@ class View {
                 newProductModal.remove();
                 const formulario = document.getElementById("formDeassignDirectorsActors");
                 formulario.reset();
+                formulario.setAttribute("class", "text-white m-5");
             })
         }
     }

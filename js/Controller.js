@@ -573,65 +573,72 @@ class Controller {
     //Método handleDeleteProduction que guarda los datos en el sistema de la producción eliminada
     handleDeleteProduction = (titulo) => {
 
-        let done = true;
+        let done;
         let error;
 
         //Obtenemos la producción a eliminar
         let produccion = this.#model.getProduction(titulo);
 
-        //Le deasignamos los actores
-        let actores = [];
+        if (produccion != undefined) {
+            //Le deasignamos los actores
+            let actores = [];
 
-        //Obtenemos los actores correspondientes a esa producción
-        for (const elem3 of this.#model.getCast(produccion)) {
-            actores.push(elem3);
-        }
-
-        //Los deasignamos
-        for (let i = 0; i < actores.length; i++) {
-            this.#model.deassignActor(produccion, actores[i]);
-        }
-
-        //Le deasignamos los directores
-        let directores = [];
-
-        //Obtenemos los directores correspondientes a esa producción
-        for (const elem3 of this.#model.getCast2(produccion)) {
-            directores.push(elem3);
-        }
-
-        //Los deasignamos
-        for (let i = 0; i < directores.length; i++) {
-            this.#model.deassignDirector(produccion, directores[i]);
-        }
-
-        if (!(produccion instanceof Production)) {
-            done = false;
-        }
-
-        try {
-
-            //Borramos la producción
-            this.#model.removeProduction(produccion);
-
-            let production;
-            let categorie;
-
-            //Obtenemos la categoría en la que está asignada esa producción
-            for (const elem of this.#model.categories) {
-                console.log(elem);
-                for (const elem2 of elem.producs) {
-                    if (titulo === elem2.title) {
-                        production = elem2;
-                        categorie = elem.category;
-                    }
-                }
+            //Obtenemos los actores correspondientes a esa producción
+            for (const elem3 of this.#model.getCast(produccion)) {
+                actores.push(elem3);
             }
 
-            //A la categoría correspondiente le deasignamos dicha producción
-            this.#model.deassignCategory(production, categorie);
-        } catch (error) {
+            //Los deasignamos
+            for (let i = 0; i < actores.length; i++) {
+                this.#model.deassignActor(produccion, actores[i]);
+            }
 
+            //Le deasignamos los directores
+            let directores = [];
+
+            //Obtenemos los directores correspondientes a esa producción
+            for (const elem3 of this.#model.getCast2(produccion)) {
+                directores.push(elem3);
+            }
+
+            //Los deasignamos
+            for (let i = 0; i < directores.length; i++) {
+                this.#model.deassignDirector(produccion, directores[i]);
+            }
+
+            if (!(produccion instanceof Production)) {
+                done = false;
+            }
+
+            try {
+
+                //Borramos la producción
+                this.#model.removeProduction(produccion);
+
+                let production;
+                let categorie;
+
+                //Obtenemos la categoría en la que está asignada esa producción
+                for (const elem of this.#model.categories) {
+                    for (const elem2 of elem.producs) {
+                        if (titulo === elem2.title) {
+                            production = elem2;
+                            categorie = elem.category;
+                        }
+                    }
+                }
+
+                //A la categoría correspondiente le deasignamos dicha producción
+                this.#model.deassignCategory(production, categorie);
+
+                done = true;
+
+            } catch (error) {
+
+            }
+
+        } else {
+            done = false;
         }
 
         //Llamamos al método showDeleteProductModal para mostrar un modal tras eliminar una producción
@@ -746,6 +753,26 @@ class Controller {
 
         //Llamamos al método showDeletePersonModal para mostrar un modal tras eliminar una person
         this.#view.showDeletePersonModal(done, actores, directores, error);
+        
+        //Obtenemos los actores del sistema
+        let actors = [];
+
+        for (const iterator of this.#model.actors) {
+            actors.push(iterator);
+        }
+
+        //Obtenemos los directores del sistema
+        let directors = [];
+
+        for (const iterator of this.#model.directors) {
+            directors.push(iterator);
+        }
+
+        //Actualizamos el formulario con los nuevos datos del sistema
+        this.#view.showFormDeletePerson(directors, actors);
+        
+        //Llamamos al evento
+        this.#view.bindSubmitDeleteFormPerson(this.handleDeletePerson);
 
     }
 
