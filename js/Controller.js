@@ -18,9 +18,9 @@ class Controller {
         //Declaramos dichos objetos
 
         //!CATEGORIAS
-        let categoria1 = new Category("Acción", "Acción");
-        let categoria2 = new Category("Ficción", "Ficción");
-        let categoria3 = new Category("Aventura", "Aventura");
+        let categoria1 = new Category("Acción", "Acción", "Acción");
+        let categoria2 = new Category("Ficción", "Ficción", "Ficción");
+        let categoria3 = new Category("Aventura", "Aventura", "Aventura");
 
         //!RESOURCE
         let resource1 = new Resource("169", "movies/movie1.mp4");
@@ -194,6 +194,8 @@ class Controller {
 
     handleShowForm = (value) => {
 
+        console.log(value);
+
         let actores = [];
 
         for (const iterator of this.#model.actors) {
@@ -222,8 +224,14 @@ class Controller {
             this.#view.showFormCategory();
             this.#view.bindSubmitFormCategory(this.handleAssignDataFormCategory);
         } else if (value === "Eliminar categoría") {
-            this.#view.showFormDeleteCategory();
+            this.#view.showFormDeleteCategory(categorias);
             this.#view.bindSubmitDeleteFormCategory(this.handleDeleteCategory);
+        } else if (value === "Crear person") {
+            this.#view.showFormPerson();
+            this.#view.bindSubmitFormPerson(this.handleAssignDataFormPerson);
+        } else if (value === "Eliminar person") {
+            this.#view.showFormDeletePerson(directores, actores);
+            this.#view.bindSubmitDeleteFormPerson(this.handleDeletePerson);
         }
 
         this.#view.bindShowProduction(this.handleShowProduct);
@@ -290,6 +298,36 @@ class Controller {
 
 
         this.#view.showCategoryModal(done, category, error);
+
+    }
+
+    handleAssignDataFormPerson = (person, tipoPerson) => {
+
+        let done, error;
+
+        try {
+
+            if (tipoPerson === "Actor") {
+                this.#model.addActor(person);
+
+            } else if (tipoPerson === "Director") {
+                this.#model.addDirector(person);
+            }
+
+            this.onAddCategory();
+            this.onAddDirector();
+            this.onAddActor();
+            this.onAddButtonWindow();
+            this.onAddForm();
+
+            done = true;
+        } catch (error) {
+            done = false;
+            error = error;
+        }
+
+
+        this.#view.showPersonModal(done, person, error, tipoPerson);
 
     }
 
@@ -365,19 +403,55 @@ class Controller {
 
         let categoria = this.#model.getCategory(nombre);
 
-        // console.log(categoria.category instanceof Category);
-
-        // let categoriaFull = new Category(categoria.category);
-
-        // console.log(categoriaFull);
-
-        if (!(categoria instanceof Category)) {
-            done = false;
-        }
-
         try {
 
             this.#model.removeCategorie(categoria.category);
+
+            for (let pro of categoria.producs) {
+                this.#model.removeProduction(pro);
+            }
+
+            this.onAddCategory();
+            this.onAddDirector();
+            this.onAddActor();
+            this.onAddButtonWindow();
+            this.onAddForm();
+
+            this.onInit();
+
+        } catch (error) {
+
+        }
+
+        this.#view.showDeleteCategoryModal(done, categoria, error);
+
+    }
+
+
+    handleDeletePerson = (actores, directores) => {
+
+        let done = true;
+        let error;
+
+        try {
+
+            for (let act of actores) {
+
+                let actor = this.#model.getActor(act);
+
+                let actorFull = new Person(actor.actor.name, actor.actor.lastname1, actor.actor.lastname2, actor.actor.born, actor.actor.picture);
+
+                this.#model.removeActor(actorFull);
+            }
+
+            for (let dir of directores) {
+
+                let director = this.#model.getDirector(dir);
+
+                let directorFull = new Person(director.director.name, director.director.lastname1, director.director.lastname2, director.director.born, director.director.picture);
+
+                this.#model.removeDirector(directorFull);
+            }
 
             this.onAddCategory();
             this.onAddDirector();
@@ -389,7 +463,7 @@ class Controller {
 
         }
 
-        // this.#view.showCategoryModal(done, categoria, error);
+        this.#view.showDeletePersonModal(done, actores, directores, error);
 
     }
 
@@ -434,6 +508,8 @@ class Controller {
 
     //Método handle que muestra la carta de una producción con sus actores y sus directores correspondientes
     handleShowProduct = (serial) => {
+
+        console.log(serial);
 
         let directors = [];
         let actors = [];

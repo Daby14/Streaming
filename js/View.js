@@ -1,6 +1,6 @@
 "use strict";
 
-import { Category, Serie, Movie, Resource, Coordinate } from "../entities/products.js";
+import { Person, Category, Serie, Movie, Resource, Coordinate } from "../entities/products.js";
 
 //Clase View
 class View {
@@ -42,33 +42,23 @@ class View {
         //Vaciamos el main
         this.main.empty();
 
-        //Añadimos al main las 3 categorías iniciales
-        this.main.append(`<div id="categoriasIniciales" class="row inicial">
-            <div id="cat1" class="col-lg-4 col-md-6"><a class="prueba" data-type="Acción" href="#categoriasIniciales">
-                    <div><img class="cat__img" alt="Acción" src="./images/Acción.jpg" />
+        this.main.append(`<div id="categoriasIniciales" class="row inicial"></div>`);
+
+        for (let elem of categories) {
+            $("#categoriasIniciales").append(`
+            <div id="${elem.category.name}" class="col-lg-4 col-md-6">
+                <a data-type="${elem.category.name}" href="#categoriasIniciales">
+                    <div>
+                        <img class="cat__img" alt="${elem.category.name}" src="./images/${elem.category.image}.jpg" />
                     </div>
                     <div class="cat__text">
-                        <h3><strong>Acción</strong></h3>
+                        <h3><strong>${elem.category.name}</strong></h3>
                     </div>
                 </a>
-            </div>
-            <div id="cat2" class="col-lg-4 col-md-6"><a data-type="Ficción" href="#categoriasIniciales">
-                    <div><img class="cat__img" alt="Ficción" src="./images/Ficción.jpg" />
-                    </div>
-                    <div class="cat__text">
-                        <h3><strong>Ficción</strong></h3>
-                    </div>
-                </a>
-            </div>
-            <div id="cat3" class="col-lg-4 col-md-6"><a data-type="Aventura" href="#categoriasIniciales">
-                    <div><img class="cat__img" alt="Aventura" src="./images/Aventura.jpg" />
-                    </div>
-                    <div class="cat__text">
-                        <h3><strong>Aventura</strong></h3>
-                    </div>
-                </a>
-            </div>
-        </div>`);
+            </div>`);
+        }
+
+
 
 
         //Recorremos el array con las producciones aleatorias que se recibe y las añadimos al main
@@ -292,7 +282,7 @@ class View {
 
             let imagen = document.getElementById("vfImagen").value;
             let segundaParte = imagen.substring(12);
-            let imagenFull = "images/" + segundaParte;
+            let imagenFull = "./images/" + segundaParte;
 
             let contenido = document.getElementById("vfContenido").value;
             let latitud = document.getElementById("vfLatitud").value;
@@ -397,6 +387,15 @@ class View {
 							<div class="valid-feedback">Correcto.</div>
 						</div>
 					</div>
+
+                    <div class="col-md-6 mb-3">
+						<label for="vfImagen">Imagen</label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="vfImagen" name="vfImagen" placeholder="Imagen" value="" required>
+							<div class="invalid-feedback">La imagen es obligatoria</div>
+							<div class="valid-feedback">Correcto.</div>
+						</div>
+					</div>
 				</div>
 
 				<button class="btn btn-primary" type="submit">Enviar</button>
@@ -414,36 +413,37 @@ class View {
 
             let nombre = document.getElementById("vfNombre").value;
             let descripcion = document.getElementById("vfDescripcion").value;
+            let imagen = document.getElementById("vfImagen").value;
 
-            let category = new Category(nombre, descripcion);
+            let category = new Category(nombre, descripcion, imagen);
 
             handler(category);
         });
 
     }
 
-    showFormDeleteCategory() {
+    showFormDeleteCategory(categories) {
         this.main.empty();
-        this.main.append(`
-        <div class="container m-5" id="cValidation">
-			<h1 class="d-flex justify-content-center">Eliminar Categoría</h1>
-			<form id="formDeleteCategory" name="fValidation" role="form" class="text-white m-5">
-				<div id="row" class="form-row row">
-					<div class="col-md-4 mb-3">
-						<label for="vfNombreCategoria">Nombre</label>
-						<div class="input-group">
-							<input type="text" class="form-control" id="vfNombreCategoria" name="vfNombreCategoria" placeholder="Título" value="" required>
-							<div class="invalid-feedback">El nombre es obligatorio</div>
-							<div class="valid-feedback">Correcto.</div>
-						</div>
-					</div>
 
-				</div>
+        this.main.append(`<div class="container m-5" id="cValidation">
+        <h1 class="tituloFormCategory">Eliminar Categoría</h1>
+        <form id="formDeleteCategory" name="fValidation" role="form" class="text-white">
+            <div id="row" class="form-row row">
+                <div class="col-md-4 mb-3">
+                    <select id="selectCategorias"></select>
+                </div>
 
-				<button class="btn btn-primary" type="submit">Enviar</button>
-				<button class="btn btn-primary" type="reset">Cancelar</button>
-			</form>
-		</div>`);
+            </div>
+
+            <button class="btn btn-primary" type="submit">Enviar</button>
+            <button class="btn btn-primary" type="reset">Cancelar</button>
+        </form>
+    </div>`);
+
+        for (let cat of categories) {
+            $("#selectCategorias").append(`<option value="${cat.category.name}">${cat.category.name}</option>`);
+        }
+
     }
 
     bindSubmitDeleteFormCategory(handler) {
@@ -452,9 +452,184 @@ class View {
 
             event.preventDefault();
 
-            let nombre = document.getElementById("vfNombreCategoria").value;
+            // let nombre = document.getElementById("vfNombreCategoria").value;
 
-            handler(nombre);
+            const select = document.getElementById("selectCategorias");
+            const opcionSeleccionada = select.value;
+
+            handler(opcionSeleccionada);
+        });
+
+    }
+
+    showFormPerson() {
+        this.main.empty();
+        this.main.append(`
+        <div class="container m-5" id="cValidation">
+			<h1 class="d-flex justify-content-center">Nueva Person</h1>
+			<form id="formPerson" name="fValidation" role="form" class="text-white m-5">
+				<div id="row" class="form-row row">
+					<div class="col-md-6 mb-3">
+						<label for="vfNombre">Nombre</label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="vfNombre" name="vfNombre" placeholder="Nombre" value="" required>
+							<div class="invalid-feedback">El nombre es obligatorio</div>
+							<div class="valid-feedback">Correcto.</div>
+						</div>
+					</div>
+
+                    <div class="col-md-6 mb-3">
+						<label for="vfApellido1">Apellido 1</label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="vfApellido1" name="vfApellido1" placeholder="Apellido 1" value="" required>
+							<div class="invalid-feedback">El apellido 1 es obligatorio</div>
+							<div class="valid-feedback">Correcto.</div>
+						</div>
+					</div>
+
+                    <div class="col-md-6 mb-3">
+						<label for="vfApellido2">Apellido 2</label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="vfApellido2" name="vfApellido2" placeholder="Apellido 2" value="" required>
+							<div class="invalid-feedback">El apellido 2 es obligatorio</div>
+							<div class="valid-feedback">Correcto.</div>
+						</div>
+					</div>
+
+                    <div class="col-md-6 mb-3">
+						<label for="vfNacimiento">Fecha de Nacimiento</label>
+						<div class="input-group">
+							<input type="date" class="form-control" id="vfNacimiento" name="vfNacimiento" placeholder="Fecha de Nacimiento" value="" required>
+							<div class="invalid-feedback">La fecha de nacimiento es obligatoria</div>
+							<div class="valid-feedback">Correcto.</div>
+						</div>
+					</div>
+
+                    <div class="col-md-6 mb-3">
+						<label for="vfPicture">Imagen</label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="vfPicture" name="vfPicture" placeholder="Imagen" value="" required>
+							<div class="invalid-feedback">La imagen es obligatoria</div>
+							<div class="valid-feedback">Correcto.</div>
+						</div>
+					</div>
+
+                    <div class="col-md-6 mb-3">
+						<label for="vfTipoPerson">Tipo Person</label>
+						<div class="input-group">
+                            <select id="selectPerson">
+                                <option value="Actor">Actor</option>
+                                <option value="Director">Director</option>
+                            </select>
+						</div>
+					</div>
+				</div>
+
+				<button class="btn btn-primary" type="submit">Enviar</button>
+				<button class="btn btn-primary" type="reset">Cancelar</button>
+			</form>
+		</div>`);
+
+    }
+
+    bindSubmitFormPerson(handler) {
+
+        document.getElementById("formPerson").addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+            let nombre = document.getElementById("vfNombre").value;
+            let apellido1 = document.getElementById("vfApellido1").value;
+            let apellido2 = document.getElementById("vfApellido2").value;
+            let nacimiento = document.getElementById("vfNacimiento").value;
+            let imagen = document.getElementById("vfPicture").value;
+
+            let imagenFull = "./images/" + imagen + ".jpg";
+
+            const select = document.getElementById("selectPerson");
+            let opcionSeleccionada = select.value;
+
+            let tipoPerson;
+
+            if (opcionSeleccionada === "Actor") {
+                tipoPerson = "Actor";
+            } else if (opcionSeleccionada === "Director") {
+                tipoPerson = "Director";
+            }
+
+            let person = new Person(nombre, apellido1, apellido2, nacimiento, imagenFull);
+
+            // console.log(person);
+
+            // let category = new Category(nombre, descripcion, imagen);
+
+            handler(person, tipoPerson);
+        });
+
+    }
+
+    showFormDeletePerson(directores, actores) {
+        this.main.empty();
+
+        this.main.append(`<div class="container m-5" id="cValidation">
+        <h1 class="tituloFormCategory">Eliminar Person</h1>
+        <br>
+        <form id="formDeletePerson" name="fValidation" role="form" class="text-white">
+            <div id="row" class="form-row row">
+                <div class="col-md-4 mb-3">
+                    <select id="selectDirectores" name="selectDirectores" required multiple></select>
+                    
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <select id="selectActores" name="selectActores" required multiple></select>
+                </div>
+
+            </div>
+
+            <button class="btn btn-primary" type="submit">Enviar</button>
+            <button class="btn btn-primary" type="reset">Cancelar</button>
+        </form>
+    </div>`);
+
+
+
+        for (let dir of directores) {
+            $("#selectDirectores").append(`<option value="${dir.director.name}">${dir.director.name}</option>`);
+        }
+
+        for (let act of actores) {
+            $("#selectActores").append(`<option value="${act.actor.name}">${act.actor.name}</option>`);
+        }
+
+    }
+
+    bindSubmitDeleteFormPerson(handler) {
+
+        document.getElementById("formDeletePerson").addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+            //Actores
+            let actores = [];
+
+            const selectActor = document.getElementById("selectActores");
+            const opcionesSeleccionadasActor = selectActor.selectedOptions;
+            for (let i = 0; i < opcionesSeleccionadasActor.length; i++) {
+                actores.push(opcionesSeleccionadasActor[i].value);
+            }
+
+            //Directores
+            let directores = [];
+
+            const selectDirector = document.getElementById("selectDirectores");
+            const opcionesSeleccionadasDirector = selectDirector.selectedOptions;
+            for (let i = 0; i < opcionesSeleccionadasDirector.length; i++) {
+                directores.push(opcionesSeleccionadasDirector[i].value);
+            }
+
+
+            handler(actores, directores);
         });
 
     }
@@ -462,7 +637,7 @@ class View {
     showFormInMenu() {
         let li = $(`<li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle enlaceMenu" href="#menuForm" id="menuForm" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
-          Formularios
+            Formularios
         </a>
         </li>`);
 
@@ -629,6 +804,120 @@ class View {
         }
     }
 
+    showDeleteCategoryModal(done, category, error) {
+        // console.log(done);
+        if (done) {
+            let modal = $(`<div class="modal fade" id="deleteCategoryModal" tabindex="-1"
+				data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="newCategoryModalLabel">Categoría eliminada</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							La categoría <strong>${category.category.name}</strong> ha sido eliminada correctamente.
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+						</div>
+					</div>
+				</div>
+			</div>`);
+            $('body').append(modal);
+            let newProductModal = $('#deleteCategoryModal');
+            newProductModal.modal('show');
+            newProductModal.find('button').click(() => {
+                newProductModal.modal('hide');
+                newProductModal.remove();
+                // const formulario = document.getElementById("formDeleteCategory");
+                // console.log(formulario);
+                // formulario.reset();
+            })
+        }
+    }
+
+    showPersonModal(done, person, error, tipoPerson) {
+        if (done) {
+            let modal = $(`<div class="modal fade" id="modalPerson" tabindex="-1"
+				data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="newCategoryModalLabel">${tipoPerson} creado</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							El ${tipoPerson} <strong>${person.name}</strong> ha sido creado correctamente.
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+						</div>
+					</div>
+				</div>
+			</div>`);
+            $('body').append(modal);
+            let newProductModal = $('#modalPerson');
+            newProductModal.modal('show');
+            newProductModal.find('button').click(() => {
+                newProductModal.modal('hide');
+                newProductModal.remove();
+                const formulario = document.getElementById("formPerson");
+                formulario.reset();
+            })
+        } else {
+            $(document.fNewProduct).prepend(`<div class="error text-danger p-3"><i class="fas fa-exclamation-triangle"></i> El ${tipoPerson} <strong>${person.name}</strong> no ha podido crearse correctamente.</div>`);
+        }
+    }
+
+    showDeletePersonModal(done, actores, directores, error) {
+        if (done) {
+            $('body').append(`<div class="modal fade" id="modalDeletePerson" tabindex="-1"
+				data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="newCategoryModalLabel">Person eliminado</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body" id="prueba">
+                        
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+						</div>
+					</div>
+				</div>
+			</div>`);
+
+            for (let act of actores) {
+                $("#prueba").append(`El actor <strong>${act}</strong> ha sido eliminado correctamente. <br>`)
+            }
+
+            for (let dir of directores) {
+                $("#prueba").append(`El director <strong>${dir}</strong> ha sido eliminado correctamente. <br>`)
+            }
+
+            // $('body').append(modal);
+            let newProductModal = $('#modalDeletePerson');
+            newProductModal.modal('show');
+            newProductModal.find('button').click(() => {
+                newProductModal.modal('hide');
+                newProductModal.remove();
+                const formulario = document.getElementById("formDeletePerson");
+                formulario.reset();
+            })
+        } else {
+            $(document.fNewProduct).prepend(`<div class="error text-danger p-3"><i class="fas fa-exclamation-triangle"></i> El ${tipoPerson} <strong>${person.name}</strong> no ha podido crearse correctamente.</div>`);
+        }
+    }
+
     //!SHOW PRODUCTIONS
     //Método que muestra las producciones correspondientes a una categoría
     showProductions(iterator, title) {
@@ -776,13 +1065,11 @@ class View {
                                     <span class="text-uppercase text-muted brand">Resource: ${product.resources}</span>
                                     <br>
                                     <br>
-                                    <h6 class="text-uppercase"><u>Directores</u></h6>
                                     <div id="directores">
 
                                     </div>
                                     <br>
                                     <br>
-                                    <h6 class="text-uppercase"><u>Actores</u></h6>
                                     <div id="actores">
 
                                     </div>
@@ -797,7 +1084,16 @@ class View {
         </div>
     <div>`);
 
+            if (directors.length !== 0) {
+                $('#directores').append(`<h6 class="text-uppercase"><u>Directores</u></h6>`);
+            }
+
+            if (actors.length !== 0) {
+                $('#actores').append(`<h6 class="text-uppercase"><u>Actores</u></h6>`);
+            }
+
             for (let i = 0; i < directors.length; i++) {
+
                 $("#directores").append(`
                 <a href="#" id="director" data-serial="${directors[i].name}"><span class="text-muted brand">Nombre: ${directors[i].name} ${directors[i].lastname1} ${directors[i].lastname2}</span><br></a>`);
                 // console.log(directors[i].name)

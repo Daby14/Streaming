@@ -53,3 +53,16 @@ img {
   margin-bottom: 200px;
   margin-left: 500px;
 }
+
+#formDeleteCategory{
+  margin-left: 450px;
+  margin-top: 50px;
+}
+
+#selectCategorias{
+  width: 200px;
+}
+
+.tituloFormCategory{
+  margin-left: 450px;
+}

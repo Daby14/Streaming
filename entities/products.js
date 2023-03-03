@@ -53,12 +53,14 @@ class Category {
     //Declaramos las propiedades de category
     #name;
     #description;
+    #image;
 
     //Declaramos el constructor de category
-    constructor(name, description = "") {
+    constructor(name, description = "", image) {
 
         this.#name = name;
         this.#description = description;
+        this.#image = image;
 
     }
 
@@ -71,9 +73,13 @@ class Category {
         return this.#description;
     }
 
+    get image() {
+        return this.#image;
+    }
+
     //Método toString que muestra las propiedades de category
     toString() {
-        return this.#name + " " + this.#description;
+        return this.#name + " " + this.#description + " " + this.#image;
     }
 
 }
