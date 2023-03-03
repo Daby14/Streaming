@@ -66,3 +66,20 @@ img {
 .tituloFormCategory{
   margin-left: 450px;
 }
+
+.botones{
+  margin-left: 350px;
+  gap: 5px;
+}
+
+#formDeleteCategory{
+  margin-left: 500px;
+}
+
+#formDeletePerson{
+  margin-left: 300px; 
+}
+
+.serie_peli{
+  margin: 100px;
+}

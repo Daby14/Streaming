@@ -23,6 +23,7 @@ $(function () {
 		menuActores: (event) => App.handleProductsActorList(event.state.category),
 		productionDirector: (event) => App.handleShowProduct(event.state.serial),
 		productionActor: (event) => App.handleShowProduct(event.state.serial),
+		formularios: (event) => App.handleShowForm(event.state.category),
 	}
 
 	//Con el evento popstate llamaos al historial declarado anteriormente

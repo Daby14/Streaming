@@ -112,161 +112,466 @@ class View {
         });
     }
 
+
     //!SHOW FORM PRODUCTION
     //Método que muestra el formulario de crear una producción
     showFormProduction(actores, directores, categorias) {
         this.main.empty();
 
         this.main.append(`
-        <div class="container m-5" id="cValidation">
-			<h1 class="d-flex justify-content-center">Nueva Producción</h1>
-			<form id="form" name="fValidation" role="form" class="text-white m-5">
-				<div id="row" class="form-row row">
-					<div class="col-md-4 mb-3">
-						<label for="vfTitulo">Título</label>
-						<div class="input-group">
-							<input type="text" class="form-control" id="vfTitulo" name="vfTitulo" placeholder="Título" value="" required>
-							<div class="invalid-feedback">El título es obligatorio</div>
-							<div class="valid-feedback">Correcto.</div>
-						</div>
-					</div>
-					<div class="col-md-4 mb-3">
-						<label for="vfNacionalidad">Nacionalidad</label>
-						<div class="input-group">
-							<input type="text" class="form-control" id="vfNacionalidad" name="vfNacionalidad"
-								placeholder="Nacionalidad" value="" required>
-							<div class="invalid-feedback">La nacionalidad es obligatoria</div>
-							<div class="valid-feedback">Correcto.</div>
-						</div>
-					</div>
-					<div class="col-md-4 mb-3">
-						<label for="vfPublicacion">Publicación</label>
-						<div class="input-group">
-							<input type="date" class="form-control" id="vfPublicacion" name="vfPublicacion"
-								placeholder="Publicación" value="" required>
-                            <div class="invalid-feedback">La publicación es obligatoria</div>
-							<div class="valid-feedback">Correcto.</div>
-						</div>
-					</div>
+        <div id="serie_peli" class="serie_peli text-light" class="container m-5" id="cValidation">
+            <h1 class="d-flex justify-content-center">Nueva Producción</h1>
+            <form id="form" name="fValidation" role="form" class="text-white m-5">
+                <div id="prueba">
+                    <label for="vfOpcion">¿Serie o Pelicula?</label>
+                    <select id="selectOption" class="form-select" aria-label="Default select example">
+                        <option value=""></option>
+                        <option value="Serie">Serie</option>
+                        <option value="Pelicula">Pelicula</option>
+                    </select>
+                </div>
+                    
+            </form>
+        </div>`);
 
-                    <div class="col-md-4 mb-3">
-						<label for="vfDescripcion">Descripción</label>
-						<div class="input-group">
-							<input type="text" class="form-control" id="vfDescripcion" name="vfDescripcion"
-								placeholder="Descripción" value="" required>
-                            <div class="invalid-feedback">La descripción es obligatoria</div>
-							<div class="valid-feedback">Correcto.</div>
-						</div>
-					</div>
+        const selectOption = document.getElementById('selectOption');
+        selectOption.addEventListener('change', function () {
+            const selectedValue = selectOption.value;
 
+            if (selectedValue === "Serie") {
+
+                $("#prueba").empty();
+
+                $("#prueba").append(`
+                    <div id="row" class="form-row row">
+                        <div class="col-md-4 mb-3">
+                            <label for="vfTitulo">Título</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="vfTitulo" name="vfTitulo" placeholder="Título" value="" required>
+                                <div class="invalid-feedback">El título es obligatorio</div>
+                                <div class="valid-feedback">Correcto.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="vfNacionalidad">Nacionalidad</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="vfNacionalidad" name="vfNacionalidad"
+                                    placeholder="Nacionalidad" value="" required>
+                                <div class="invalid-feedback">La nacionalidad es obligatoria</div>
+                                <div class="valid-feedback">Correcto.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="vfPublicacion">Publicación</label>
+                            <div class="input-group">
+                                <input type="date" class="form-control" id="vfPublicacion" name="vfPublicacion"
+                                    placeholder="Publicación" value="" required>
+                                <div class="invalid-feedback">La publicación es obligatoria</div>
+                                <div class="valid-feedback">Correcto.</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="vfDescripcion">Descripción</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="vfDescripcion" name="vfDescripcion"
+                                    placeholder="Descripción" value="" required>
+                                <div class="invalid-feedback">La descripción es obligatoria</div>
+                                <div class="valid-feedback">Correcto.</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8 mb-3">
+                            <label for="vfImagen">Imagen</label>
+                            <div class="input-group">
+                                <input type="file" class="form-control" id="vfImagen" name="vfImagen"
+                                    placeholder="Imagen" value="" required>
+                                <div class="invalid-feedback">La imagen es obligatoria</div>
+                                <div class="valid-feedback">Correcto.</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="vfContenido">Contenido</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="vfContenido" name="vfContenido"
+                                    placeholder="Contenido" value="" required>
+                                <div class="invalid-feedback">El contenido es obligatorio</div>
+                                <div class="valid-feedback">Correcto.</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="vfLatitud">Latitud</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="vfLatitud" name="vfLatitud"
+                                    placeholder="Latitud" value="" required>
+                                <div class="invalid-feedback">La latitud es obligatoria</div>
+                                <div class="valid-feedback">Correcto.</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="vfLongitud">Longitud</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="vfLongitud" name="vfLongitud"
+                                    placeholder="Longitud" value="" required>
+                                <div class="invalid-feedback">La longitud es obligatoria</div>
+                                <div class="valid-feedback">Correcto.</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="vfTemporadas">Temporadas</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="vfTemporadas" name="vfTemporadas"
+                                    placeholder="Temporadas" value="" required>
+                                <div class="invalid-feedback">Las temporadas son obligatorias</div>
+                                <div class="valid-feedback">Correcto.</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">Enviar</button>
+                    <button class="btn btn-primary" type="reset">Cancelar</button> `);
+
+                //Actores
+                $("#row").append(`
                     <div class="col-md-8 mb-3">
-						<label for="vfImagen">Imagen</label>
-						<div class="input-group">
-							<input type="file" class="form-control" id="vfImagen" name="vfImagen"
-								placeholder="Imagen" value="" required>
-                            <div class="invalid-feedback">La imagen es obligatoria</div>
-							<div class="valid-feedback">Correcto.</div>
-						</div>
-					</div>
+                        <label for="vfActores">Actores</label>
+                        <div class="form-group">
+                            <select class="form-select custom-select" id="vfActores" name="vfActores" required multiple></select>
+                            <div class="invalid-feedback">Los actores son obligatorios</div>
+                            <div class="valid-feedback">Correcto.</div>
+                        </div>
+                    </div>`);
 
-                    <div class="col-md-4 mb-3">
-						<label for="vfContenido">Contenido</label>
-						<div class="input-group">
-							<input type="text" class="form-control" id="vfContenido" name="vfContenido"
-								placeholder="Contenido" value="" required>
-                            <div class="invalid-feedback">El contenido es obligatorio</div>
-							<div class="valid-feedback">Correcto.</div>
-						</div>
-					</div>
+                for (let i = 0; i < actores.length; i++) {
+                    let option = `<option value="${actores[i].actor.name}">${actores[i].actor.name}</option>`;
+                    $("#vfActores").append(option);
+                }
 
-                    <div class="col-md-4 mb-3">
-						<label for="vfLatitud">Latitud</label>
-						<div class="input-group">
-							<input type="text" class="form-control" id="vfLatitud" name="vfLatitud"
-								placeholder="Latitud" value="" required>
-                            <div class="invalid-feedback">La latitud es obligatoria</div>
-							<div class="valid-feedback">Correcto.</div>
-						</div>
-					</div>
+                //Directores
+                $("#row").append(`
+                    <div class="col-md-6 mb-3">
+                        <label for="vfDirectores">Directores</label>
+                        <div class="form-group">
+                            <select class="form-select custom-select" id="vfDirectores" name="vfDirectores" required multiple></select>
+                            <div class="invalid-feedback">Los directores son obligatorios</div>
+                            <div class="valid-feedback">Correcto.</div>
+                        </div>
+                    </div>`);
 
-                    <div class="col-md-4 mb-3">
-						<label for="vfLongitud">Longitud</label>
-						<div class="input-group">
-							<input type="text" class="form-control" id="vfLongitud" name="vfLongitud"
-								placeholder="Longitud" value="" required>
-                            <div class="invalid-feedback">La longitud es obligatoria</div>
-							<div class="valid-feedback">Correcto.</div>
-						</div>
-					</div>
+                for (let i = 0; i < directores.length; i++) {
+                    let option = `<option value="${directores[i].director.name}">${directores[i].director.name}</option>`;
+                    $("#vfDirectores").append(option);
+                }
 
-                    <div class="col-md-4 mb-3">
-						<label for="vfTemporadas">Temporadas</label>
-						<div class="input-group">
-							<input type="text" class="form-control" id="vfTemporadas" name="vfTemporadas"
-								placeholder="Temporadas" value="" required>
-                            <div class="invalid-feedback">Las temporadas son obligatorias</div>
-							<div class="valid-feedback">Correcto.</div>
-						</div>
-					</div>
+                //Categorías
+                $("#row").append(`
+                    <div class="col-md-6 mb-3">
+                        <label for="vfCategorias">Categorías</label>
+                        <div class="form-group">
+                            <select class="form-select custom-select" id="vfCategorias" name="vfCategorias" required multiple></select>
+                            <div class="invalid-feedback">Las categorías son obligatorias</div>
+                            <div class="valid-feedback">Correcto.</div>
+                        </div>
+                    </div>`);
 
-				</div>
+                for (let i = 0; i < categorias.length; i++) {
+                    let option = `<option value="${categorias[i].category.name}">${categorias[i].category.name}</option>`;
+                    $("#vfCategorias").append(option);
+                }
 
-				<button class="btn btn-primary" type="submit">Enviar</button>
-				<button class="btn btn-primary" type="reset">Cancelar</button>
-			</form>
-		</div>`);
+            } else if (selectedValue === "Pelicula") {
+                $("#prueba").empty();
 
-        //Actores
-        $("#row").append(`
-        <div class="col-md-3 mb-3">
-            <label for="vfActores">Actores</label>
-            <div class="form-group">
-                <select class="custom-select" id="vfActores" name="vfActores" required multiple></select>
-                <div class="invalid-feedback">Los actores son obligatorios</div>
-                <div class="valid-feedback">Correcto.</div>
-            </div>
-        </div>`);
+                $("#prueba").append(`
+                    <div id="row" class="form-row row">
+                        <div class="col-md-4 mb-3">
+                            <label for="vfTitulo">Título</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="vfTitulo" name="vfTitulo" placeholder="Título" value="" required>
+                                <div class="invalid-feedback">El título es obligatorio</div>
+                                <div class="valid-feedback">Correcto.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="vfNacionalidad">Nacionalidad</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="vfNacionalidad" name="vfNacionalidad"
+                                    placeholder="Nacionalidad" value="" required>
+                                <div class="invalid-feedback">La nacionalidad es obligatoria</div>
+                                <div class="valid-feedback">Correcto.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="vfPublicacion">Publicación</label>
+                            <div class="input-group">
+                                <input type="date" class="form-control" id="vfPublicacion" name="vfPublicacion"
+                                    placeholder="Publicación" value="" required>
+                                <div class="invalid-feedback">La publicación es obligatoria</div>
+                                <div class="valid-feedback">Correcto.</div>
+                            </div>
+                        </div>
 
-        for (let i = 0; i < actores.length; i++) {
-            let option = `
-            <option value="${actores[i].actor.name}">${actores[i].actor.name}</option>`;
-            $("#vfActores").append(option);
-        }
+                        <div class="col-md-4 mb-3">
+                            <label for="vfDescripcion">Descripción</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="vfDescripcion" name="vfDescripcion"
+                                    placeholder="Descripción" value="" required>
+                                <div class="invalid-feedback">La descripción es obligatoria</div>
+                                <div class="valid-feedback">Correcto.</div>
+                            </div>
+                        </div>
 
-        //Directores
-        $("#row").append(`
-        <div class="col-md-3 mb-3">
-            <label for="vfDirectores">Directores</label>
-            <div class="form-group">
-                <select class="custom-select" id="vfDirectores" name="vfDirectores" required multiple></select>
-                <div class="invalid-feedback">Los directores son obligatorios</div>
-                <div class="valid-feedback">Correcto.</div>
-            </div>
-        </div>`);
+                        <div class="col-md-8 mb-3">
+                            <label for="vfImagen">Imagen</label>
+                            <div class="input-group">
+                                <input type="file" class="form-control" id="vfImagen" name="vfImagen"
+                                    placeholder="Imagen" value="" required>
+                                <div class="invalid-feedback">La imagen es obligatoria</div>
+                                <div class="valid-feedback">Correcto.</div>
+                            </div>
+                        </div>
 
-        for (let i = 0; i < directores.length; i++) {
-            let option = `
-            <option value="${directores[i].director.name}">${directores[i].director.name}</option>`;
-            $("#vfDirectores").append(option);
-        }
+                        <div class="col-md-4 mb-3">
+                            <label for="vfDuracion">Duracion</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="vfDuracion" name="vfDuracion"
+                                    placeholder="Duracion" value="" required>
+                                <div class="invalid-feedback">La duracion es obligatoria</div>
+                                <div class="valid-feedback">Correcto.</div>
+                            </div>
+                        </div>
 
-        //Categorías
-        $("#row").append(`
-        <div class="col-md-3 mb-3">
-            <label for="vfCategorias">Categorías</label>
-            <div class="form-group">
-                <select class="custom-select" id="vfCategorias" name="vfCategorias" required multiple></select>
-                <div class="invalid-feedback">Las categorías son obligatorias</div>
-                <div class="valid-feedback">Correcto.</div>
-            </div>
-        </div>`);
+                        <div class="col-md-4 mb-3">
+                            <label for="vfLatitud">Latitud</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="vfLatitud" name="vfLatitud"
+                                    placeholder="Latitud" value="" required>
+                                <div class="invalid-feedback">La latitud es obligatoria</div>
+                                <div class="valid-feedback">Correcto.</div>
+                            </div>
+                        </div>
 
-        for (let i = 0; i < categorias.length; i++) {
-            let option = `
-            <option value="${categorias[i].category.name}">${categorias[i].category.name}</option>`;
-            $("#vfCategorias").append(option);
-        }
+                        <div class="col-md-4 mb-3">
+                            <label for="vfLongitud">Longitud</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="vfLongitud" name="vfLongitud"
+                                    placeholder="Longitud" value="" required>
+                                <div class="invalid-feedback">La longitud es obligatoria</div>
+                                <div class="valid-feedback">Correcto.</div>
+                            </div>
+                        </div>
 
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">Enviar</button>
+                    <button class="btn btn-primary" type="reset">Cancelar</button> `);
+
+                //Actores
+                $("#row").append(`
+                    <div class="col-md-6 mb-3">
+                        <label for="vfActores">Actores</label>
+                        <div class="form-group">
+                            <select class="form-select custom-select" id="vfActores" name="vfActores" required multiple></select>
+                            <div class="invalid-feedback">Los actores son obligatorios</div>
+                            <div class="valid-feedback">Correcto.</div>
+                        </div>
+                    </div>`);
+
+                for (let i = 0; i < actores.length; i++) {
+                    let option = `<option value="${actores[i].actor.name}">${actores[i].actor.name}</option>`;
+                    $("#vfActores").append(option);
+                }
+
+                //Directores
+                $("#row").append(`
+                    <div class="col-md-6 mb-3">
+                        <label for="vfDirectores">Directores</label>
+                        <div class="form-group">
+                            <select class="form-select custom-select" id="vfDirectores" name="vfDirectores" required multiple></select>
+                            <div class="invalid-feedback">Los directores son obligatorios</div>
+                            <div class="valid-feedback">Correcto.</div>
+                        </div>
+                    </div>`);
+
+                for (let i = 0; i < directores.length; i++) {
+                    let option = `<option value="${directores[i].director.name}">${directores[i].director.name}</option>`;
+                    $("#vfDirectores").append(option);
+                }
+
+                //Categorías
+                $("#row").append(`
+                    <div class="col-md-6 mb-3">
+                        <label for="vfCategorias">Categorías</label>
+                        <div class="form-group">
+                            <select class="form-select custom-select" id="vfCategorias" name="vfCategorias" required multiple></select>
+                            <div class="invalid-feedback">Las categorías son obligatorias</div>
+                            <div class="valid-feedback">Correcto.</div>
+                        </div>
+                    </div>`);
+
+                for (let i = 0; i < categorias.length; i++) {
+                    let option = `<option value="${categorias[i].category.name}">${categorias[i].category.name}</option>`;
+                    $("#vfCategorias").append(option);
+                }
+            }
+
+        });
+
+
+        // this.main.append(`
+        //  <div class="container m-5" id="cValidation">
+        //  	<h1 class="d-flex justify-content-center">Nueva Producción</h1>
+        //  	<form id="form" name="fValidation" role="form" class="text-white m-5">
+        //  		<div id="row" class="form-row row">
+        //  			<div class="col-md-4 mb-3">
+        //  				<label for="vfTitulo">Título</label>
+        //  				<div class="input-group">
+        //  					<input type="text" class="form-control" id="vfTitulo" name="vfTitulo" placeholder="Título" value="" required>
+        //  					<div class="invalid-feedback">El título es obligatorio</div>
+        //  					<div class="valid-feedback">Correcto.</div>
+        //  				</div>
+        //  			</div>
+        //  			<div class="col-md-4 mb-3">
+        //  				<label for="vfNacionalidad">Nacionalidad</label>
+        //  				<div class="input-group">
+        //  					<input type="text" class="form-control" id="vfNacionalidad" name="vfNacionalidad"
+        //  						placeholder="Nacionalidad" value="" required>
+        //  					<div class="invalid-feedback">La nacionalidad es obligatoria</div>
+        //  					<div class="valid-feedback">Correcto.</div>
+        //  				</div>
+        //  			</div>
+        //  			<div class="col-md-4 mb-3">
+        //  				<label for="vfPublicacion">Publicación</label>
+        //  				<div class="input-group">
+        //  					<input type="date" class="form-control" id="vfPublicacion" name="vfPublicacion"
+        //  						placeholder="Publicación" value="" required>
+        //                      <div class="invalid-feedback">La publicación es obligatoria</div>
+        //  					<div class="valid-feedback">Correcto.</div>
+        //  				</div>
+        //  			</div>
+
+        //              <div class="col-md-4 mb-3">
+        //  				<label for="vfDescripcion">Descripción</label>
+        //  				<div class="input-group">
+        //  					<input type="text" class="form-control" id="vfDescripcion" name="vfDescripcion"
+        //  						placeholder="Descripción" value="" required>
+        //                      <div class="invalid-feedback">La descripción es obligatoria</div>
+        //  					<div class="valid-feedback">Correcto.</div>
+        //  				</div>
+        //  			</div>
+
+        //              <div class="col-md-8 mb-3">
+        //  				<label for="vfImagen">Imagen</label>
+        //  				<div class="input-group">
+        //  					<input type="file" class="form-control" id="vfImagen" name="vfImagen"
+        //  						placeholder="Imagen" value="" required>
+        //                      <div class="invalid-feedback">La imagen es obligatoria</div>
+        //  					<div class="valid-feedback">Correcto.</div>
+        //  				</div>
+        //  			</div>
+
+        //              <div class="col-md-4 mb-3">
+        //  				<label for="vfContenido">Contenido</label>
+        //  				<div class="input-group">
+        //  					<input type="text" class="form-control" id="vfContenido" name="vfContenido"
+        //  						placeholder="Contenido" value="" required>
+        //                      <div class="invalid-feedback">El contenido es obligatorio</div>
+        //  					<div class="valid-feedback">Correcto.</div>
+        //  				</div>
+        //  			</div>
+
+        //              <div class="col-md-4 mb-3">
+        //  				<label for="vfLatitud">Latitud</label>
+        //  				<div class="input-group">
+        //  					<input type="text" class="form-control" id="vfLatitud" name="vfLatitud"
+        //  						placeholder="Latitud" value="" required>
+        //                      <div class="invalid-feedback">La latitud es obligatoria</div>
+        //  					<div class="valid-feedback">Correcto.</div>
+        //  				</div>
+        //  			</div>
+
+        //              <div class="col-md-4 mb-3">
+        //  				<label for="vfLongitud">Longitud</label>
+        //  				<div class="input-group">
+        //  					<input type="text" class="form-control" id="vfLongitud" name="vfLongitud"
+        //  						placeholder="Longitud" value="" required>
+        //                      <div class="invalid-feedback">La longitud es obligatoria</div>
+        //  					<div class="valid-feedback">Correcto.</div>
+        //  				</div>
+        //  			</div>
+
+        //              <div class="col-md-4 mb-3">
+        //  				<label for="vfTemporadas">Temporadas</label>
+        //  				<div class="input-group">
+        //  					<input type="text" class="form-control" id="vfTemporadas" name="vfTemporadas"
+        //  						placeholder="Temporadas" value="" required>
+        //                      <div class="invalid-feedback">Las temporadas son obligatorias</div>
+        //  					<div class="valid-feedback">Correcto.</div>
+        //  				</div>
+        //  			</div>
+
+        //  		</div>
+
+        //  		<button class="btn btn-primary" type="submit">Enviar</button>
+        //  		<button class="btn btn-primary" type="reset">Cancelar</button>
+        //  	</form>
+        //  </div>`);
+
+        // //Actores
+        // $("#row").append(`
+        //  <div class="col-md-8 mb-3">
+        //      <label for="vfActores">Actores</label>
+        //      <div class="form-group">
+        //          <select class="form-select custom-select" id="vfActores" name="vfActores" required multiple></select>
+        //          <div class="invalid-feedback">Los actores son obligatorios</div>
+        //          <div class="valid-feedback">Correcto.</div>
+        //      </div>
+        //  </div>`);
+
+        // for (let i = 0; i < actores.length; i++) {
+        //     let option = `
+        //      <option value="${actores[i].actor.name}">${actores[i].actor.name}</option>`;
+        //     $("#vfActores").append(option);
+        // }
+
+        // //Directores
+        // $("#row").append(`
+        //  <div class="col-md-6 mb-3">
+        //      <label for="vfDirectores">Directores</label>
+        //      <div class="form-group">
+        //          <select class="form-select custom-select" id="vfDirectores" name="vfDirectores" required multiple></select>
+        //          <div class="invalid-feedback">Los directores son obligatorios</div>
+        //          <div class="valid-feedback">Correcto.</div>
+        //      </div>
+        //  </div>`);
+
+        // for (let i = 0; i < directores.length; i++) {
+        //     let option = `
+        //      <option value="${directores[i].director.name}">${directores[i].director.name}</option>`;
+        //     $("#vfDirectores").append(option);
+        // }
+
+        // //Categorías
+        // $("#row").append(`
+        //  <div class="col-md-6 mb-3">
+        //      <label for="vfCategorias">Categorías</label>
+        //      <div class="form-group">
+        //          <select class="form-select custom-select" id="vfCategorias" name="vfCategorias" required multiple></select>
+        //          <div class="invalid-feedback">Las categorías son obligatorias</div>
+        //          <div class="valid-feedback">Correcto.</div>
+        //      </div>
+        //  </div>`);
+
+        // for (let i = 0; i < categorias.length; i++) {
+        //     let option = `
+        //      <option value="${categorias[i].category.name}">${categorias[i].category.name}</option>`;
+        //     $("#vfCategorias").append(option);
+        // }
 
 
     }
@@ -279,6 +584,8 @@ class View {
 
             event.preventDefault();
 
+            let produccion;
+
             let titulo = document.getElementById("vfTitulo").value;
             let nacionalidad = document.getElementById("vfNacionalidad").value;
             let publicacion = document.getElementById("vfPublicacion").value;
@@ -288,10 +595,31 @@ class View {
             let segundaParte = imagen.substring(12);
             let imagenFull = "./images/" + segundaParte;
 
-            let contenido = document.getElementById("vfContenido").value;
-            let latitud = document.getElementById("vfLatitud").value;
-            let longitud = document.getElementById("vfLongitud").value;
-            let temporadas = document.getElementById("vfTemporadas").value;
+            let temporadas = document.getElementById("vfTemporadas");
+
+            if (temporadas != null) {
+
+                let contenido = document.getElementById("vfContenido").value;
+                let latitud = document.getElementById("vfLatitud").value;
+                let longitud = document.getElementById("vfLongitud").value;
+
+                let coordinate = new Coordinate(latitud, longitud);
+
+                produccion = new Serie(titulo, nacionalidad, publicacion, descripcion, imagenFull, contenido, coordinate, temporadas);
+
+            } else if (temporadas == null) {
+
+                let latitud = document.getElementById("vfLatitud").value;
+                let longitud = document.getElementById("vfLongitud").value;
+
+                let duracion = document.getElementById("vfDuracion").value;
+
+                let coordinate = new Coordinate(latitud, longitud);
+
+                let resource = new Resource(duracion, "movies/movie.mp4");
+
+                produccion = new Movie(titulo, nacionalidad, publicacion, descripcion, imagenFull, resource, coordinate);
+            }
 
             //Actores
             let actores = [];
@@ -320,10 +648,6 @@ class View {
                 categorias.push(opcionesSeleccionadasCategoria[i].value);
             }
 
-            let coordinate = new Coordinate(latitud, longitud);
-
-            let produccion = new Serie(titulo, nacionalidad, publicacion, descripcion, imagenFull, contenido, coordinate, temporadas);
-
             handler(produccion, actores, directores, categorias);
         });
 
@@ -337,7 +661,7 @@ class View {
         <div class="container m-5" id="cValidation">
 			<h1 class="d-flex justify-content-center">Eliminar Producción</h1>
 			<form id="formProduction" name="fValidation" role="form" class="text-white m-5">
-				<div id="row" class="form-row row">
+				<div id="row" class="d-flex justify-content-center form-row row">
 					<div class="col-md-4 mb-3">
 						<label for="vfTituloProduccion">Título</label>
 						<div class="input-group">
@@ -349,8 +673,11 @@ class View {
 
 				</div>
 
-				<button class="btn btn-primary" type="submit">Enviar</button>
-				<button class="btn btn-primary" type="reset">Cancelar</button>
+                <div class="d-flex botones">
+                    <button class="btn btn-primary" type="submit">Enviar</button>
+                    <button class="btn btn-primary" type="reset">Cancelar</button>
+                </div>
+				
 			</form>
 		</div>`);
     }
@@ -376,21 +703,28 @@ class View {
         this.main.empty();
 
         this.main.append(`<div class="container m-5" id="cValidation">
-        <h1 class="tituloFormAssignDirectorsActors">Asignar Actores/Directores</h1>
+        <h1 class="d-flex justify-content-center tituloFormAssignDirectorsActors">Asignar Actores/Directores</h1>
         <br>
         <form id="formAssignDirectorsActors" name="fValidation" role="form" class="text-white">
             <div id="row" class="form-row row">
+
+                
                 <div class="col-md-4 mb-3">
-                    <select id="selectDirectores" name="selectDirectores" required multiple></select>
-                    
+                <label for="vfDirectores">Directores</label>
+                    <select class="form-select custom-select" id="selectDirectores" name="selectDirectores" required multiple></select>    
                 </div>
 
+                
                 <div class="col-md-4 mb-3">
-                    <select id="selectActores" name="selectActores" required multiple></select>
+                <label for="vfActores">Actores</label>
+                    <select class="form-select custom-select" id="selectActores" name="selectActores" required multiple></select>
                 </div>
 
+                
+                
                 <div class="col-md-4 mb-3">
-                    <select id="selectProducciones" name="selectProducciones" required multiple></select>
+                <label for="vfProducciones">Producciones</label>
+                    <select class="form-select custom-select" id="selectProducciones" name="selectProducciones" required multiple></select>
                 </div>
 
             </div>
@@ -460,21 +794,23 @@ class View {
         this.main.empty();
 
         this.main.append(`<div class="container m-5" id="cValidation">
-        <h1 class="tituloFormDeassignDirectorsActors">Desasignar Actores/Directores</h1>
+        <h1 class="d-flex justify-content-center tituloFormDeassignDirectorsActors">Desasignar Actores/Directores</h1>
         <br>
         <form id="formDeassignDirectorsActors" name="fValidation" role="form" class="text-white">
             <div id="row" class="form-row row">
                 <div class="col-md-4 mb-3">
-                    <select id="selectDirectores" name="selectDirectores" required multiple></select>
-                    
+                    <label for="vfDirectores">Directores</label>
+                    <select class="form-select custom-select" id="selectDirectores" name="selectDirectores" required multiple></select>
                 </div>
 
                 <div class="col-md-4 mb-3">
-                    <select id="selectActores" name="selectActores" required multiple></select>
+                    <label for="vfActores">Actores</label>
+                    <select class="form-select custom-select" id="selectActores" name="selectActores" required multiple></select>
                 </div>
 
                 <div class="col-md-4 mb-3">
-                    <select id="selectProducciones" name="selectProducciones" required multiple></select>
+                    <label for="vfProducciones">Producciones</label>
+                    <select class="form-select custom-select" id="selectProducciones" name="selectProducciones" required multiple></select>
                 </div>
 
             </div>
@@ -610,8 +946,8 @@ class View {
         <h1 class="tituloFormCategory">Eliminar Categoría</h1>
         <form id="formDeleteCategory" name="fValidation" role="form" class="text-white">
             <div id="row" class="form-row row">
-                <div class="col-md-4 mb-3">
-                    <select id="selectCategorias"></select>
+                <div class="col-md-6 mb-3">
+                    <select class="form-select" id="selectCategorias"></select>
                 </div>
 
             </div>
@@ -700,7 +1036,7 @@ class View {
                     <div class="col-md-6 mb-3">
 						<label for="vfTipoPerson">Tipo Person</label>
 						<div class="input-group">
-                            <select id="selectPerson">
+                            <select class="form-select" id="selectPerson">
                                 <option value="Actor">Actor</option>
                                 <option value="Director">Director</option>
                             </select>
@@ -764,12 +1100,12 @@ class View {
         <form id="formDeletePerson" name="fValidation" role="form" class="text-white">
             <div id="row" class="form-row row">
                 <div class="col-md-4 mb-3">
-                    <select id="selectDirectores" name="selectDirectores" required multiple></select>
+                    <select class="form-select custom-select" id="selectDirectores" name="selectDirectores" required multiple></select>
                     
                 </div>
 
                 <div class="col-md-4 mb-3">
-                    <select id="selectActores" name="selectActores" required multiple></select>
+                    <select  class="form-select custom-select" id="selectActores" name="selectActores" required multiple></select>
                 </div>
 
             </div>
@@ -858,8 +1194,12 @@ class View {
     bindFormInMenu(handler) {
         $('#formularios').find('a').click((event) => {
             let category = $(event.target).closest($('a')).get(0).dataset.category;
-
-            handler(category);
+            this.#executeHandlerHistory(
+                handler, [category],
+                'body',
+                { action: 'formularios', category: category },
+                '#formularios', event
+            );
         });
     }
 
@@ -1216,7 +1556,7 @@ class View {
                 const formulario = document.getElementById("formDeassignDirectorsActors");
                 formulario.reset();
             })
-        }else{
+        } else {
             $('body').append(`<div class="modal fade" id="modalDeassignDirectorsActors" tabindex="-1"
 				data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document">
@@ -1427,6 +1767,7 @@ class View {
                 $('#actores').append(`<h6 class="text-uppercase"><u>Actores</u></h6>`);
             }
 
+
             for (let i = 0; i < directors.length; i++) {
 
                 $("#directores").append(`
@@ -1470,13 +1811,11 @@ class View {
                                     <span class="text-uppercase text-muted brand">Ruta: ${product.resource.link}</span>
                                     <br>
                                     <br>
-                                    <h6 class="text-uppercase"><u>Directores</u></h6>
                                     <div id="directores">
 
                                     </div>
                                     <br>
                                     <br>
-                                    <h6 class="text-uppercase"><u>Actores</u></h6>
                                     <div id="actores">
 
                                     </div>
@@ -1490,6 +1829,14 @@ class View {
             </div>
         </div>
     <div>`);
+
+            if (directors.length !== 0) {
+                $('#directores').append(`<h6 class="text-uppercase"><u>Directores</u></h6>`);
+            }
+
+            if (actors.length !== 0) {
+                $('#actores').append(`<h6 class="text-uppercase"><u>Actores</u></h6>`);
+            }
 
             for (let i = 0; i < directors.length; i++) {
                 $("#directores").append(`<a href="#" id="director" data-serial="${directors[i].name}"><span class="text-muted brand">Nombre: ${directors[i].name} ${directors[i].lastname1} ${directors[i].lastname2}</span><br></a>`);

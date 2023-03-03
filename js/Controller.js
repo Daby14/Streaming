@@ -232,7 +232,7 @@ class Controller {
             //Llamamos al evento
             this.#view.bindSubmitForm(this.handleAssignDataForm);
 
-        //Si seleccionamos eliminar producción
+            //Si seleccionamos eliminar producción
         } else if (value === "Eliminar Producción") {
 
             //Mostramos el formulario de eliminar una producción
@@ -241,7 +241,7 @@ class Controller {
             //Llamamos al evento
             this.#view.bindSubmitFormProduction(this.handleDeleteProduction);
 
-        //Si seleccionamos asignar actores/directores
+            //Si seleccionamos asignar actores/directores
         } else if (value === "Asignar actores/directores") {
 
             //Mostramos el formulario de asignar directores/actores
@@ -250,7 +250,7 @@ class Controller {
             //Llamamos al evento
             this.#view.bindSubmitAssignDirectorsActors(this.handleAssignDirectorsActorsForm);
 
-        //Si seleccionamos deasignar actores/directores
+            //Si seleccionamos deasignar actores/directores
         } else if (value === "Desasignar actores/directores") {
 
             //Mostramos el formulario de deasignar directores/actores
@@ -259,7 +259,7 @@ class Controller {
             //Llamamos al evento
             this.#view.bindSubmitDeassignDirectorsActors(this.handleDeassignDirectorsActorsForm);
 
-        //Si seleccionamos crear categoría
+            //Si seleccionamos crear categoría
         } else if (value === "Crear categoría") {
 
             //Mostramos el formulario de crear una categoría
@@ -268,7 +268,7 @@ class Controller {
             //Llamamos al evento
             this.#view.bindSubmitFormCategory(this.handleAssignDataFormCategory);
 
-        //Si seleccionamos eliminar categoría
+            //Si seleccionamos eliminar categoría
         } else if (value === "Eliminar categoría") {
 
             //Mostramos el formulario de eliminar una categoría
@@ -277,7 +277,7 @@ class Controller {
             //Llamamos al evento
             this.#view.bindSubmitDeleteFormCategory(this.handleDeleteCategory);
 
-        //Si seleccionamos crear person
+            //Si seleccionamos crear person
         } else if (value === "Crear person") {
 
             //Mostramos el formulario de crear una person
@@ -286,7 +286,7 @@ class Controller {
             //Llamamos al evento
             this.#view.bindSubmitFormPerson(this.handleAssignDataFormPerson);
 
-        //Si seleccionamos eliminar person
+            //Si seleccionamos eliminar person
         } else if (value === "Eliminar person") {
 
             //Mostramos el formulario de eliminar una person
@@ -547,7 +547,7 @@ class Controller {
             if (tipoPerson === "Actor") {
                 this.#model.addActor(person);
 
-            //Si el tipo es actor añadimos el director al sistema
+                //Si el tipo es actor añadimos el director al sistema
             } else if (tipoPerson === "Director") {
                 this.#model.addDirector(person);
             }
