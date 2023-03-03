@@ -363,6 +363,166 @@ class View {
 
     }
 
+    showFormAssignDirectorsActors(actores, directores, producciones) {
+        this.main.empty();
+
+        this.main.append(`<div class="container m-5" id="cValidation">
+        <h1 class="tituloFormAssignDirectorsActors">Asignar Actores/Directores</h1>
+        <br>
+        <form id="formAssignDirectorsActors" name="fValidation" role="form" class="text-white">
+            <div id="row" class="form-row row">
+                <div class="col-md-4 mb-3">
+                    <select id="selectDirectores" name="selectDirectores" required multiple></select>
+                    
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <select id="selectActores" name="selectActores" required multiple></select>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <select id="selectProducciones" name="selectProducciones" required multiple></select>
+                </div>
+
+            </div>
+
+            <button class="btn btn-primary" type="submit">Enviar</button>
+            <button class="btn btn-primary" type="reset">Cancelar</button>
+        </form>
+    </div>`);
+
+        for (let dir of directores) {
+            $("#selectDirectores").append(`<option value="${dir.director.name}">${dir.director.name}</option>`);
+        }
+
+        for (let act of actores) {
+            $("#selectActores").append(`<option value="${act.actor.name}">${act.actor.name}</option>`);
+        }
+
+        for (let pro of producciones) {
+            $("#selectProducciones").append(`<option value="${pro.title}">${pro.title}</option>`);
+        }
+
+    }
+
+    bindSubmitAssignDirectorsActors(handler) {
+
+        document.getElementById("formAssignDirectorsActors").addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+            //Actores
+            let actores = [];
+
+            const selectActor = document.getElementById("selectActores");
+            const opcionesSeleccionadasActor = selectActor.selectedOptions;
+            for (let i = 0; i < opcionesSeleccionadasActor.length; i++) {
+                actores.push(opcionesSeleccionadasActor[i].value);
+            }
+
+            //Directores
+            let directores = [];
+
+            const selectDirector = document.getElementById("selectDirectores");
+            const opcionesSeleccionadasDirector = selectDirector.selectedOptions;
+            for (let i = 0; i < opcionesSeleccionadasDirector.length; i++) {
+                directores.push(opcionesSeleccionadasDirector[i].value);
+            }
+
+            //Producciones
+            let producciones = [];
+
+            const selectProduccion = document.getElementById("selectProducciones");
+            const opcionesSeleccionadasProducciones = selectProduccion.selectedOptions;
+            for (let i = 0; i < opcionesSeleccionadasProducciones.length; i++) {
+                producciones.push(opcionesSeleccionadasProducciones[i].value);
+            }
+
+            handler(actores, directores, producciones);
+        });
+
+    }
+
+    showFormDeassignDirectorsActors(actores, directores, producciones) {
+        this.main.empty();
+
+        this.main.append(`<div class="container m-5" id="cValidation">
+        <h1 class="tituloFormDeassignDirectorsActors">Desasignar Actores/Directores</h1>
+        <br>
+        <form id="formDeassignDirectorsActors" name="fValidation" role="form" class="text-white">
+            <div id="row" class="form-row row">
+                <div class="col-md-4 mb-3">
+                    <select id="selectDirectores" name="selectDirectores" required multiple></select>
+                    
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <select id="selectActores" name="selectActores" required multiple></select>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <select id="selectProducciones" name="selectProducciones" required multiple></select>
+                </div>
+
+            </div>
+
+            <button class="btn btn-primary" type="submit">Enviar</button>
+            <button class="btn btn-primary" type="reset">Cancelar</button>
+        </form>
+    </div>`);
+
+        for (let dir of directores) {
+            $("#selectDirectores").append(`<option value="${dir.director.name}">${dir.director.name}</option>`);
+        }
+
+        for (let act of actores) {
+            $("#selectActores").append(`<option value="${act.actor.name}">${act.actor.name}</option>`);
+        }
+
+        for (let pro of producciones) {
+            $("#selectProducciones").append(`<option value="${pro.title}">${pro.title}</option>`);
+        }
+
+    }
+
+    bindSubmitDeassignDirectorsActors(handler) {
+
+        document.getElementById("formDeassignDirectorsActors").addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+            //Actores
+            let actores = [];
+
+            const selectActor = document.getElementById("selectActores");
+            const opcionesSeleccionadasActor = selectActor.selectedOptions;
+            for (let i = 0; i < opcionesSeleccionadasActor.length; i++) {
+                actores.push(opcionesSeleccionadasActor[i].value);
+            }
+
+            //Directores
+            let directores = [];
+
+            const selectDirector = document.getElementById("selectDirectores");
+            const opcionesSeleccionadasDirector = selectDirector.selectedOptions;
+            for (let i = 0; i < opcionesSeleccionadasDirector.length; i++) {
+                directores.push(opcionesSeleccionadasDirector[i].value);
+            }
+
+            //Producciones
+            let producciones = [];
+
+            const selectProduccion = document.getElementById("selectProducciones");
+            const opcionesSeleccionadasProducciones = selectProduccion.selectedOptions;
+            for (let i = 0; i < opcionesSeleccionadasProducciones.length; i++) {
+                producciones.push(opcionesSeleccionadasProducciones[i].value);
+            }
+
+            handler(actores, directores, producciones);
+        });
+
+    }
+
     showFormCategory() {
         this.main.empty();
         this.main.append(`
@@ -647,7 +807,8 @@ class View {
 
         forms.push("Crear Producción");
         forms.push("Eliminar Producción");
-        forms.push("Asignar y desasignar actores/directores");
+        forms.push("Asignar actores/directores");
+        forms.push("Desasignar actores/directores");
         forms.push("Crear categoría");
         forms.push("Eliminar categoría");
         forms.push("Crear person");
@@ -886,7 +1047,7 @@ class View {
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<div class="modal-body" id="prueba">
+						<div class="modal-body" id="deletePerson">
                         
 						</div>
 						<div class="modal-footer">
@@ -897,14 +1058,13 @@ class View {
 			</div>`);
 
             for (let act of actores) {
-                $("#prueba").append(`El actor <strong>${act}</strong> ha sido eliminado correctamente. <br>`)
+                $("#deletePerson").append(`El actor <strong>${act}</strong> ha sido eliminado correctamente. <br>`)
             }
 
             for (let dir of directores) {
-                $("#prueba").append(`El director <strong>${dir}</strong> ha sido eliminado correctamente. <br>`)
+                $("#deletePerson").append(`El director <strong>${dir}</strong> ha sido eliminado correctamente. <br>`)
             }
 
-            // $('body').append(modal);
             let newProductModal = $('#modalDeletePerson');
             newProductModal.modal('show');
             newProductModal.find('button').click(() => {
@@ -915,6 +1075,132 @@ class View {
             })
         } else {
             $(document.fNewProduct).prepend(`<div class="error text-danger p-3"><i class="fas fa-exclamation-triangle"></i> El ${tipoPerson} <strong>${person.name}</strong> no ha podido crearse correctamente.</div>`);
+        }
+    }
+
+    showDirectorsActorsModal(done, actores, directores, producciones, error) {
+        if (done) {
+            $('body').append(`<div class="modal fade" id="modalDirectorsActors" tabindex="-1"
+				data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="newCategoryModalLabel">Asignación Actores/Directores</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body" id="directorsActors">
+                        
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+						</div>
+					</div>
+				</div>
+			</div>`);
+
+            for (let pro of producciones) {
+                $("#directorsActors").append(`A la producción <strong>${pro.title}</strong> se le han asignado: <br>`)
+
+                for (let act of actores) {
+                    $("#directorsActors").append(`El actor <strong>${act.actor.name}</strong> <br>`)
+                }
+
+                for (let dir of directores) {
+                    $("#directorsActors").append(`El director <strong>${dir.director.name}</strong> <br>`)
+                }
+
+            }
+
+            let newProductModal = $('#modalDirectorsActors');
+            newProductModal.modal('show');
+            newProductModal.find('button').click(() => {
+                newProductModal.modal('hide');
+                newProductModal.remove();
+                const formulario = document.getElementById("formAssignDirectorsActors");
+                formulario.reset();
+            })
+        }
+    }
+
+    showDeassignDirectorsActorsModal(done, actores, directores, producciones, error) {
+        if (done) {
+            $('body').append(`<div class="modal fade" id="modalDeassignDirectorsActors" tabindex="-1"
+				data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="newCategoryModalLabel">Deasignación Actores/Directores</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body" id="deassingDirectorsActors">
+                        
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+						</div>
+					</div>
+				</div>
+			</div>`);
+
+            for (let pro of producciones) {
+                $("#deassingDirectorsActors").append(`A la producción <strong>${pro.title}</strong> se le ha deasignado: <br>`)
+
+                for (let act of actores) {
+                    $("#deassingDirectorsActors").append(`El actor <strong>${act.actor.name}</strong> <br>`)
+                }
+
+                for (let dir of directores) {
+                    $("#deassingDirectorsActors").append(`El director <strong>${dir.director.name}</strong> <br>`)
+                }
+
+            }
+
+            let newProductModal = $('#modalDeassignDirectorsActors');
+            newProductModal.modal('show');
+            newProductModal.find('button').click(() => {
+                newProductModal.modal('hide');
+                newProductModal.remove();
+                const formulario = document.getElementById("formDeassignDirectorsActors");
+                formulario.reset();
+            })
+        }else{
+            $('body').append(`<div class="modal fade" id="modalDeassignDirectorsActors" tabindex="-1"
+				data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="newCategoryModalLabel">Deasignación Actores/Directores</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body" id="deassingDirectorsActors">
+                        
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+						</div>
+					</div>
+				</div>
+			</div>`);
+
+            for (let pro of producciones) {
+                $("#deassingDirectorsActors").append(`A la producción <strong>${pro.title}</strong> no se le ha deasignado algunos actores/directores porque no existen en <strong>${pro.title}</strong> <br>`)
+
+            }
+
+            let newProductModal = $('#modalDeassignDirectorsActors');
+            newProductModal.modal('show');
+            newProductModal.find('button').click(() => {
+                newProductModal.modal('hide');
+                newProductModal.remove();
+                const formulario = document.getElementById("formDeassignDirectorsActors");
+                formulario.reset();
+            })
         }
     }
 

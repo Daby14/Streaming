@@ -194,8 +194,6 @@ class Controller {
 
     handleShowForm = (value) => {
 
-        console.log(value);
-
         let actores = [];
 
         for (const iterator of this.#model.actors) {
@@ -214,12 +212,24 @@ class Controller {
             categorias.push(iterator);
         }
 
+        let producciones = [];
+
+        for (const iterator of this.#model.producciones) {
+            producciones.push(iterator);
+        }
+
         if (value === "Crear Producción") {
             this.#view.showFormProduction(actores, directores, categorias);
             this.#view.bindSubmitForm(this.handleAssignDataForm);
         } else if (value === "Eliminar Producción") {
             this.#view.showFormDeleteProduction(actores, directores, categorias);
             this.#view.bindSubmitFormProduction(this.handleDeleteProduction);
+        } else if (value === "Asignar actores/directores") {
+            this.#view.showFormAssignDirectorsActors(actores, directores, producciones);
+            this.#view.bindSubmitAssignDirectorsActors(this.handleAssignDirectorsActorsForm);
+        } else if (value === "Desasignar actores/directores") {
+            this.#view.showFormDeassignDirectorsActors(actores, directores, producciones);
+            this.#view.bindSubmitDeassignDirectorsActors(this.handleDeassignDirectorsActorsForm);
         } else if (value === "Crear categoría") {
             this.#view.showFormCategory();
             this.#view.bindSubmitFormCategory(this.handleAssignDataFormCategory);
@@ -274,6 +284,110 @@ class Controller {
         }
 
         this.#view.showProductModal(done, produccion, error);
+
+    }
+
+    handleAssignDirectorsActorsForm = (actores, directores, producciones) => {
+
+        let done, error;
+
+        let actors = [];
+        let directors = [];
+        let products = [];
+
+        try {
+
+            for (let act of actores) {
+                let actor = this.#model.getActor(act);
+                actors.push(actor);
+            }
+
+            for (let dir of directores) {
+                let director = this.#model.getDirector(dir);
+                directors.push(director);
+            }
+
+            for (let pro of producciones) {
+                let produccion = this.#model.getProduction(pro);
+                products.push(produccion);
+            }
+
+            //Por cada producción le asignamos los actores y directores correspondientes
+            for (let pro of products) {
+
+                for (let act of actors) {
+                    this.#model.assignActor(pro, [act.actor]);
+                }
+
+                for (let dir of directors) {
+                    this.#model.assignDirector(pro, [dir.director]);
+                }
+
+            }
+
+            done = true;
+        } catch (error) {
+            done = false;
+            error = error
+        }
+
+        this.#view.showDirectorsActorsModal(done, actors, directors, products, error);
+
+    }
+
+    handleDeassignDirectorsActorsForm = (actores, directores, producciones) => {
+
+        let done, error;
+
+        let actors = [];
+        let directors = [];
+        let products = [];
+
+        try {
+
+            for (let act of actores) {
+                let actor = this.#model.getActor(act);
+                actors.push(actor);
+            }
+
+            for (let dir of directores) {
+                let director = this.#model.getDirector(dir);
+                directors.push(director);
+            }
+
+            for (let pro of producciones) {
+                let produccion = this.#model.getProduction(pro);
+                products.push(produccion);
+            }
+
+            //Por cada producción le asignamos los actores y directores correspondientes
+            for (let pro of products) {
+
+                for (let dir of directors) {
+                    this.#model.deassignDirector(pro, dir.director);
+                }
+
+            }
+
+            done = true;
+        } catch (error) {
+            done = false;
+            error = error
+        }
+
+        try {
+            for (let pro of products) {
+
+                for (let act of actors) {
+                    this.#model.deassignActor(pro, act.actor);
+                }
+            }
+        } catch (error) {
+            done = false;
+            error = error
+        }
+
+        this.#view.showDeassignDirectorsActorsModal(done, actors, directors, products, error);
 
     }
 
@@ -408,6 +522,27 @@ class Controller {
             this.#model.removeCategorie(categoria.category);
 
             for (let pro of categoria.producs) {
+
+                let actores = [];
+
+                let directores = [];
+
+                for(let act of this.#model.getCast(pro)){
+                    actores.push(act);
+                }
+
+                for(let dir of this.#model.getCast2(pro)){
+                    directores.push(dir);
+                }
+
+                for(let act of actores){
+                    this.#model.deassignActor(pro, act);
+                }
+
+                for(let dir of directores){
+                    this.#model.deassignDirector(pro, dir);
+                }
+
                 this.#model.removeProduction(pro);
             }
 
@@ -508,8 +643,6 @@ class Controller {
 
     //Método handle que muestra la carta de una producción con sus actores y sus directores correspondientes
     handleShowProduct = (serial) => {
-
-        console.log(serial);
 
         let directors = [];
         let actors = [];
