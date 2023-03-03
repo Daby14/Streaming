@@ -112,6 +112,8 @@ class View {
         });
     }
 
+    //!SHOW FORM PRODUCTION
+    //Método que muestra el formulario de crear una producción
     showFormProduction(actores, directores, categorias) {
         this.main.empty();
 
@@ -269,6 +271,8 @@ class View {
 
     }
 
+    //!BIND SUBMIT FORM
+    //Método que captura el evento submit al envíar los datos de la nueva producción
     bindSubmitForm(handler) {
 
         document.getElementById("form").addEventListener("submit", function (event) {
@@ -323,9 +327,10 @@ class View {
             handler(produccion, actores, directores, categorias);
         });
 
-
     }
 
+    //!SHOW FORM DELETE PRODUCTION
+    //Método que muestra el formulario de eliminar una producción
     showFormDeleteProduction() {
         this.main.empty();
         this.main.append(`
@@ -350,6 +355,8 @@ class View {
 		</div>`);
     }
 
+    //!BIND SUBMIT FORM PRODUCTION
+    //Método que captura el evento submit al envíar los datos de la producción eliminada
     bindSubmitFormProduction(handler) {
 
         document.getElementById("formProduction").addEventListener("submit", function (event) {
@@ -363,6 +370,8 @@ class View {
 
     }
 
+    //!SHOW FORM ASSIGN DIRECTORS ACTORS
+    //Método que muestra el formulario de asignar directores/actores
     showFormAssignDirectorsActors(actores, directores, producciones) {
         this.main.empty();
 
@@ -405,6 +414,8 @@ class View {
 
     }
 
+    //!BIND SUBMIT ASSIGN DIRECTORS ACTORS
+    //Método que captura el evento submit al envíar los datos de asignar directores/actores
     bindSubmitAssignDirectorsActors(handler) {
 
         document.getElementById("formAssignDirectorsActors").addEventListener("submit", function (event) {
@@ -443,6 +454,8 @@ class View {
 
     }
 
+    //!SHOW FORM DEASSIGN DIRECTORS ACTORS
+    //Método que muestra el formulario de desasignar directores/actores
     showFormDeassignDirectorsActors(actores, directores, producciones) {
         this.main.empty();
 
@@ -485,6 +498,8 @@ class View {
 
     }
 
+    //!BIND SUBMIT DEASSIGN DIRECTORS ACTORS
+    //Método que captura el evento submit al envíar los datos de deasignar directores/actores
     bindSubmitDeassignDirectorsActors(handler) {
 
         document.getElementById("formDeassignDirectorsActors").addEventListener("submit", function (event) {
@@ -523,6 +538,8 @@ class View {
 
     }
 
+    //!SHOW FORM CATEGORY
+    //Método que muestra el formulario de la nueva categoría
     showFormCategory() {
         this.main.empty();
         this.main.append(`
@@ -565,6 +582,8 @@ class View {
 
     }
 
+    //!BIND SUBMIT FORM CATEGORY
+    //Método que captura el evento submit al envíar los datos de la categoría creada
     bindSubmitFormCategory(handler) {
 
         document.getElementById("formCategory").addEventListener("submit", function (event) {
@@ -582,6 +601,8 @@ class View {
 
     }
 
+    //!SHOW FORM DELETE CATEGORY
+    //Método que muestra el formulario de la categoría eliminada
     showFormDeleteCategory(categories) {
         this.main.empty();
 
@@ -606,13 +627,13 @@ class View {
 
     }
 
+    //!BIND SUBMIT DELETE FORM CATEGORY
+    //Método que captura el evento submit al envíar los datos de la categoría eliminada
     bindSubmitDeleteFormCategory(handler) {
 
         document.getElementById("formDeleteCategory").addEventListener("submit", function (event) {
 
             event.preventDefault();
-
-            // let nombre = document.getElementById("vfNombreCategoria").value;
 
             const select = document.getElementById("selectCategorias");
             const opcionSeleccionada = select.value;
@@ -622,6 +643,8 @@ class View {
 
     }
 
+    //!SHOW FORM PERSON
+    //Método que muestra el formulario de la nueva person
     showFormPerson() {
         this.main.empty();
         this.main.append(`
@@ -692,6 +715,8 @@ class View {
 
     }
 
+    //!BIND SUBMIT FORM PERSON
+    //Método que captura el evento submit al envíar los datos de la person creada
     bindSubmitFormPerson(handler) {
 
         document.getElementById("formPerson").addEventListener("submit", function (event) {
@@ -728,6 +753,8 @@ class View {
 
     }
 
+    //!SHOW FORM DELETE PERSON
+    //Método que muestra el formulario de la person elimiinada
     showFormDeletePerson(directores, actores) {
         this.main.empty();
 
@@ -764,6 +791,8 @@ class View {
 
     }
 
+    //!BIND SUBMIT DELETE FORM PERSON
+    //Método que captura el evento submit al envíar los datos de la person eliminada
     bindSubmitDeleteFormPerson(handler) {
 
         document.getElementById("formDeletePerson").addEventListener("submit", function (event) {
@@ -794,6 +823,8 @@ class View {
 
     }
 
+    //!SHOW FORM IN MENU
+    //Método que muestra los formularios en el menú
     showFormInMenu() {
         let li = $(`<li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle enlaceMenu" href="#menuForm" id="menuForm" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
@@ -822,6 +853,8 @@ class View {
         this.menu.append(li);
     }
 
+    //!BIND FORM IN MENU
+    //Método que captura el evento de hacer click en un formulario del menú
     bindFormInMenu(handler) {
         $('#formularios').find('a').click((event) => {
             let category = $(event.target).closest($('a')).get(0).dataset.category;
@@ -830,6 +863,8 @@ class View {
         });
     }
 
+    //!SHOW PRODUCT MODAL
+    //Método que muestra el modal de una nueva producción
     showProductModal(done, product, error) {
         $(document.fNewProduct).find('div.error').remove();
         if (done) {
@@ -866,6 +901,8 @@ class View {
         }
     }
 
+    //!SHOW DELETE PRODUCT MODAL
+    //Método que muestra el modal de la producción eliminada
     showDeleteProductModal(done, product, error) {
         if (done) {
             let modal = $(`<div class="modal fade" id="deleteProductModal" tabindex="-1"
@@ -929,6 +966,8 @@ class View {
         }
     }
 
+    //!SHOW CATEGORY MODAL
+    //Método que muestra el modal de la nueva categoría
     showCategoryModal(done, category, error) {
         $(document.fNewProduct).find('div.error').remove();
         if (done) {
@@ -965,6 +1004,8 @@ class View {
         }
     }
 
+    //!SHOW DELETE CATEGORY MODAL
+    //Método que muestra el modal de la categoría eliminada
     showDeleteCategoryModal(done, category, error) {
         // console.log(done);
         if (done) {
@@ -1000,6 +1041,8 @@ class View {
         }
     }
 
+    //!SHOW PERSON MODAL
+    //Método que muestra el modal de la nueva person
     showPersonModal(done, person, error, tipoPerson) {
         if (done) {
             let modal = $(`<div class="modal fade" id="modalPerson" tabindex="-1"
@@ -1035,6 +1078,8 @@ class View {
         }
     }
 
+    //!SHOW DELETE PERSON MODAL
+    //Método que muestra el modal de la person eliminada
     showDeletePersonModal(done, actores, directores, error) {
         if (done) {
             $('body').append(`<div class="modal fade" id="modalDeletePerson" tabindex="-1"
@@ -1078,6 +1123,8 @@ class View {
         }
     }
 
+    //!SHOW DIRECTORS ACTORS MODAL
+    //Método que muestra el modal de asignar directores/actores
     showDirectorsActorsModal(done, actores, directores, producciones, error) {
         if (done) {
             $('body').append(`<div class="modal fade" id="modalDirectorsActors" tabindex="-1"
@@ -1124,6 +1171,8 @@ class View {
         }
     }
 
+    //!SHOW DEASSIGN DIRECTORS ACTORS MODAL
+    //Método que muestra el modal de deasignar directores/actores
     showDeassignDirectorsActorsModal(done, actores, directores, producciones, error) {
         if (done) {
             $('body').append(`<div class="modal fade" id="modalDeassignDirectorsActors" tabindex="-1"

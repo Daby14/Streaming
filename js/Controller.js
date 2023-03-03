@@ -192,88 +192,155 @@ class Controller {
         this.#view.bindFormInMenu(this.handleShowForm);
     }
 
+    //Método handleShowForm que muestra el formulario que se seleccione en el menú
     handleShowForm = (value) => {
 
+        //Obtenemos los actores del sistema
         let actores = [];
 
         for (const iterator of this.#model.actors) {
             actores.push(iterator);
         }
 
+        //Obtenemos los directores del sistema
         let directores = [];
 
         for (const iterator of this.#model.directors) {
             directores.push(iterator);
         }
 
+        //Obtenemos las categorías del sistema
         let categorias = [];
 
         for (const iterator of this.#model.categories) {
             categorias.push(iterator);
         }
 
+        //Obtenemos las producciones del sistema
         let producciones = [];
 
         for (const iterator of this.#model.producciones) {
             producciones.push(iterator);
         }
 
+        //Si seleccionamos crear producción
         if (value === "Crear Producción") {
+
+            //Mostramos el formulario de crear una producción
             this.#view.showFormProduction(actores, directores, categorias);
+
+            //Llamamos al evento
             this.#view.bindSubmitForm(this.handleAssignDataForm);
+
+        //Si seleccionamos eliminar producción
         } else if (value === "Eliminar Producción") {
+
+            //Mostramos el formulario de eliminar una producción
             this.#view.showFormDeleteProduction(actores, directores, categorias);
+
+            //Llamamos al evento
             this.#view.bindSubmitFormProduction(this.handleDeleteProduction);
+
+        //Si seleccionamos asignar actores/directores
         } else if (value === "Asignar actores/directores") {
+
+            //Mostramos el formulario de asignar directores/actores
             this.#view.showFormAssignDirectorsActors(actores, directores, producciones);
+
+            //Llamamos al evento
             this.#view.bindSubmitAssignDirectorsActors(this.handleAssignDirectorsActorsForm);
+
+        //Si seleccionamos deasignar actores/directores
         } else if (value === "Desasignar actores/directores") {
+
+            //Mostramos el formulario de deasignar directores/actores
             this.#view.showFormDeassignDirectorsActors(actores, directores, producciones);
+
+            //Llamamos al evento
             this.#view.bindSubmitDeassignDirectorsActors(this.handleDeassignDirectorsActorsForm);
+
+        //Si seleccionamos crear categoría
         } else if (value === "Crear categoría") {
+
+            //Mostramos el formulario de crear una categoría
             this.#view.showFormCategory();
+
+            //Llamamos al evento
             this.#view.bindSubmitFormCategory(this.handleAssignDataFormCategory);
+
+        //Si seleccionamos eliminar categoría
         } else if (value === "Eliminar categoría") {
+
+            //Mostramos el formulario de eliminar una categoría
             this.#view.showFormDeleteCategory(categorias);
+
+            //Llamamos al evento
             this.#view.bindSubmitDeleteFormCategory(this.handleDeleteCategory);
+
+        //Si seleccionamos crear person
         } else if (value === "Crear person") {
+
+            //Mostramos el formulario de crear una person
             this.#view.showFormPerson();
+
+            //Llamamos al evento
             this.#view.bindSubmitFormPerson(this.handleAssignDataFormPerson);
+
+        //Si seleccionamos eliminar person
         } else if (value === "Eliminar person") {
+
+            //Mostramos el formulario de eliminar una person
             this.#view.showFormDeletePerson(directores, actores);
+
+            //Llamamos al evento
             this.#view.bindSubmitDeleteFormPerson(this.handleDeletePerson);
         }
 
+        //Llamamos al evento de mostrar una producción con sus datos correspondientes
         this.#view.bindShowProduction(this.handleShowProduct);
     }
 
+    //Método handleAssignDataForm que guarda los datos en el sistema de la producción creada
     handleAssignDataForm = (produccion, actores, directores, categorias) => {
 
         let done, error;
 
         try {
+
+            //Recorremos los actores que se han seleccionado en el formulario
             for (let i = 0; i < actores.length; i++) {
 
+                //Obtenemos el actor correspondiente
                 let act = this.#model.getActor(actores[i]);
 
                 let actorFull = new Person(act.actor.name, act.actor.lastname1, act.actor.lastname2, act.actor.born, act.actor.picture);
 
+                //Asignamos dicho actor a la producción creada
                 this.#model.assignActor(produccion, [actorFull]);
             }
 
+            //Recorremos los directores que se han seleccionado en el formulario
             for (let i = 0; i < directores.length; i++) {
 
+                //Obtenemos el director correspondiente
                 let dir = this.#model.getDirector(directores[i]);
 
                 let directorFull = new Person(dir.director.name, dir.director.lastname1, dir.director.lastname2, dir.director.born, dir.director.picture);
 
+                //Asignamos dicho director a la producción creada
                 this.#model.assignDirector(produccion, [directorFull]);
 
             }
 
+            //Recorremos las categorías que se han seleccionado en el formulario
             for (let i = 0; i < categorias.length; i++) {
+
+                //Obtenemos la categoría correspondiente
                 let cat = this.#model.getCategory(categorias[i]);
+
                 let categoriaFull = new Category(cat.category.name, cat.category.description);
+
+                //Asignamos dicha categoría a la producción creada
                 this.#model.assignCategory(produccion, categoriaFull);
             }
 
@@ -283,10 +350,12 @@ class Controller {
             error = error
         }
 
+        //Llamamos al método showProductModal para mostrar un modal tras crear la producción
         this.#view.showProductModal(done, produccion, error);
 
     }
 
+    //Método handleAssignDirectorsActorsForm que guarda los datos en el sistema de los actores/directores asignados
     handleAssignDirectorsActorsForm = (actores, directores, producciones) => {
 
         let done, error;
@@ -297,29 +366,50 @@ class Controller {
 
         try {
 
+            //Recorremos los actores que se han seleccionado
             for (let act of actores) {
+
+                //Obtenemos el actor correspondiente
                 let actor = this.#model.getActor(act);
+
+                //Lo añadimos al array de actors
                 actors.push(actor);
             }
 
+            //Recorremos los directores que se han seleccionado
             for (let dir of directores) {
+
+                //Obtenemos el director correspondiente
                 let director = this.#model.getDirector(dir);
+
+                //Lo añadimos al array de directors
                 directors.push(director);
             }
 
+            //Recorremos las producciones que se han seleccionado
             for (let pro of producciones) {
+
+                //Obtenemos la producción correspondiente
                 let produccion = this.#model.getProduction(pro);
+
+                //Lo añadimos al array de products
                 products.push(produccion);
             }
 
             //Por cada producción le asignamos los actores y directores correspondientes
             for (let pro of products) {
 
+                //Recorremos los actors
                 for (let act of actors) {
+
+                    //Asignamos los actores a la producción correspondiente
                     this.#model.assignActor(pro, [act.actor]);
                 }
 
+                //Recorremos los directors
                 for (let dir of directors) {
+
+                    //Asignamos los directores a la producción correspondiente
                     this.#model.assignDirector(pro, [dir.director]);
                 }
 
@@ -331,10 +421,12 @@ class Controller {
             error = error
         }
 
+        //Llamamos al método showDirectorsActorsModal para mostrar un modal tras asignar actores/directores a una producción específica
         this.#view.showDirectorsActorsModal(done, actors, directors, products, error);
 
     }
 
+    //Método handleDeassignDirectorsActorsForm que guarda los datos en el sistema de los actores/directores deasignados
     handleDeassignDirectorsActorsForm = (actores, directores, producciones) => {
 
         let done, error;
@@ -345,25 +437,44 @@ class Controller {
 
         try {
 
+            //Recorremos los actores que se han seleccionado
             for (let act of actores) {
+
+                //Obtenemos el actor correspondiente
                 let actor = this.#model.getActor(act);
+
+                //Lo añadimos al array de actors
                 actors.push(actor);
             }
 
+            //Recorremos los directores que se han seleccionado
             for (let dir of directores) {
+
+                //Obtenemos el director correspondiente
                 let director = this.#model.getDirector(dir);
+
+                //Lo añadimos al array de directors
                 directors.push(director);
             }
 
+            //Recorremos las producciones que se han seleccionado
             for (let pro of producciones) {
+
+                //Obtenemos la producción correspondiente
                 let produccion = this.#model.getProduction(pro);
+
+                //Lo añadimos al array de products
                 products.push(produccion);
             }
 
-            //Por cada producción le asignamos los actores y directores correspondientes
+
+            //Por cada producción le deasignamos los directores correspondientes
             for (let pro of products) {
 
+                //Recorremos los directores
                 for (let dir of directors) {
+
+                    //Deasignamos los directores a la producción correspondiente
                     this.#model.deassignDirector(pro, dir.director);
                 }
 
@@ -376,9 +487,14 @@ class Controller {
         }
 
         try {
+
+            //Por cada producción le deasignamos los actores correspondientes
             for (let pro of products) {
 
+                //Recorremos los actores
                 for (let act of actors) {
+
+                    //Deasignamos los actores a la producción correspondiente
                     this.#model.deassignActor(pro, act.actor);
                 }
             }
@@ -387,17 +503,22 @@ class Controller {
             error = error
         }
 
+        //Llamamos al método showDeassignDirectorsActorsModal para mostrar un modal tras deasignar actores/directores a una producción específica
         this.#view.showDeassignDirectorsActorsModal(done, actors, directors, products, error);
 
     }
 
+    //Método handleAssignDataFormCategory que guarda los datos en el sistema de la categoría creada
     handleAssignDataFormCategory = (category) => {
 
         let done, error;
 
         try {
+
+            //Añadimos la categoría que se ha creado al sistema
             this.#model.addCategorie([category]);
 
+            //Actualizamos los menús
             this.onAddCategory();
             this.onAddDirector();
             this.onAddActor();
@@ -410,24 +531,28 @@ class Controller {
             error = error;
         }
 
-
+        //Llamamos al método showCategoryModal para mostrar un modal tras crear una categoría
         this.#view.showCategoryModal(done, category, error);
 
     }
 
+    //Método handleAssignDataFormPerson que guarda los datos en el sistema del actor/director creado
     handleAssignDataFormPerson = (person, tipoPerson) => {
 
         let done, error;
 
         try {
 
+            //Si el tipo es actor añadimos el actor al sistema
             if (tipoPerson === "Actor") {
                 this.#model.addActor(person);
 
+            //Si el tipo es actor añadimos el director al sistema
             } else if (tipoPerson === "Director") {
                 this.#model.addDirector(person);
             }
 
+            //Actualizamos los menús
             this.onAddCategory();
             this.onAddDirector();
             this.onAddActor();
@@ -440,26 +565,29 @@ class Controller {
             error = error;
         }
 
-
+        //Llamamos al método showPersonModal para mostrar un modal tras crear una person
         this.#view.showPersonModal(done, person, error, tipoPerson);
 
     }
 
+    //Método handleDeleteProduction que guarda los datos en el sistema de la producción eliminada
     handleDeleteProduction = (titulo) => {
 
         let done = true;
         let error;
 
-        //Obtenemos la producción a borrar
+        //Obtenemos la producción a eliminar
         let produccion = this.#model.getProduction(titulo);
 
         //Le deasignamos los actores
         let actores = [];
 
+        //Obtenemos los actores correspondientes a esa producción
         for (const elem3 of this.#model.getCast(produccion)) {
             actores.push(elem3);
         }
 
+        //Los deasignamos
         for (let i = 0; i < actores.length; i++) {
             this.#model.deassignActor(produccion, actores[i]);
         }
@@ -467,26 +595,29 @@ class Controller {
         //Le deasignamos los directores
         let directores = [];
 
+        //Obtenemos los directores correspondientes a esa producción
         for (const elem3 of this.#model.getCast2(produccion)) {
             directores.push(elem3);
         }
 
+        //Los deasignamos
         for (let i = 0; i < directores.length; i++) {
             this.#model.deassignDirector(produccion, directores[i]);
         }
-
 
         if (!(produccion instanceof Production)) {
             done = false;
         }
 
         try {
+
             //Borramos la producción
             this.#model.removeProduction(produccion);
 
             let production;
             let categorie;
 
+            //Obtenemos la categoría en la que está asignada esa producción
             for (const elem of this.#model.categories) {
                 console.log(elem);
                 for (const elem2 of elem.producs) {
@@ -499,70 +630,78 @@ class Controller {
 
             //A la categoría correspondiente le deasignamos dicha producción
             this.#model.deassignCategory(production, categorie);
-
-            // done = true;
         } catch (error) {
-            // done = false;
-            // error = error;
+
         }
 
+        //Llamamos al método showDeleteProductModal para mostrar un modal tras eliminar una producción
         this.#view.showDeleteProductModal(done, produccion, error);
 
     }
 
+    //Método handleDeleteCategory que guarda los datos en el sistema de la categoría eliminada
     handleDeleteCategory = (nombre) => {
 
         let done = true;
         let error;
 
+        //Obtenemos la categoría correspondiente
         let categoria = this.#model.getCategory(nombre);
 
         try {
 
+            //Borramos la categoría
             this.#model.removeCategorie(categoria.category);
 
+            //Recorremos las producciones de dicha categoría
             for (let pro of categoria.producs) {
 
                 let actores = [];
 
                 let directores = [];
 
-                for(let act of this.#model.getCast(pro)){
-                    actores.push(act);
-                }
+                //Obtenemos los actores correspondientes a la produccion
+                // for(let act of this.#model.getCast(pro)){
+                //     actores.push(act);
+                // }
 
-                for(let dir of this.#model.getCast2(pro)){
-                    directores.push(dir);
-                }
+                //Obtenemos los directores correspondientes a la produccion
+                // for(let dir of this.#model.getCast2(pro)){
+                //     directores.push(dir);
+                // }
 
-                for(let act of actores){
-                    this.#model.deassignActor(pro, act);
-                }
+                //Deasignamos los actores de la producción
+                // for(let act of actores){
+                //     this.#model.deassignActor(pro, act);
+                // }
 
-                for(let dir of directores){
-                    this.#model.deassignDirector(pro, dir);
-                }
+                //Deasignamos los directores de la producción
+                // for(let dir of directores){
+                //     this.#model.deassignDirector(pro, dir);
+                // }
 
-                this.#model.removeProduction(pro);
+                //Borramos dicha producción
+                // this.#model.removeProduction(pro);
             }
 
+            //Actualizamos el menú y el contenido de la página principal
             this.onAddCategory();
             this.onAddDirector();
             this.onAddActor();
             this.onAddButtonWindow();
             this.onAddForm();
-
             this.onInit();
 
         } catch (error) {
 
         }
 
+        //Llamamos al método showDeleteCategoryModal para mostrar un modal tras eliminar una categoría
         this.#view.showDeleteCategoryModal(done, categoria, error);
 
     }
 
-
+    //Método handleDeletePerson que guarda los datos en el sistema de la person eliminada
     handleDeletePerson = (actores, directores) => {
 
         let done = true;
@@ -570,24 +709,31 @@ class Controller {
 
         try {
 
+            //Recorremos los actores seleccionados
             for (let act of actores) {
 
+                //Obtenemos el actor correspondiente
                 let actor = this.#model.getActor(act);
 
                 let actorFull = new Person(actor.actor.name, actor.actor.lastname1, actor.actor.lastname2, actor.actor.born, actor.actor.picture);
 
+                //Borramos dicho actor
                 this.#model.removeActor(actorFull);
             }
 
+            //Recorremos los directores seleccionados
             for (let dir of directores) {
 
+                //Obtenemos el director correspondiente
                 let director = this.#model.getDirector(dir);
 
                 let directorFull = new Person(director.director.name, director.director.lastname1, director.director.lastname2, director.director.born, director.director.picture);
 
+                //Borramos dicho director
                 this.#model.removeDirector(directorFull);
             }
 
+            //Actualizamos el menú
             this.onAddCategory();
             this.onAddDirector();
             this.onAddActor();
@@ -598,6 +744,7 @@ class Controller {
 
         }
 
+        //Llamamos al método showDeletePersonModal para mostrar un modal tras eliminar una person
         this.#view.showDeletePersonModal(done, actores, directores, error);
 
     }
@@ -654,19 +801,11 @@ class Controller {
         //Obtenemos el director correspondiente a la producción
         for (let pros of this.#model.getCast2(pro)) {
             directors.push(pros);
-            // directors[pos] = pros;
-            // pos++;
-            // console.log(pros);
         }
-
-        // this.#model.getCast2(pro);
 
         //Obtenemos los actores correspondiente a la producción
         for (let actor of this.#model.getCast(pro)) {
             actors.push(actor);
-            // actors[pos] = actor;
-            // pos++;
-            // console.log(actor);
         }
 
         //Llamamos al método para mostrar la información de la producción con sus actores y directores correspondientes
