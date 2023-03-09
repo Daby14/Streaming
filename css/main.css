@@ -68,7 +68,7 @@ img {
 }
 
 .botones{
-  margin-left: 350px;
+  justify-content: center;
   gap: 5px;
 }
 
@@ -90,4 +90,8 @@ img {
 
 .valid-feedback{
   color: white;
+}
+
+.categoriasVacias{
+  margin: 110px;
 }

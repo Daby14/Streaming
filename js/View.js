@@ -147,8 +147,8 @@ class View {
                         <div class="col-md-4 mb-3">
                             <label for="vfTitulo">Título</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="vfTitulo" name="vfTitulo" placeholder="Título" value="" required>
-                                <div class="invalid-feedback">El título es obligatorio</div>
+                                <input type="text" class="form-control" id="vfTitulo" name="vfTitulo" placeholder="Título" value="" pattern="[A-Z]{1}[a-z]{2,9}" required>
+                                <div class="invalid-feedback">Debe contener 1 mayúscula y varias minúsculas</div>
                                 <div class="valid-feedback">Correcto.</div>
                             </div>
                         </div>
@@ -156,8 +156,8 @@ class View {
                             <label for="vfNacionalidad">Nacionalidad</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="vfNacionalidad" name="vfNacionalidad"
-                                    placeholder="Nacionalidad" value="" required>
-                                <div class="invalid-feedback">La nacionalidad es obligatoria</div>
+                                    placeholder="Nacionalidad" value="" pattern="[A-Z]{1}[a-z]{2,9}" required>
+                                <div class="invalid-feedback">Debe contener 1 mayúscula y varias minúsculas</div>
                                 <div class="valid-feedback">Correcto.</div>
                             </div>
                         </div>
@@ -175,8 +175,8 @@ class View {
                             <label for="vfDescripcion">Descripción</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="vfDescripcion" name="vfDescripcion"
-                                    placeholder="Descripción" value="" required>
-                                <div class="invalid-feedback">La descripción es obligatoria</div>
+                                    placeholder="Descripción" value="" pattern="[A-Z]{1}[a-z]{2,9}" required>
+                                <div class="invalid-feedback">Debe contener 1 mayúscula y varias minúsculas</div>
                                 <div class="valid-feedback">Correcto.</div>
                             </div>
                         </div>
@@ -195,8 +195,8 @@ class View {
                             <label for="vfContenido">Contenido</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="vfContenido" name="vfContenido"
-                                    placeholder="Contenido" value="" required>
-                                <div class="invalid-feedback">El contenido es obligatorio</div>
+                                    placeholder="Contenido" value="" pattern="[A-Z]{1}[a-z]{2,9}" required>
+                                <div class="invalid-feedback">Debe contener 1 mayúscula y varias minúsculas</div>
                                 <div class="valid-feedback">Correcto.</div>
                             </div>
                         </div>
@@ -205,8 +205,8 @@ class View {
                             <label for="vfLatitud">Latitud</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="vfLatitud" name="vfLatitud"
-                                    placeholder="Latitud" value="" required>
-                                <div class="invalid-feedback">La latitud es obligatoria</div>
+                                    placeholder="Latitud" value="" pattern="-?[0-9]{2,9}" required>
+                                <div class="invalid-feedback">Debe contener números (puede o no contener números negativos)</div>
                                 <div class="valid-feedback">Correcto.</div>
                             </div>
                         </div>
@@ -215,8 +215,8 @@ class View {
                             <label for="vfLongitud">Longitud</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="vfLongitud" name="vfLongitud"
-                                    placeholder="Longitud" value="" required>
-                                <div class="invalid-feedback">La longitud es obligatoria</div>
+                                    placeholder="Longitud" value="" pattern="-?[0-9]{2,9}" required>
+                                <div class="invalid-feedback">Debe contener números (puede o no contener números negativos)</div>
                                 <div class="valid-feedback">Correcto.</div>
                             </div>
                         </div>
@@ -225,8 +225,8 @@ class View {
                             <label for="vfTemporadas">Temporadas</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="vfTemporadas" name="vfTemporadas"
-                                    placeholder="Temporadas" value="" required>
-                                <div class="invalid-feedback">Las temporadas son obligatorias</div>
+                                    placeholder="Temporadas" value="" pattern="[0-9]{1,2}" required>
+                                <div class="invalid-feedback">Debe contener números (máximo 2)</div>
                                 <div class="valid-feedback">Correcto.</div>
                             </div>
                         </div>
@@ -292,8 +292,8 @@ class View {
                         <div class="col-md-4 mb-3">
                             <label for="vfTitulo">Título</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="vfTitulo" name="vfTitulo" placeholder="Título" value="" required>
-                                <div class="invalid-feedback">El título es obligatorio</div>
+                                <input type="text" class="form-control" id="vfTitulo" name="vfTitulo" placeholder="Título" value="" pattern="[A-Z]{1}[a-z]{2,9}" required>
+                                <div class="invalid-feedback">Debe contener 1 mayúscula y varias minúsculas</div>
                                 <div class="valid-feedback">Correcto.</div>
                             </div>
                         </div>
@@ -301,8 +301,8 @@ class View {
                             <label for="vfNacionalidad">Nacionalidad</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="vfNacionalidad" name="vfNacionalidad"
-                                    placeholder="Nacionalidad" value="" required>
-                                <div class="invalid-feedback">La nacionalidad es obligatoria</div>
+                                    placeholder="Nacionalidad" value="" pattern="[A-Z]{1}[a-z]{2,9}" required>
+                                <div class="invalid-feedback">Debe contener 1 mayúscula y varias minúsculas</div>
                                 <div class="valid-feedback">Correcto.</div>
                             </div>
                         </div>
@@ -320,8 +320,8 @@ class View {
                             <label for="vfDescripcion">Descripción</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="vfDescripcion" name="vfDescripcion"
-                                    placeholder="Descripción" value="" required>
-                                <div class="invalid-feedback">La descripción es obligatoria</div>
+                                    placeholder="Descripción" value="" pattern="[A-Z]{1}[a-z]{2,9}" required>
+                                <div class="invalid-feedback">Debe contener 1 mayúscula y varias minúsculas</div>
                                 <div class="valid-feedback">Correcto.</div>
                             </div>
                         </div>
@@ -340,8 +340,8 @@ class View {
                             <label for="vfDuracion">Duracion</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="vfDuracion" name="vfDuracion"
-                                    placeholder="Duracion" value="" required>
-                                <div class="invalid-feedback">La duracion es obligatoria</div>
+                                    placeholder="Duracion" value="" pattern="[0-9]{2,3}" required>
+                                <div class="invalid-feedback">Debe contener entre 2 y 3 números</div>
                                 <div class="valid-feedback">Correcto.</div>
                             </div>
                         </div>
@@ -350,8 +350,8 @@ class View {
                             <label for="vfLatitud">Latitud</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="vfLatitud" name="vfLatitud"
-                                    placeholder="Latitud" value="" required>
-                                <div class="invalid-feedback">La latitud es obligatoria</div>
+                                    placeholder="Latitud" value="" pattern="-?[0-9]{2,9}" required>
+                                <div class="invalid-feedback">Debe contener números (puede o no contener números negativos)</div>
                                 <div class="valid-feedback">Correcto.</div>
                             </div>
                         </div>
@@ -360,8 +360,8 @@ class View {
                             <label for="vfLongitud">Longitud</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="vfLongitud" name="vfLongitud"
-                                    placeholder="Longitud" value="" required>
-                                <div class="invalid-feedback">La longitud es obligatoria</div>
+                                    placeholder="Longitud" value="" pattern="-?[0-9]{2,9}" required>
+                                <div class="invalid-feedback">Debe contener números (puede o no contener números negativos)</div>
                                 <div class="valid-feedback">Correcto.</div>
                             </div>
                         </div>
@@ -453,6 +453,7 @@ class View {
 
                 if (temporadas != null) {
 
+                    let temporadas = document.getElementById("vfTemporadas").value;
                     let contenido = document.getElementById("vfContenido").value;
                     let latitud = document.getElementById("vfLatitud").value;
                     let longitud = document.getElementById("vfLongitud").value;
@@ -523,8 +524,8 @@ class View {
 					<div class="col-md-4 mb-3">
 						<label for="vfTituloProduccion">Título</label>
 						<div class="input-group">
-							<input type="text" class="form-control" id="vfTituloProduccion" name="vfTituloProduccion" placeholder="Título" value="" required>
-							<div class="invalid-feedback">El título es obligatorio</div>
+							<input type="text" class="form-control" id="vfTituloProduccion" name="vfTituloProduccion" placeholder="Título" value="" pattern="[A-Z]{1}[a-z]{2,9}" required>
+							<div class="invalid-feedback">Debe contener 1 mayúscula y varias minúsculas</div>
 							<div class="valid-feedback">Correcto.</div>
 						</div>
 					</div>
@@ -782,8 +783,8 @@ class View {
 					<div class="col-md-6 mb-3">
 						<label for="vfNombre">Nombre</label>
 						<div class="input-group">
-							<input type="text" class="form-control" id="vfNombre" name="vfNombre" placeholder="Título" value="" required>
-							<div class="invalid-feedback">El nombre es obligatorio</div>
+							<input type="text" class="form-control" id="vfNombre" name="vfNombre" placeholder="Título" value="" pattern="[A-Z]{1}[a-z]{2,9}" required>
+							<div class="invalid-feedback">Debe contener 1 mayúscula y varias minúsculas</div>
 							<div class="valid-feedback">Correcto.</div>
 						</div>
 					</div>
@@ -791,8 +792,8 @@ class View {
                     <div class="col-md-6 mb-3">
 						<label for="vfDescripcion">Descripción</label>
 						<div class="input-group">
-							<input type="text" class="form-control" id="vfDescripcion" name="vfDescripcion" placeholder="Título" value="" required>
-							<div class="invalid-feedback">La descripción es obligatoria</div>
+							<input type="text" class="form-control" id="vfDescripcion" name="vfDescripcion" placeholder="Título" value="" pattern="[A-Z]{1}[a-z]{2,9}" required>
+							<div class="invalid-feedback">Debe contener 1 mayúscula y varias minúsculas</div>
 							<div class="valid-feedback">Correcto.</div>
 						</div>
 					</div>
@@ -845,9 +846,16 @@ class View {
     //!SHOW FORM DELETE CATEGORY
     //Método que muestra el formulario de la categoría eliminada
     showFormDeleteCategory(categories) {
-        this.main.empty();
 
-        this.main.append(`<div class="container m-5" id="cValidation">
+        if (categories.length === 0) {
+            this.main.empty();
+
+            this.main.append(`<h1 id="categoriaVacia" class="text-light d-flex justify-content-center categoriasVacias">NO EXISTEN CATEGORÍAS PARA BORRAR</h1>`);
+
+        } else {
+            this.main.empty();
+
+            this.main.append(`<div class="container m-5" id="cValidation">
         <h1 class="tituloFormCategory">Eliminar Categoría</h1>
         <form id="formDeleteCategory" name="fValidation" role="form" class="text-white" novalidate>
             <div id="row" class="form-row row">
@@ -866,9 +874,12 @@ class View {
         </form>
     </div>`);
 
-        for (let cat of categories) {
-            $("#selectCategorias").append(`<option value="${cat.category.name}">${cat.category.name}</option>`);
+            for (let cat of categories) {
+                $("#selectCategorias").append(`<option value="${cat.category.name}">${cat.category.name}</option>`);
+            }
         }
+
+
 
     }
 
@@ -876,24 +887,28 @@ class View {
     //Método que captura el evento submit al envíar los datos de la categoría eliminada
     bindSubmitDeleteFormCategory(handler) {
 
-        document.getElementById("formDeleteCategory").addEventListener("submit", function (event) {
+        let id = document.getElementById("categoriaVacia");
 
-            event.preventDefault();
+        if (id == null) {
+            document.getElementById("formDeleteCategory").addEventListener("submit", function (event) {
 
-            $("#formDeleteCategory").addClass('was-validated');
-
-            if (this.checkValidity() === false) {
                 event.preventDefault();
-                event.stopPropagation();
-            } else {
-                const select = document.getElementById("selectCategorias");
-                const opcionSeleccionada = select.value;
 
-                handler(opcionSeleccionada);
-            }
+                $("#formDeleteCategory").addClass('was-validated');
+
+                if (this.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                } else {
+                    const select = document.getElementById("selectCategorias");
+                    const opcionSeleccionada = select.value;
+
+                    handler(opcionSeleccionada);
+                }
 
 
-        });
+            });
+        }
 
     }
 
@@ -909,8 +924,8 @@ class View {
 					<div class="col-md-6 mb-3">
 						<label for="vfNombre">Nombre</label>
 						<div class="input-group">
-							<input type="text" class="form-control" id="vfNombre" name="vfNombre" placeholder="Nombre" value="" required>
-							<div class="invalid-feedback">El nombre es obligatorio</div>
+							<input type="text" class="form-control" id="vfNombre" name="vfNombre" placeholder="Nombre" value="" pattern="[A-Z]{1}[a-z]{2,9}" required>
+							<div class="invalid-feedback">Debe contener 1 mayúscula y varias minúsculas</div>
 							<div class="valid-feedback">Correcto.</div>
 						</div>
 					</div>
@@ -918,8 +933,8 @@ class View {
                     <div class="col-md-6 mb-3">
 						<label for="vfApellido1">Apellido 1</label>
 						<div class="input-group">
-							<input type="text" class="form-control" id="vfApellido1" name="vfApellido1" placeholder="Apellido 1" value="" required>
-							<div class="invalid-feedback">El apellido 1 es obligatorio</div>
+							<input type="text" class="form-control" id="vfApellido1" name="vfApellido1" placeholder="Apellido 1" value="" pattern="[A-Z]{1}[a-z]{2,9}" required>
+							<div class="invalid-feedback">Debe contener 1 mayúscula y varias minúsculas</div>
 							<div class="valid-feedback">Correcto.</div>
 						</div>
 					</div>
@@ -927,8 +942,8 @@ class View {
                     <div class="col-md-6 mb-3">
 						<label for="vfApellido2">Apellido 2</label>
 						<div class="input-group">
-							<input type="text" class="form-control" id="vfApellido2" name="vfApellido2" placeholder="Apellido 2" value="" required>
-							<div class="invalid-feedback">El apellido 2 es obligatorio</div>
+							<input type="text" class="form-control" id="vfApellido2" name="vfApellido2" placeholder="Apellido 2" value="" pattern="[A-Z]{1}[a-z]{2,9}" required>
+							<div class="invalid-feedback">Debe contener 1 mayúscula y varias minúsculas</div>
 							<div class="valid-feedback">Correcto.</div>
 						</div>
 					</div>
@@ -959,6 +974,8 @@ class View {
                                 <option value="Actor">Actor</option>
                                 <option value="Director">Director</option>
                             </select>
+                            <div class="invalid-feedback">El tipo de person es obligatorio</div>
+							<div class="valid-feedback">Correcto.</div>
 						</div>
 					</div>
 				</div>

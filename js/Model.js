@@ -565,7 +565,7 @@ let VideoSystem = (function () {
 
                 //Comparamos por name
                 function compareElements(element) {
-                    return (element.director.name === director.name)
+                    return ((element.director.name === director.name) && (element.director.lastname1 === director.lastname1))
                 }
 
                 return this.#directors.findIndex(compareElements);
