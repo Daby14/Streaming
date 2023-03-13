@@ -31,11 +31,10 @@ class Controller {
         let resource6 = new Resource("132", "movies/movie6.mp4");
 
         //!COORDINATE
-        let coordinate1 = new Coordinate(42, 175);
-        let coordinate2 = new Coordinate(40, 3);
-        let coordinate3 = new Coordinate(37, -95);
-        let coordinate4 = new Coordinate(37, -119);
-
+        let coordinate1 = new Coordinate(-41.28664, 174.77557);
+        let coordinate2 = new Coordinate(40.4165, -3.70256 );
+        let coordinate3 = new Coordinate(39.09973, -94.57857);
+        let coordinate4 = new Coordinate(35.1258000, -117.9859000);
 
         //!SERIES
         let produccion1 = new Serie("El señor de los anillos", "Nueva Zelanda", "12/01/2022", "Los héroes se enfrentan al temido resurgimiento del mal en la Tierra Media, forjando legados que perdurarán mucho tiempo después de su desaparición", "images/image1.jpg", "Volcán", coordinate1, 3);
@@ -94,7 +93,7 @@ class Controller {
         let actor24 = new Person("Imani", "Pullum", "(Betsy)", "24/01/2003", "images/actor24.jpg");
 
         //!USER
-        let usuario1 = new User("David", "davidletrado03@gmail.com", "ConTRasenIA");
+        let usuario1 = new User("Admin", "admin@gmail.com", "Admin");
 
         //!ADD CATEGORIE
         this.#model.addCategorie([categoria1, categoria2, categoria3]);
@@ -141,6 +140,9 @@ class Controller {
         this.#model.assignActor(produccion11, [actor21, actor22]);
         this.#model.assignActor(produccion12, [actor23, actor24]);
 
+        //!ADD USER
+        this.#model.addUser(usuario1);
+
     }
 
     //Constructor
@@ -169,6 +171,9 @@ class Controller {
         this.#view.bindShowCategory(this.handleShowCategory);
         this.#view.bindShowProduction(this.handleShowProduct);
 
+        
+        this.onAddMap();
+
     }
 
     //Método hHandle que llama al onInit
@@ -184,6 +189,57 @@ class Controller {
         this.onAddActor();
         this.onAddButtonWindow();
         this.onAddForm();
+        this.onAddUser();
+        this.onAddCookie();
+
+    }
+
+    onAddUser = () => {
+
+        this.#view.showButtonRegisterInMenu();
+
+        this.#view.bindButtonRegister(this.handleFormUser);
+
+    }
+
+    handleFormUser = () => {
+        this.#view.showFormLogin();
+        this.#view.bindSubmitFormLogin(this.handleSubmitFormLogin);
+    }
+
+    handleSubmitFormLogin = (usuario, password) => {
+
+        let prueba = false;
+
+        for (const elem of this.#model.users) {
+            if (elem.username === usuario && elem.password === password) {
+                document.cookie = "usuario=" + usuario + ";password=" + password;
+
+                prueba = true;
+            }
+            document.location.href = "http://127.0.0.1:5502/Streaming/main.html";
+        }
+
+    }
+
+    onAddCookie = () => {
+
+        let cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            let cookie = cookies[i].trim();
+            if (cookie.startsWith("usuario=")) {
+
+
+
+                let usuario = cookie.substring("usuario=".length, cookie.length);
+
+                console.log("Hola " + usuario + "!");
+                break;
+            }
+        }
+
+        this.#view.showPrueba();
+
     }
 
     //Método onAddForm que muestra los formularios en el menú
@@ -616,20 +672,26 @@ class Controller {
                 this.#model.removeProduction(produccion);
 
                 let production;
-                let categorie;
+                // let categorie;
+
+                let categories = [];
 
                 //Obtenemos la categoría en la que está asignada esa producción
                 for (const elem of this.#model.categories) {
                     for (const elem2 of elem.producs) {
                         if (titulo === elem2.title) {
                             production = elem2;
-                            categorie = elem.category;
+                            // categorie = elem.category;
+                            categories.push(elem.category);
                         }
                     }
                 }
 
                 //A la categoría correspondiente le deasignamos dicha producción
-                this.#model.deassignCategory(production, categorie);
+                // this.#model.deassignCategory(production, categorie);
+                for (const elem of categories) {
+                    this.#model.deassignCategory(production, elem);
+                }
 
                 done = true;
 
@@ -753,7 +815,7 @@ class Controller {
 
         //Llamamos al método showDeletePersonModal para mostrar un modal tras eliminar una person
         this.#view.showDeletePersonModal(done, actores, directores, error);
-        
+
         //Obtenemos los actores del sistema
         let actors = [];
 
@@ -770,7 +832,7 @@ class Controller {
 
         //Actualizamos el formulario con los nuevos datos del sistema
         this.#view.showFormDeletePerson(directors, actors);
-        
+
         //Llamamos al evento
         this.#view.bindSubmitDeleteFormPerson(this.handleDeletePerson);
 
@@ -951,6 +1013,12 @@ class Controller {
 
         this.#view.showCardActor(producciones, act);
         this.#view.bindProduction(this.handleShowProduct);
+    }
+
+    onAddMap = () => {
+
+        this.#view.showGeocoder();
+
     }
 
 }

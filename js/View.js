@@ -205,7 +205,7 @@ class View {
                             <label for="vfLatitud">Latitud</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="vfLatitud" name="vfLatitud"
-                                    placeholder="Latitud" value="" pattern="-?[0-9]{2,9}" required>
+                                    placeholder="Latitud" value="" pattern="-?[0-9].{2,9}" required>
                                 <div class="invalid-feedback">Debe contener números (puede o no contener números negativos)</div>
                                 <div class="valid-feedback">Correcto.</div>
                             </div>
@@ -215,7 +215,7 @@ class View {
                             <label for="vfLongitud">Longitud</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="vfLongitud" name="vfLongitud"
-                                    placeholder="Longitud" value="" pattern="-?[0-9]{2,9}" required>
+                                    placeholder="Longitud" value="" pattern="-?[0-9].{2,9}" required>
                                 <div class="invalid-feedback">Debe contener números (puede o no contener números negativos)</div>
                                 <div class="valid-feedback">Correcto.</div>
                             </div>
@@ -350,7 +350,7 @@ class View {
                             <label for="vfLatitud">Latitud</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="vfLatitud" name="vfLatitud"
-                                    placeholder="Latitud" value="" pattern="-?[0-9]{2,9}" required>
+                                    placeholder="Latitud" value="" pattern="-?[0-9].{2,9}" required>
                                 <div class="invalid-feedback">Debe contener números (puede o no contener números negativos)</div>
                                 <div class="valid-feedback">Correcto.</div>
                             </div>
@@ -360,7 +360,7 @@ class View {
                             <label for="vfLongitud">Longitud</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="vfLongitud" name="vfLongitud"
-                                    placeholder="Longitud" value="" pattern="-?[0-9]{2,9}" required>
+                                    placeholder="Longitud" value="" pattern="-?[0-9].{2,9}" required>
                                 <div class="invalid-feedback">Debe contener números (puede o no contener números negativos)</div>
                                 <div class="valid-feedback">Correcto.</div>
                             </div>
@@ -578,7 +578,7 @@ class View {
 
                 
                 <div class="col-md-4 mb-3">
-                <label for="vfDirectores">Directores</label>
+                    <label for="vfDirectores">Directores</label>
                     <select class="form-select custom-select" id="selectDirectores" name="selectDirectores" required multiple></select> 
                     <div class="invalid-feedback">Los directores son obligatorios</div>
                     <div class="valid-feedback">Correcto.</div>   
@@ -920,7 +920,8 @@ class View {
         <div class="container m-5" id="cValidation">
 			<h1 class="d-flex justify-content-center">Nueva Person</h1>
 			<form id="formPerson" name="fValidation" role="form" class="text-white m-5" novalidate>
-				<div id="row" class="form-row row">
+				
+                <div id="row" class="form-row row">
 					<div class="col-md-6 mb-3">
 						<label for="vfNombre">Nombre</label>
 						<div class="input-group">
@@ -1802,19 +1803,42 @@ class View {
 
             for (let i = 0; i < directors.length; i++) {
                 $("#directores").append(`<a href="#" id="director" data-serial="${directors[i].name}"><span class="text-muted brand">Nombre: ${directors[i].name} ${directors[i].lastname1} ${directors[i].lastname2}</span><br></a>`);
-                // console.log(directors[i].name)
             }
 
             for (let i = 0; i < actors.length; i++) {
                 $("#actores").append(`<a href="#" id="actor" data-serial="${actors[i].name}"><span class="text-muted brand">Nombre: ${actors[i].name} ${actors[i].lastname1} ${actors[i].lastname2}</span><br></a>`);
-                // console.log(actors[i].name)
             }
 
 
         }
 
+        this.main.append($('<div class="container"><div class="m-4" id="mapid"></div></div>'));
+        let mapContainer = $('#mapid');
+        mapContainer.css({
+            height: '350px',
+            border: '2px solid #faa541'
+        });
 
-        // this.main.append(container);
+        let map = L.map('mapid')
+            .setView([product.locations.latitude, product.locations.longitude], 15);
+
+        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+            maxZoom: 18
+        }).addTo(map);
+
+        let marker = L.marker([product.locations.latitude, product.locations.longitude]).addTo(map);
+
+        if (product.nationality === "España") {
+            marker.bindPopup('<strong>Madrid</strong>').openPopup();
+        } else if (product.nationality === "Nueva Zelanda (Wellington)") {
+            marker.bindPopup('<strong>Nueva Zelanda</strong>').openPopup();
+        } else if (product.nationality === "Estados Unidos") {
+            marker.bindPopup('<strong>Estados Unidos (Kansas City)</strong>').openPopup();
+        } else if (product.nationality === "California") {
+            marker.bindPopup('<strong>California City</strong>').openPopup();
+        }
+
     }
 
     //!BIND DIRECTOR
@@ -2162,6 +2186,161 @@ class View {
         });
     }
 
+    showFormLogin() {
+
+        this.main.empty();
+
+        this.main.append(`<div class="container m-5 " id="cValidation">
+            <h1 class="tituloFormUser d-flex justify-content-center">Login Usuario</h1>
+            <br>
+            <form id="formUser" name="fValidation" role="form" class="text-white" novalidate>
+                <div id="row" class="form-row row d-flex justify-content-center">
+                    <div class="col-md-4 mb-3">
+                        <label for="vfUser">Usuario</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="vfUser" name="vfUser" placeholder="Usuario" value="" pattern="[A-Z]{1}[a-z]{2,9}" required>
+                            <div class="invalid-feedback">Debe contener 1 mayúscula y varias minúsculas</div>
+                            <div class="valid-feedback">Correcto.</div>
+                        </div>
+                    </div>
+    
+                    <div class="col-md-4 mb-3">
+						<label for="vfPassword">Contraseña</label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="vfPassword" name="vfPassword" placeholder="Password" value="" pattern="[A-Z]{1}[a-z]{2,9}" required>
+							<div class="invalid-feedback">Debe contener 1 mayúscula y varias minúsculas</div>
+							<div class="valid-feedback">Correcto.</div>
+						</div>
+					</div>
+    
+                </div>
+    
+                <div class="d-flex justify-content-center gap-5 mt-5">
+                    <button class="btn btn-primary" type="submit">Enviar</button>
+                    <button class="btn btn-primary" type="reset">Cancelar</button>
+                </div>
+
+                
+            </form>
+        </div>`);
+
+    }
+
+    showButtonRegisterInMenu() {
+        $("#headerEnd").append(`<a href="#"><button id="login" type="button" data-serial="botonLogin" class="btn btn-warning">Login</button></a>`);
+    }
+
+    bindButtonRegister(handler) {
+
+        $('#login').click((event) => {
+            let serial = $(event.target).closest($('a')).get(0).dataset.serial;
+
+            this.#executeHandlerHistory(
+                handler, [serial],
+                'body',
+                { action: 'formLogin', serial: serial },
+                '#formLogin', event
+            );
+        });
+
+    }
+
+    bindSubmitFormLogin(handler) {
+
+        document.getElementById("formUser").addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+            $("#formUser").addClass('was-validated');
+
+            if (this.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+            } else {
+                let usuario = document.getElementById("vfUser").value;
+                let password = document.getElementById("vfPassword").value;
+
+                handler(usuario, password);
+            }
+
+        });
+
+    }
+
+    showPrueba() {
+        this.main.empty();
+    }
+
+    showGeocoder() {
+
+        //Contenedor del mapa
+        this.main.append($(`<div class="container p-4">
+			<form id="fGeocoder" class="text-white" method="get" action="https://nominatim.openstreetmap.org/search">
+				<input type="hidden" name="format" value="json">
+				<input type="hidden" name="limit" value="3">
+				<h2>Ejemplo de uso de GeoCoder</h2>
+				<div class="form-group row">
+					<div class="col-sm-10">
+						<label for="address" class="col-form-label">Dirección</label>
+						<input type="text" name="q" class="form-control" id="address" placeholder="Introduce la dirección a buscar">
+					</div>
+					<div class="col-sm-2 align-self-end">
+						<button id="bAddress" class="btn btn-primary" type="submit">Buscar</button>
+					</div>
+				</div>
+				<div id="geocoderAddresses"></div>
+				<div id="geocoderMap" class="my-2"></div>
+			</form>
+		</div>`));
+
+        let form = $('#fGeocoder');
+        let addresses = $('#geocoderAddresses');
+        let mapContainer = $('#geocoderMap');
+        let map = null;
+
+        form.submit(function (event) {
+            let form = $(this);
+            $.get(this.action + '?' + form.serialize()).then(
+                function (data) {
+                    let list = $('<div class="list-group"></div>');
+                    data.forEach((address) => {
+                        list.append(`<a href="#" data-lat="${address.lat}" data-lon="${address.lon}" class="list-group-item list-group-item-action">
+							${address.display_name}</a>`);
+                    });
+                    addresses.empty();
+                    addresses.append(list);
+                    list.find('a').click(function (event) {
+                        $(this).siblings().removeClass('active');
+                        $(this).addClass('active');
+                        if (map) {
+                            map.setView(new L.LatLng(this.dataset.lat, this.dataset.lon), 15);
+                        } else {
+                            mapContainer.css({ height: '350px', border: '2px solid #faa541' });
+                            map = L.map('geocoderMap').setView([this.dataset.lat, this.dataset.lon], 15);
+                            L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+                                maxZoom: 18
+                            }).addTo(map);
+                        }
+                        L.marker([this.dataset.lat, this.dataset.lon]).addTo(map);
+                        event.preventDefault();
+                        event.stopPropagation();
+                    })
+                }, function (error) {
+                    addresses.empty();
+                    addresses.append(`<div class="text-danger">
+						<i class="fas fa-exclamation-circle"></i>
+						No se ha podido establecer la conexión con el servidor de mapas.
+					</div>`);
+                }
+            );
+
+            event.preventDefault();
+            event.stopPropagation();
+
+        })
+
+    }
 }
 
 export default View;
