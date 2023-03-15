@@ -32,7 +32,7 @@ class Controller {
 
         //!COORDINATE
         let coordinate1 = new Coordinate(-41.28664, 174.77557);
-        let coordinate2 = new Coordinate(40.4165, -3.70256 );
+        let coordinate2 = new Coordinate(40.4165, -3.70256);
         let coordinate3 = new Coordinate(39.09973, -94.57857);
         let coordinate4 = new Coordinate(35.1258000, -117.9859000);
 
@@ -161,6 +161,16 @@ class Controller {
     //Método onInit
     onInit = () => {
 
+        // fetch('proyecto.json')
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         //Aquí puedes trabajar con los datos JSON como un objeto JavaScript
+        //         console.log(data.Producciones);
+        //     })
+        //     .catch(error => {
+        //         console.error('Ha ocurrido un error al leer el archivo JSON:', error);
+        //     });
+
         //Obtenemos 3 producciones aleatorias
         let pros = this.#model.randomProduction(3);
 
@@ -171,7 +181,6 @@ class Controller {
         this.#view.bindShowCategory(this.handleShowCategory);
         this.#view.bindShowProduction(this.handleShowProduct);
 
-        
         this.onAddMap();
 
     }
@@ -188,18 +197,15 @@ class Controller {
         this.onAddDirector();
         this.onAddActor();
         this.onAddButtonWindow();
-        this.onAddForm();
         this.onAddUser();
         this.onAddCookie();
+        // this.onAddForm();
 
     }
 
     onAddUser = () => {
-
         this.#view.showButtonRegisterInMenu();
-
         this.#view.bindButtonRegister(this.handleFormUser);
-
     }
 
     handleFormUser = () => {
@@ -209,36 +215,100 @@ class Controller {
 
     handleSubmitFormLogin = (usuario, password) => {
 
-        let prueba = false;
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
 
         for (const elem of this.#model.users) {
             if (elem.username === usuario && elem.password === password) {
-                document.cookie = "usuario=" + usuario + ";password=" + password;
-
-                prueba = true;
+                setCookie("usuario", usuario, 60);
+                document.location.href = "http://127.0.0.1:5502/Streaming/main.html";
+            } else {
+                this.#view.showLoginModal();
             }
-            document.location.href = "http://127.0.0.1:5502/Streaming/main.html";
         }
 
     }
 
     onAddCookie = () => {
 
-        let cookies = document.cookie.split(';');
+        let cookieString = document.cookie;
+        let cookieName;
+        let valor;
+        let cookies = cookieString.split(';');
+
         for (let i = 0; i < cookies.length; i++) {
             let cookie = cookies[i].trim();
-            if (cookie.startsWith("usuario=")) {
-
-
-
-                let usuario = cookie.substring("usuario=".length, cookie.length);
-
-                console.log("Hola " + usuario + "!");
+            if (cookie.indexOf('usuario=') == 0) {
+                cookieName = cookie.substring(0, cookie.indexOf('='));
+                valor = cookie.substring("usuario=".length, cookie.length);
                 break;
             }
         }
 
-        this.#view.showPrueba();
+        function getCookie(cname) {
+            let re = new RegExp('(?:(?:^|.*;\\s*)' + cname +
+                '\\s*\\=\\s*([^;]*).*$)|^.*$');
+            return document.cookie.replace(re, "$1");
+        }
+
+        let prueba = getCookie(cookieName);
+
+        if (prueba !== "") {
+            this.onAddForm();
+            this.#view.showButtonLogOut(valor);
+            this.#view.bindLogOut(this.handleLogOut);
+
+        } else {
+
+        }
+
+    }
+
+    handleLogOut = () => {
+
+        let cookieString = document.cookie;
+        let cookieName;
+        let valor;
+
+        let cookies = cookieString.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            let cookie = cookies[i].trim();
+            if (cookie.indexOf('usuario=') == 0) {
+                cookieName = cookie.substring(0, cookie.indexOf('='));
+                valor = cookie.substring("usuario=".length, cookie.length);
+                break;
+            }
+        }
+
+        //Una vez tengo los datos de la cookie, la borramos
+
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        setCookie("usuario", '', 0);
+
+        function getCookie(cname) {
+            let re = new RegExp('(?:(?:^|.*;\\s*)' + cname +
+                '\\s*\\=\\s*([^;]*).*$)|^.*$');
+            return document.cookie.replace(re, "$1");
+        }
+
+        let prueba = getCookie(cookieName);
+
+        if (prueba === "") {
+            $('#menuForm').css({ display: "none" });
+            $('#menuCookie').css({ display: "none" });
+            $('#desconectar').css({ display: "none" });
+            $('#login').css({ display: "block" });
+        }
 
     }
 

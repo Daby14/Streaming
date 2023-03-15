@@ -58,9 +58,6 @@ class View {
             </div>`);
         }
 
-
-
-
         //Recorremos el array con las producciones aleatorias que se recibe y las añadimos al main
         for (let i = 0; i < pros.length; i++) {
 
@@ -2267,24 +2264,75 @@ class View {
 
     }
 
-    showPrueba() {
-        this.main.empty();
+    showButtonLogOut(usuario) {
+
+        this.menu.append(`<li id="menuCookie" class="nav-item dropdown mt-2">Hola ${usuario}</li>`);
+
+        $("#login").css({ display: "none" });
+
+        $("#headerEnd").append(`<a href="#"><button id="desconectar" type="button" data-serial="botonDesconectar" class="btn btn-warning">Desconectar</button></a>`);
+
+    }
+
+    bindLogOut(handler) {
+
+        $('#desconectar').click((event) => {
+
+            handler();
+
+        });
+
+    }
+
+    showLoginModal() {
+
+        let modal = $(`<div class="modal fade" id="newLoginModal" tabindex="-1"
+				data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="newCategoryModalLabel">Login Incorrecto</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body text-danger">
+							Ese usuario no existe en el sistema
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+						</div>
+					</div>
+				</div>
+			</div>`);
+        $('body').append(modal);
+        let newProductModal = $('#newLoginModal');
+        newProductModal.modal('show');
+        newProductModal.find('button').click(() => {
+            newProductModal.modal('hide');
+            newProductModal.remove();
+            const formulario = document.getElementById("formUser");
+            formulario.reset();
+            formulario.setAttribute("class", "text-white m-5");
+        })
     }
 
     showGeocoder() {
 
         //Contenedor del mapa
         this.main.append($(`<div class="container p-4">
-			<form id="fGeocoder" class="text-white" method="get" action="https://nominatim.openstreetmap.org/search">
+			<form id="formGeocoder" class="text-white" method="get" action="https://nominatim.openstreetmap.org/search" novalidate>
 				<input type="hidden" name="format" value="json">
 				<input type="hidden" name="limit" value="3">
-				<h2>Ejemplo de uso de GeoCoder</h2>
+				<h2>GeoCoder</h2>
 				<div class="form-group row">
 					<div class="col-sm-10">
 						<label for="address" class="col-form-label">Dirección</label>
-						<input type="text" name="q" class="form-control" id="address" placeholder="Introduce la dirección a buscar">
+						<input type="text" name="q" class="form-control" id="address" placeholder="Introduce la dirección a buscar" required>
+                        <div class="invalid-feedback">La dirección es obligatoria</div>
+						<div class="valid-feedback">Correcto.</div>
 					</div>
-					<div class="col-sm-2 align-self-end">
+					<div class="col-sm-2 buscarGeo">
 						<button id="bAddress" class="btn btn-primary" type="submit">Buscar</button>
 					</div>
 				</div>
@@ -2293,7 +2341,19 @@ class View {
 			</form>
 		</div>`));
 
-        let form = $('#fGeocoder');
+        let form = $('#formGeocoder');
+
+        document.getElementById("formGeocoder").addEventListener("submit", function (event) {
+            event.preventDefault();
+            $("#formGeocoder").addClass('was-validated');
+
+            if (this.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+            };
+
+        })
+
         let addresses = $('#geocoderAddresses');
         let mapContainer = $('#geocoderMap');
         let map = null;
